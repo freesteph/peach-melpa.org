@@ -10,5 +10,10 @@
   <%= @theme.version %>
 </p>
 
+<p>
+  <strong>Screenshot</strong>
+  <%= image_tag @theme.name %>
+<p>
+
 <%= link_to 'Edit', edit_theme_path(@theme) %> |
 <%= link_to 'Back', themes_path %>
