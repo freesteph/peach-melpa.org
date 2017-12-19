@@ -1,14 +1,14 @@
 * Peach Melpa Todo
 
-** TODO 0.1
+** DONE 0.1
 
-*** TODO themes retrieval
+*** DONE themes retrieval
 
-*** TODO list page
+*** DONE list page
 
-*** TODO show page
+*** DONE show page
 
-*** TODO basic screenshot
+*** DONE basic screenshot
 
 ** TODO 0.2
 
