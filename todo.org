@@ -9,3 +9,13 @@
 *** TODO show page
 
 *** TODO basic screenshot
+
+** TODO 0.2
+
+*** TODO Install theme if necessary
+
+*** TODO Load other code samples
+
+** TODO 0.3
+
+*** TODO Load other fonts
