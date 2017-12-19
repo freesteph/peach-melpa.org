@@ -20,7 +20,6 @@
   "Get and install THEME-NAME before taking a screenshot of it."
   (let ((cmd-name (concat "gnome-screenshot -B -w -f " default-directory "app/assets/images/" theme-name ".jpg")))
     (load-theme (intern theme-name) t)
-    (message "going to screenshot with %s" cmd-name)
     (find-file (concat default-directory "lib/sample.js"))
     (redisplay t)
     (sleep-for 1)

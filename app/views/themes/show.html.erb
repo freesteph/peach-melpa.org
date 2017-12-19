@@ -1,19 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div class="theme">
+  <section class="name">
+    <h1><%= @theme.name %></h1>
+  </section>
 
-<p>
-  <strong>Name:</strong>
-  <%= @theme.name %>
-</p>
+  <section class="props">
+      <p>
+        <strong>Version:</strong>
+        <%= @theme.version %>
+      </p>
+  </section>
 
-<p>
-  <strong>Version:</strong>
-  <%= @theme.version %>
-</p>
+  <section class="screenshots">
+    <%= image_tag @theme.name %>
+  </section>
 
-<p>
-  <strong>Screenshot</strong>
-  <%= image_tag @theme.name %>
-<p>
-
-<%= link_to 'Edit', edit_theme_path(@theme) %> |
-<%= link_to 'Back', themes_path %>
+  <%= link_to 'Edit', edit_theme_path(@theme) %> |
+  <%= link_to 'Back', themes_path %>
+</div>
