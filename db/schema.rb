@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 20170222233953) do
 
   create_table "themes", force: :cascade do |t|
-    t.string   "name"
-    t.string   "version"
+    t.string "name"
+    t.string "version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
