@@ -1,3 +1,4 @@
+require 'open-uri'
 require 'json'
 
 namespace :themes do
@@ -6,6 +7,11 @@ namespace :themes do
 
   desc "grabs MELPA archives.json and put it in tmp"
   task refresh: :environment do
+    open(MELPA_ARCHIVE) do |fresh|
+      File.open(ARCHIVE_PATH, "r+") do |tmp|
+        tmp.write(fresh.read)
+      end
+    end
   end
 
   desc "grabs tmp JSON file and store themes"
@@ -14,6 +20,7 @@ namespace :themes do
 
     themes = data.select { |name,| name.end_with? '-theme' }
 
+    # FIXME: 5 is just for testing purposes
     themes.first(5).each do |theme|
       name = theme.first.sub('-theme', '')
       info = theme.last
