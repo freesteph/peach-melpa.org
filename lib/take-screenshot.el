@@ -7,17 +7,24 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
-(defun peach--install-if-necessary (theme-name)
-  "Install THEME-NAME is not already installed on the system."
-  (let
-      ((pkg-name (make-symbol (concat theme-name "-theme")))
-       (screenshoter "gnome-screenshot"))
-    (message "going to install %s" theme-name)
-    (unless (package-installed-p pkg-name)
-      (package-install pkg-name))))
+(package-refresh-contents)
 
-(defun fetch-and-load-theme (theme-name)
+(defun peach--install-if-necessary (theme-name version)
+  "Install THEME-NAME is not already installed on the system."
+  (let (
+	(pkg (package-desc-create
+	      :name (make-symbol (concat theme-name "-theme"))
+	      :version '(20170330 0)
+	      :kind 'single
+	      :archive "melpa"
+	      ))
+	(screenshoter "gnome-screenshot"))
+    (unless (package-installed-p pkg)
+      (package-install pkg))))
+
+(defun fetch-and-load-theme (theme-name version)
   "Get and install THEME-NAME before taking a screenshot of it."
+  (peach--install-if-necessary theme-name version)
   (let ((cmd-name (concat "gnome-screenshot -B -w -f " default-directory "app/assets/images/" theme-name ".jpg")))
     (load-theme (intern theme-name) t)
     (find-file (concat default-directory "lib/sample.js"))

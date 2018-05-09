@@ -24,17 +24,22 @@ namespace :themes do
     themes.first(5).each do |theme|
       name = theme.first.sub('-theme', '')
       info = theme.last
+      version = info['ver'].join('.')
 
       puts "parsing #{name}"
-      Theme.find_or_create_by(name: name)
+      Theme.find_or_create_by(name: name) do |theme|
+        theme.version = version
+      end
     end
   end
 
   desc "update screenshot for THEME_NAME"
   task :screenshot, [:name] => :environment do |t, args|
-    theme = args[:name]
+    theme = Theme.find_by(name: args[:name])
 
-    cmd = %x[emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme "zerodark")']
+    Kernel.raise "could not find #{args[:name]}" if theme.nil?
+
+    cmd = %x[emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme "#{theme[:name]}" "#{theme[:version]}")']
     puts "done!"
   end
 end
