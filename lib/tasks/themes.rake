@@ -7,8 +7,10 @@ namespace :themes do
 
   desc "grabs MELPA archives.json and put it in tmp"
   task refresh: :environment do
+    puts "grabbing archive file from MELPA"
     open(MELPA_ARCHIVE) do |fresh|
-      File.open(ARCHIVE_PATH, "r+") do |tmp|
+      puts "writing MELPA file down."
+      File.open(ARCHIVE_PATH, "w+") do |tmp|
         tmp.write(fresh.read)
       end
     end
@@ -20,15 +22,24 @@ namespace :themes do
 
     themes = data.select { |name,| name.end_with? '-theme' }
 
-    # FIXME: 5 is just for testing purposes
-    themes.first(5).each do |theme|
+    themes.first(50).each do |theme|
       name = theme.first.sub('-theme', '')
       info = theme.last
       version = info['ver'].join('.')
 
       puts "parsing #{name}"
-      Theme.find_or_create_by(name: name) do |theme|
-        theme.version = version
+      t = Theme.find_or_create_by(name: name)
+
+      if t.version == version
+        puts "not updating as version (#{t.version}) is similar"
+      else
+        t.version = version
+        t.save
+
+        puts "creating screenshot for #{name}"
+        Rake::Task["themes:screenshot"].reenable
+        Rake::Task["themes:screenshot"].invoke t.name
+        puts "done with the screenshot"
       end
     end
   end
