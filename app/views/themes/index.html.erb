@@ -1,25 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Themes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Version</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @themes.each do |theme| %>
-      <tr>
-        <td><%= theme.name %></td>
-        <td><%= theme.version %></td>
-        <td><%= link_to 'Show', theme %></td>
-      </tr>
+<div id="themes-list-wrapper">
+  <% @themes.each do |theme| %>
+  <div class="theme-thumbnail">
+    <%= link_to theme_path(theme) do %>
+      <%= image_tag theme.name %>
     <% end %>
-  </tbody>
-</table>
-
+  </div>
+  <% end %>
+</div>
 <br>

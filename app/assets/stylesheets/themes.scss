@@ -25,3 +25,18 @@
     }
   }
 }
+
+#themes-list-wrapper {
+  display: inline-block;
+
+  .theme-thumbnail {
+    padding: 0.5em;
+    margin: 0.5em;
+    border:1px solid #DDD;
+    display: inline-block;
+
+    img {
+      max-width: 420px;
+    }
+  }
+}
