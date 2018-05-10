@@ -7,14 +7,12 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
-(package-refresh-contents)
-
 (defun peach--install-if-necessary (theme-name version)
   "Install THEME-NAME is not already installed on the system."
   (let (
 	(pkg (package-desc-create
 	      :name (make-symbol (concat theme-name "-theme"))
-	      :version '(20170330 0)
+	      :version (version-to-list version)
 	      :kind 'single
 	      :archive "melpa"
 	      ))
