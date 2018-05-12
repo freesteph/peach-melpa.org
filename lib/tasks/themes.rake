@@ -1,3 +1,4 @@
+require 'timeout'
 require 'open-uri'
 require 'json'
 
@@ -38,8 +39,15 @@ namespace :themes do
 
         puts "creating screenshot for #{name}"
         Rake::Task["themes:screenshot"].reenable
-        Rake::Task["themes:screenshot"].invoke t.name
-        puts "done with the screenshot"
+
+        begin
+          Timeout::timeout(5) do
+            Rake::Task["themes:screenshot"].invoke t.name
+            puts "done with screenshot"
+          end
+        rescue Timeout::Error
+          puts "could not capture screenshot"
+        end
       end
     end
   end
