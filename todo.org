@@ -1,7 +1,6 @@
 * Peach Melpa Todo
 
-** DONE 0.1
-
+** 0.1
 *** DONE themes retrieval
 
 *** DONE list page
@@ -10,12 +9,14 @@
 
 *** DONE basic screenshot
 
-** TODO 0.2
+*** DONE Install theme if necessary
 
-*** TODO Install theme if necessary
-
-*** TODO Load other code samples
-
+** 0.2
+*** TODO Screenshot based on env
+*** TODO Find a good domain name
+*** TODO Better CSS
 ** TODO 0.3
-
+*** TODO Hook Stimulus.js
+*** TODO Other samples of code
+** TODO 0.4
 *** TODO Load other fonts
