@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222233953) do
+ActiveRecord::Schema.define(version: 20180512161503) do
 
   create_table "themes", force: :cascade do |t|
     t.string "name"
     t.string "version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "processed"
   end
 
 end

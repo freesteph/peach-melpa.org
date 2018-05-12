@@ -34,6 +34,7 @@ namespace :themes do
       if t.version == version
         puts "not updating as version (#{t.version}) is similar"
       else
+        t.processed = false
         t.version = version
         t.save
 
@@ -43,11 +44,14 @@ namespace :themes do
         begin
           Timeout::timeout(5) do
             Rake::Task["themes:screenshot"].invoke t.name
+            t.processed = true
             puts "done with screenshot"
           end
         rescue Timeout::Error
           puts "could not capture screenshot"
         end
+
+        t.save
       end
     end
   end
