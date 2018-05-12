@@ -50,7 +50,7 @@ namespace :themes do
 
     Kernel.raise "could not find #{args[:name]}" if theme.nil?
 
-    cmd = %x[emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme "#{theme[:name]}" "#{theme[:version]}")']
+    cmd = %x[DISPLAY=:13 emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme "#{theme[:name]}" "#{theme[:version]}")']
     puts "done!"
   end
 end
