@@ -30,7 +30,7 @@
   (peach--install-if-necessary theme-name version)
   (let* (
          (screenshot-path (concat default-directory "app/assets/images/" theme-name ".jpg"))
-         (cmd-name (peach--get-screenshot-cmd)))
+         (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path)))
     (load-theme (intern theme-name) t)
     (toggle-frame-fullscreen)
     (find-file (concat default-directory "lib/sample.js"))
