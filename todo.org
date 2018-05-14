@@ -12,11 +12,13 @@
 *** DONE Install theme if necessary
 
 ** 0.2
-*** TODO Screenshot based on env
+*** DONE Screenshot based on env
 *** TODO Find a good domain name
 *** TODO Better CSS
+*** TODO use theme slug in the SHOW url path
 ** TODO 0.3
 *** TODO Hook Stimulus.js
 *** TODO Other samples of code
+*** TODO ActionPack caching
 ** TODO 0.4
 *** TODO Load other fonts
