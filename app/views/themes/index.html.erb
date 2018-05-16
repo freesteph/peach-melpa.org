@@ -6,7 +6,10 @@
   <div class="theme-thumbnail">
     <%= link_to theme_path(theme) do %>
       <%= image_tag theme.name %>
-    <% end %>
+      <% end %>
+      <div class="meta">
+        <%= theme.name %>
+      </div>
   </div>
   <% end %>
 </div>

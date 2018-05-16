@@ -21,22 +21,24 @@
 
   .screenshots {
     img {
-      max-width: 768px;
+        max-width: 100%;
     }
   }
 }
 
 #themes-list-wrapper {
-  display: inline-block;
-
   .theme-thumbnail {
-    padding: 0.5em;
+    padding: 0.3em;
     margin: 0.5em;
-    border:1px solid #DDD;
     display: inline-block;
 
     img {
       max-width: 420px;
+    }
+
+    .meta {
+        font-size:1.25rem;
+        padding:0.5em 0;
     }
   }
 }
