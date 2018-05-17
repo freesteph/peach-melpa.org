@@ -1,16 +1,17 @@
 <p id="notice"><%= notice %></p>
+<div id="themes-list">
+  <h1>Themes</h1>
 
-<h1>Themes</h1>
-<div id="themes-list-wrapper">
-  <% @themes.each do |theme| %>
-  <div class="theme-thumbnail">
-    <%= link_to theme_path(theme) do %>
+  <div id="wrapper">
+    <% @themes.each do |theme| %>
+    <div class="theme-thumbnail">
+      <%= link_to theme_path(theme) do %>
       <%= image_tag theme.screenshot %>
-      <% end %>
       <div class="meta">
         <%= theme.name %>
       </div>
+      <% end %>
+    </div>
+    <% end %>
   </div>
-  <% end %>
 </div>
-<br>
