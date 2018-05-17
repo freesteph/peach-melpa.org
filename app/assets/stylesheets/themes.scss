@@ -32,6 +32,10 @@
     margin: 0.5em;
     display: inline-block;
 
+    a:hover {
+      background-color: inherit;
+    }
+
     img {
       max-width: 420px;
     }
