@@ -3,6 +3,12 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
+; default font
+(set-face-attribute 'default nil
+                    :family "Iosevka"
+                    :weight 'light
+                    :width 'normal
+                    :height 180)
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -32,6 +38,7 @@
          (screenshot-path (concat default-directory "tmp/screenshots/" theme-name ".png"))
          (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path)))
     (load-theme (intern theme-name) t)
+    (setq frame-resize-pixelwise t)
     (toggle-frame-fullscreen)
     (find-file (concat default-directory "lib/sample.js"))
     (redisplay t)
