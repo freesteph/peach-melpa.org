@@ -10,9 +10,9 @@
 (defun peach--get-screenshot-cmd ()
   "Use the environment to figure out the screenshot command."
   (let ((peach-env (getenv "PEACH_ENV")))
-    (cond ((string-equal "OSX" peach-env) "screencapture -C -o -t png ")
-          ((string-equal "GNOME" peach-env) "gnome-screenshot -B -w -f ")
-          ((string-equal "AWS" peach-env) "import -window root "))))
+    (if (string-equal "OSX" peach-env)
+        "screencapture -C -o -t png "
+          "import -window root ")))
 
 (defun peach--install-if-necessary (theme-name version)
   "Install THEME-NAME at VERSION revision if not already installed on the system."
