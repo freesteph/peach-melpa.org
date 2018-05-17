@@ -4,9 +4,9 @@ class ThemesController < ApplicationController
   # GET /themes
   # GET /themes.json
   def index
-    @themes = Theme.where(processed: true)
-  end
+    @themes = Theme.with_attached_screenshot.select { |t| t.screenshot.attached? }
 
+  end
   # GET /themes/1
   # GET /themes/1.json
   def show

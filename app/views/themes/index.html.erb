@@ -5,7 +5,7 @@
   <% @themes.each do |theme| %>
   <div class="theme-thumbnail">
     <%= link_to theme_path(theme) do %>
-      <%= image_tag theme.name %>
+      <%= image_tag theme.screenshot %>
       <% end %>
       <div class="meta">
         <%= theme.name %>

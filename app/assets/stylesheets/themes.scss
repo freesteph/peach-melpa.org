@@ -29,7 +29,7 @@
 #themes-list-wrapper {
   .theme-thumbnail {
     padding: 0.3em;
-    margin: 0.5em;
+    margin: 4%;
     display: inline-block;
 
     a:hover {
@@ -38,6 +38,7 @@
 
     img {
       max-width: 420px;
+      border-radius: 6px;
     }
 
     .meta {

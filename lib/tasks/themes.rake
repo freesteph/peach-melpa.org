@@ -5,6 +5,7 @@ require 'json'
 namespace :themes do
   MELPA_ARCHIVE = 'https://melpa.org/archive.json'
   ARCHIVE_PATH = "#{Rails.root}/tmp/archive.json"
+  SCREENSHOT_FOLDER = "#{Rails.root}/tmp/screenshots/"
 
   desc "grabs MELPA archives.json and put it in tmp"
   task refresh: :environment do
@@ -34,7 +35,6 @@ namespace :themes do
       if t.version == version
         puts "not updating as version (#{t.version}) is similar"
       else
-        t.processed = false
         t.version = version
         t.save
 
@@ -42,9 +42,12 @@ namespace :themes do
         Rake::Task["themes:screenshot"].reenable
 
         begin
-          Timeout::timeout(5) do
+          Timeout::timeout(10) do
             Rake::Task["themes:screenshot"].invoke t.name
-            t.processed = true
+            t.screenshot.attach(
+              io: File.open(SCREENSHOT_FOLDER + t.name + ".png"),
+              filename: "#{t.name}.png"
+            )
             puts "done with screenshot"
           end
         rescue Timeout::Error
