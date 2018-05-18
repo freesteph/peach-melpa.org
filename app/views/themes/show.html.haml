@@ -1,10 +1,8 @@
 .theme
   %section.name
     %h1.name= @theme.name
+    %h2.description= @theme.description
     %span.cmd M-x package-install #{@theme.name}-theme
   %section.screenshot
     = image_tag @theme.screenshot
-  %section.props
-    %strong Version:
-    = @theme.version
   = link_to 'Back', themes_path
