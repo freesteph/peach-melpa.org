@@ -36,6 +36,9 @@ namespace :themes do
         puts "not updating as version (#{t.version}) is similar"
       else
         t.version = version
+        t.url = info['props']['url']
+        t.description = info['desc']
+
         t.save
 
         puts "creating screenshot for #{name}"
