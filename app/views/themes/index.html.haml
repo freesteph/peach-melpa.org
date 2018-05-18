@@ -1,0 +1,9 @@
+#themes-list
+  %h1 Themes
+
+  #wrapper
+    - @themes.each do |theme|
+      = link_to(theme_path(theme), { class: "theme-thumbnail" }) do
+        = image_tag theme.screenshot
+        .meta
+          = theme.name

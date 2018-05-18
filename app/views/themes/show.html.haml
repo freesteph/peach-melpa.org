@@ -1,0 +1,9 @@
+.theme
+  %section.name
+    %h1.name= @theme.name
+  %section.props
+    %strong Version:
+    = @theme.version
+  %section.screenshot
+    = image_tag @theme.screenshot
+  = link_to 'Back', themes_path
