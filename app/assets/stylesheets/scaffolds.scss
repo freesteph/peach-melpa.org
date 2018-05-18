@@ -21,7 +21,11 @@ pre {
 }
 
 a {
-  color: #000;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid #666;
+  padding: 0.2em;
+  transition: border-color 0.2s ease-out;
 
   &:visited {
     color: #666;
@@ -29,7 +33,7 @@ a {
 
   &:hover {
     color: #fff;
-    background-color: #000;
+    border-color: white;
   }
 }
 
