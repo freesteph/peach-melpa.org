@@ -5,5 +5,4 @@
     - @themes.each do |theme|
       = link_to(theme_path(theme), { class: "theme-thumbnail" }) do
         = image_tag theme.screenshot
-        .meta
-          = theme.name
+        .meta= theme.name
