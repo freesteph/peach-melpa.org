@@ -63,9 +63,10 @@ namespace :themes do
   task :screenshot, [:name] => :environment do |t, args|
     theme = Theme.find_by(name: args[:name])
 
-    Kernel.raise "could not find #{args[:name]}" if theme.nil?
+    if not Dir.exists? SCREENSHOT_FOLDER
+      Dir.mkdir SCREENSHOT_FOLDER
+    end
 
-    cmd = %x[emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme "#{theme[:name]}" "#{theme[:version]}")']
-    puts "done!"
+    %x[emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme "#{theme[:name]}" "#{theme[:version]}")']
   end
 end
