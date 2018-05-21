@@ -51,9 +51,13 @@
 }
 
 #themes-list {
-  h1 {
-    color: var(--dimmed-text-color);
+  #top {
     padding: 1em 0;
+    color: #999;
+
+    h2 {
+      color: var(--dimmed-text-color);
+    }
   }
 
   #wrapper {
