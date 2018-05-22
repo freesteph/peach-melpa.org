@@ -24,7 +24,7 @@ namespace :themes do
 
     themes = data.select { |name,| name.end_with? '-theme' }
 
-    themes.first(50).each do |theme|
+    themes.each do |theme|
       name = theme.first.sub('-theme', '')
       info = theme.last
       version = info['ver'].join('.')
