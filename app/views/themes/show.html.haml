@@ -10,5 +10,8 @@
       %dt.version Version
       %dd= @theme.version
       %dt.url URL
-      %dd.link= link_to @theme.url, @theme.url
+      - if @theme.url.present?
+        %dd.link= link_to @theme.url, @theme.url
+      - else
+        %dd.link No URL available for this theme.
   = link_to 'Back', themes_path
