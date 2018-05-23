@@ -1,6 +1,7 @@
 require 'timeout'
 require 'open-uri'
 require 'json'
+require "#{Rails.root}/lib/helpers"
 
 namespace :themes do
   MELPA_ARCHIVE = 'https://melpa.org/archive.json'
@@ -47,11 +48,17 @@ namespace :themes do
         begin
           Timeout::timeout(10) do
             Rake::Task["themes:screenshot"].invoke t.name
+
+            result = SCREENSHOT_FOLDER + t.name + ".png"
+
             t.screenshot.attach(
-              io: File.open(SCREENSHOT_FOLDER + t.name + ".png"),
+              io: File.open(result),
               filename: "#{t.name}.png"
             )
             puts "done with screenshot"
+
+            t.brightness =
+              PeachHelpers::Critic::get_brightness_index result
           end
         rescue Timeout::Error
           puts "could not capture screenshot"
