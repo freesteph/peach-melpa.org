@@ -1,10 +1,11 @@
-#themes-list
+#themes-list{data: { controller: 'themes' }}
   #top
     %h1 Themes
     %h2 last updated
 
-  #wrapper
+  = render 'filters'
+  #wrapper<
     - @themes.each do |theme|
-      = link_to(theme_path(theme), { class: "theme-thumbnail" }) do
+      = link_to(theme_path(theme), { class: "theme-thumbnail" , data: { brightness: theme.brightness }}) do
         %img{src: url_for(theme.screenshot.variant(resize: "600x"))}
         .meta= theme.name

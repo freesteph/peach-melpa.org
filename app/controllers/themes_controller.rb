@@ -5,7 +5,6 @@ class ThemesController < ApplicationController
   # GET /themes.json
   def index
     @themes = Theme.order(version: :desc).with_attached_screenshot.select { |t| t.screenshot.attached? }
-
   end
   # GET /themes/1
   # GET /themes/1.json
