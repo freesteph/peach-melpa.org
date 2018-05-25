@@ -5,6 +5,11 @@ class ThemesController < ApplicationController
   # GET /themes.json
   def index
     @themes = Theme.order(version: :desc).with_attached_screenshot.select { |t| t.screenshot.attached? }
+
+    brightness_range = @themes.map(&:brightness)
+
+    @lowest = brightness_range.min
+    @highest = brightness_range.max
   end
   # GET /themes/1
   # GET /themes/1.json
