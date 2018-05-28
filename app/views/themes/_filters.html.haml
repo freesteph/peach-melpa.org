@@ -8,5 +8,6 @@
              min: -1 + @lowest,
              max: @highest,
              step: 0.01,
-             :"data-action" => "change->themes#adjustBrightness"}
+             :"data-action" => "change->themes#adjustBrightness click->themes#handleDoubleClick",
+             :"data-target" => "themes.slider"}
       .bound Dark
