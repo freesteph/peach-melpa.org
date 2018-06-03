@@ -6,7 +6,9 @@
   - if @themes.empty?
     %h4 Somehow there are no themes yet.
   - else
-    = render 'filters'
+    - if feature_enabled? "filters"
+      = render 'filters'
+
     #wrapper<
       - @themes.each do |theme|
         = link_to(theme_path(theme), { class: "theme-thumbnail" , data: { brightness: theme.brightness }}) do
