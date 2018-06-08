@@ -1,7 +1,7 @@
 require 'timeout'
 require 'open-uri'
 require 'json'
-require "#{Rails.root}/lib/helpers"
+require "#{Rails.root}/lib/critic"
 
 namespace :themes do
   MELPA_ARCHIVE = 'https://melpa.org/archive.json'
