@@ -2,21 +2,14 @@ require 'timeout'
 require 'open-uri'
 require 'json'
 require "#{Rails.root}/lib/critic"
+require "#{Rails.root}/lib/retrieval"
 
 namespace :themes do
-  MELPA_ARCHIVE = 'https://melpa.org/archive.json'
-  ARCHIVE_PATH = "#{Rails.root}/tmp/archive.json"
   SCREENSHOT_FOLDER = "#{Rails.root}/tmp/screenshots/"
 
   desc "grabs MELPA archives.json and put it in tmp"
   task refresh: :environment do
-    puts "grabbing archive file from MELPA"
-    open(MELPA_ARCHIVE) do |fresh|
-      puts "writing MELPA file down."
-      File.open(ARCHIVE_PATH, "w+") do |tmp|
-        tmp.write(fresh.read)
-      end
-    end
+    PeachMelpa::Retrieval.refresh_melpa_archive
   end
 
   desc "grabs tmp JSON file and store themes"
