@@ -15,13 +15,20 @@
 *** DONE Screenshot based on env
 *** DONE Find a good domain name
 *** DONE Better CSS
-*** TODO more obvious connection to MELPA?
-*** TODO Logo
+*** DONE SSL
+*** DONE use theme slug in the SHOW url path
+*** DONE Hook Stimulus.js
+
 ** 0.3
-*** TODO use theme slug in the SHOW url path
-*** TODO Hook Stimulus.js
+*** TODO Logo
 *** TODO Other samples of code
-** 0.4
-*** TODO Better styling
-*** TODO ActionPack caching
 *** TODO Load other fonts
+*** TODO Lazy loading images
+
+** 0.4
+*** TODO Filters
+**** DONE Brightness
+**** TODO Name
+*** TODO Better styling
+*** TODO Some responsive template
+*** TODO ActionPack caching
