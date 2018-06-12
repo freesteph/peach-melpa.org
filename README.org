@@ -1,0 +1,23 @@
+#+TITLE: Peach Melpa
+
+* Description
+
+Peach Melpa is an Emacs themes showcase automatically retrieved from
+[[https://melpa.org][MELPA]]. Themes are refreshed daily and automatically screenshot for
+browsing at https://peach-melpa.org
+
+* Instructions to build
+
+- install rbenv;
+- clone the repo;
+- install the project's ruby version with rbenv's ruby-build;
+- install the dependencies with bundle;
+- run the migrations with ~rake db:migrate~;
+- run the server with ~rails s~;
+- fetch and parse themes with the relevant rake tasks:
+  - ~rake themes:refresh~ to get a fresh MELPA descriptor;
+  - ~rake themes:parse~ to re-capture updated themes.
+
+* Issues, bugs and contributions
+
+There's no code of conduct yet but just be nice
