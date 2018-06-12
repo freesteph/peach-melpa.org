@@ -6,6 +6,7 @@ RSpec.describe PeachMelpa::Retrieval do
   include PeachMelpa::Retrieval
 
   describe "refresh_melpa_archive" do
+    # is there anyway to avoid this drama code?
     file = nil
 
     before :each do
@@ -20,16 +21,22 @@ RSpec.describe PeachMelpa::Retrieval do
     end
 
     it "should call net open with the MELPA archive" do
-      expect(Net::HTTP).to have_received(:get)
-                             .with(
-                               PeachMelpa::Retrieval::MELPA_HOST,
-                               PeachMelpa::Retrieval::MELPA_ARCHIVE_NAME)
+      expect(Net::HTTP)
+        .to have_received(:get)
+              .with(
+                PeachMelpa::Retrieval::MELPA_HOST,
+                PeachMelpa::Retrieval::MELPA_ARCHIVE_NAME
+              )
     end
 
     it "should write the result into the tmp/archive.json file" do
-      expect(File).to have_received(:write)
-                        .with("w+", PeachMelpa::Retrieval::ARCHIVE_PATH)
-      expect(file).to have_received(:write).with(:response)
+      expect(File)
+        .to have_received(:write)
+              .with("w+", PeachMelpa::Retrieval::ARCHIVE_PATH)
+
+      expect(file)
+        .to have_received(:write)
+              .with(:response)
     end
   end
 end
