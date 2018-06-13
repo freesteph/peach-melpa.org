@@ -1,6 +1,5 @@
 require 'json'
 require './lib/retrieval'
-require './config/environment'
 
 module PeachMelpa
   module Parsing

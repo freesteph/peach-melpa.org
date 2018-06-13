@@ -1,4 +1,5 @@
 require 'json'
+require 'rails_helper'
 require './lib/parsing'
 require './lib/retrieval'
 
@@ -61,14 +62,12 @@ RSpec.describe PeachMelpa::Parsing do
       }
     ]
 
-    theme = nil
-
     before :each do
-      theme = double()
-      allow(theme).to receive(:older_than?)
-      allow(theme).to receive(:update_screenshots!)
+      @theme = double()
+      allow(@theme).to receive(:older_than?)
+      allow(@theme).to receive(:update_screenshots!)
 
-      allow(Theme).to receive(:find_or_create_by).and_return theme
+      allow(Theme).to receive(:find_or_create_by).and_return @theme
     end
 
     it "finds or creates a theme with the theme radical" do
@@ -82,18 +81,18 @@ RSpec.describe PeachMelpa::Parsing do
     it "checks if the theme needs updating" do
       PeachMelpa::Parsing.parse_theme mock_theme
 
-      expect(theme).to have_received(:older_than?).with "0.1"
+      expect(@theme).to have_received(:older_than?).with "0.1"
     end
 
     describe "if the theme needs updating" do
       before :each do
-        allow(theme).to receive(:older_than?).and_return true
+        allow(@theme).to receive(:older_than?).and_return true
       end
 
       it "calls udpate_screenshots on it" do
         PeachMelpa::Parsing.parse_theme mock_theme
 
-        expect(theme).to have_received(:update_screenshots!)
+        expect(@theme).to have_received(:update_screenshots!)
       end
     end
   end

@@ -6,14 +6,11 @@ RSpec.describe PeachMelpa::Retrieval do
   include PeachMelpa::Retrieval
 
   describe "refresh_melpa_archive" do
-    # is there anyway to avoid this drama code?
-    file = nil
-
     before :each do
-      file = double
-      allow(file).to receive(:write)
+      @file = double
+      allow(@file).to receive(:write)
       allow(Net::HTTP).to receive(:get).and_return :response
-      allow(File).to receive(:write).and_yield(file)
+      allow(File).to receive(:write).and_yield(@file)
     end
 
     before :each do
@@ -34,7 +31,7 @@ RSpec.describe PeachMelpa::Retrieval do
         .to have_received(:write)
               .with("w+", PeachMelpa::Retrieval::ARCHIVE_PATH)
 
-      expect(file)
+      expect(@file)
         .to have_received(:write)
               .with(:response)
     end
