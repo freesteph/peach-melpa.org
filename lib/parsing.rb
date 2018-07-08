@@ -13,12 +13,12 @@ module PeachMelpa
 
     def self.parse_theme obj
       name = obj.first.split("-").first
-      info = obj.last
+      version = obj.last['ver'].join(".")
 
       theme = Theme.find_or_create_by(name: name)
 
-      if theme.older_than? info['ver'].join(".")
-        theme.update_screenshots!
+      if theme.older_than? version
+        theme.update_screenshots! version
       end
     end
 

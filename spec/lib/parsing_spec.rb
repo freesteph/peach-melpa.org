@@ -92,7 +92,7 @@ RSpec.describe PeachMelpa::Parsing do
       it "calls udpate_screenshots on it" do
         PeachMelpa::Parsing.parse_theme mock_theme
 
-        expect(@theme).to have_received(:update_screenshots!)
+        expect(@theme).to have_received(:update_screenshots!).with "0.1"
       end
     end
   end
