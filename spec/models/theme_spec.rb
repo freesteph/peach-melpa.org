@@ -1,4 +1,6 @@
+require 'timeout'
 require 'rails_helper'
+require_relative '../../lib/parsing'
 
 RSpec.describe Theme, type: :model do
   describe "older_than?" do
@@ -15,6 +17,94 @@ RSpec.describe Theme, type: :model do
     it "false if the theme's version is alphabetically inferior" do
       t = Theme.new(version: "2018bbb")
       expect(t.older_than? "2018aaa").to be(false)
+    end
+  end
+
+  describe "update_screenshots!" do
+    before :each do
+      @mock_args = {
+        version: "2",
+        description: "text",
+        url: "url"
+      }
+
+      @theme = Theme.new(name: "foo")
+      allow(@theme).to receive_message_chain("screenshot.attach")
+
+      allow(Kernel).to receive(:spawn).and_return :pid
+      allow(Process).to receive(:wait)
+      allow(Process).to receive(:kill)
+      allow(Timeout).to receive(:timeout).and_yield
+      allow(File).to receive(:open).and_return :file
+    end
+
+    it "wraps the command between a Timeout block" do
+      @theme.update_screenshots! @mock_args
+
+      expect(Timeout).to have_received(:timeout).with(5)
+    end
+
+    it "calls the Kernel.spawn method with the name and new version" do
+      @theme.update_screenshots! @mock_args
+
+      expect(Kernel).to have_received(:spawn)
+                          .with(Theme::CMD % [@theme.name, @mock_args[:version]])
+    end
+
+    it "waits for the process to finish" do
+      @theme.update_screenshots! @mock_args
+
+      expect(Process).to have_received(:wait).with :pid
+    end
+    context "when the cmd exits properly" do
+      it "stores the new version into the theme" do
+        allow(@theme).to receive(:update_attributes!)
+
+        @theme.update_screenshots! @mock_args
+
+        expect(@theme).to have_received(:update_attributes!).with(@mock_args)
+      end
+
+      it "infers the screenshot path and attach it to the screenshot field" do
+        @theme.update_screenshots! @mock_args
+
+        expect(File).to have_received(:open)
+                          .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + "foo.png")
+        expect(@theme.screenshot).to have_received(:attach)
+                       .with(io: :file, filename: "foo.png")
+      end
+    end
+
+    context "when the command fails" do
+      before :each do
+        allow(Kernel).to receive(:spawn).and_raise("zut")
+      end
+
+      it "handles the error" do
+        expect{ @theme.update_screenshots!("foo") }.to_not raise_error
+      end
+
+      it "does not touch the theme version" do
+        @theme.update_screenshots!("baz")
+
+        expect(@theme.version).to eq(nil)
+      end
+
+      it "should collect some debug information"
+    end
+
+    context "when the command takes too long" do
+      before :each do
+        allow(Process).to receive(:wait).and_raise(Timeout::Error)
+      end
+
+      it "kills the process" do
+        @theme.update_screenshots! @mock_args
+
+        expect(Process).to have_received(:kill).with("TERM", :pid)
+      end
+
+      it "should collect some debug information"
     end
   end
 end

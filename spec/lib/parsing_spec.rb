@@ -45,6 +45,15 @@ RSpec.describe PeachMelpa::Parsing do
         .to have_received(:parse_theme)
               .with("foo")
     end
+
+    it "creates the screenshots folders if it doesn't exist" do
+      allow(Dir).to receive(:exists?).and_return false
+      allow(Dir).to receive(:mkdir)
+
+      PeachMelpa::Parsing.pick_updated_themes
+
+      expect(Dir).to have_received(:mkdir).with PeachMelpa::Parsing::SCREENSHOT_FOLDER
+    end
   end
 
   describe "parse_theme" do
@@ -89,10 +98,37 @@ RSpec.describe PeachMelpa::Parsing do
         allow(@theme).to receive(:older_than?).and_return true
       end
 
-      it "calls udpate_screenshots on it" do
+      it "calls update_screenshots on it with the formatted attributes" do
         PeachMelpa::Parsing.parse_theme mock_theme
 
-        expect(@theme).to have_received(:update_screenshots!).with "0.1"
+        expect(@theme).to have_received(:update_screenshots!)
+                            .with(
+                              version: "0.1",
+                              description: "some theme",
+                              url: "https://some.url/to/theme"
+                            )
+      end
+
+
+      context "if there is no MELPA props available" do
+        it "does not crash trying to access URL" do
+          empty_theme = [
+            "foo-theme", {
+              "ver" => [0, 1],
+              "deps" => "deps",
+              "desc" => "some theme",
+              "type" => "single",
+            }
+          ]
+
+          expect{ PeachMelpa::Parsing.parse_theme empty_theme }.to_not raise_error
+          expect(@theme).to have_received(:update_screenshots!)
+                              .with(
+                                version: "0.1",
+                                description: "some theme",
+                                url: nil
+                              )
+        end
       end
     end
   end

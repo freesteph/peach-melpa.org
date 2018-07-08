@@ -7,10 +7,8 @@ RSpec.describe PeachMelpa::Retrieval do
 
   describe "refresh_melpa_archive" do
     before :each do
-      @file = double
-      allow(@file).to receive(:write)
       allow(Net::HTTP).to receive(:get).and_return :response
-      allow(File).to receive(:write).and_yield(@file)
+      allow(File).to receive(:write)
     end
 
     before :each do
@@ -29,11 +27,7 @@ RSpec.describe PeachMelpa::Retrieval do
     it "should write the result into the tmp/archive.json file" do
       expect(File)
         .to have_received(:write)
-              .with("w+", PeachMelpa::Retrieval::ARCHIVE_PATH)
-
-      expect(@file)
-        .to have_received(:write)
-              .with(:response)
+              .with(PeachMelpa::Retrieval::ARCHIVE_PATH, :response)
     end
   end
 end
