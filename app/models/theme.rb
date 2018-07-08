@@ -4,4 +4,12 @@ class Theme < ApplicationRecord
   def to_param
     name
   end
+
+  def older_than? version
+    if not self.version
+      return true
+    else
+      return self.version < version
+    end
+  end
 end
