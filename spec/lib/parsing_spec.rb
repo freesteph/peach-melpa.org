@@ -88,6 +88,19 @@ RSpec.describe PeachMelpa::Parsing do
               .with(name: "foo")
     end
 
+    context "when the theme has a dash in it" do
+      it "parses everything but the last -theme token" do
+        dash_theme = mock_theme.dup
+        dash_theme[0] = "good-looking-theme"
+
+        PeachMelpa::Parsing.parse_theme dash_theme
+
+        expect(Theme)
+          .to have_received(:find_or_create_by)
+                .with(name: "good-looking")
+      end
+    end
+
     it "checks if the theme needs updating" do
       PeachMelpa::Parsing.parse_theme mock_theme
 

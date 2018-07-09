@@ -1,9 +1,9 @@
 require 'json'
-require './lib/retrieval'
+require_relative './retrieval'
 
 module PeachMelpa
   module Parsing
-    SCREENSHOT_FOLDER = "#{Rails.root}/tmp/screenshots/"
+    SCREENSHOT_FOLDER = "#{::Rails.root}/tmp/screenshots/"
 
     def self.looks_like_theme? name
       name.end_with? "-theme"
@@ -14,7 +14,7 @@ module PeachMelpa
     end
 
     def self.parse_theme obj
-      name = obj.first.split("-").first
+      name = obj.first.partition("-theme").first
 
       meta = obj.last
       version = meta["ver"].join(".")
