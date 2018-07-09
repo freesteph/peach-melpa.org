@@ -20,12 +20,14 @@
 *** DONE Hook Stimulus.js
 
 ** 0.3
+*** DONE rework Peach TDD
+** 0.4
 *** TODO Logo
 *** TODO Other samples of code
 *** TODO Load other fonts
 *** TODO Lazy loading images
 
-** 0.4
+** 0.5
 *** TODO Filters
 **** DONE Brightness
 **** TODO Name
