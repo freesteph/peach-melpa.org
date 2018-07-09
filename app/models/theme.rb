@@ -1,3 +1,5 @@
+require_relative '../../lib/errors'
+
 class Theme < ApplicationRecord
   has_one_attached :screenshot
 
@@ -17,10 +19,15 @@ class Theme < ApplicationRecord
 
   def update_screenshots! new_attrs
     pid = nil
+
     begin
       Timeout::timeout(5) do
         pid = Kernel.spawn CMD % [self.name, new_attrs[:version]]
-        Process.wait pid
+        process = Process.wait pid
+
+        if not process.success?
+          raise PeachMelpa::Errors::EmacsError
+        end
 
         asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + self.name + ".png"
 
@@ -32,8 +39,10 @@ class Theme < ApplicationRecord
         self.update_attributes!(new_attrs)
       end
     rescue Timeout::Error
-      Process.kill "TERM", pid
       # the process hung
+      Process.kill "TERM", pid
+      # FIXME: handle this properly
+      # rescue PeachMelpa::Errors::EmacsError
     rescue => e
       # something else happened
     end

@@ -1,6 +1,7 @@
 require 'timeout'
 require 'rails_helper'
 require_relative '../../lib/parsing'
+require_relative '../../lib/errors'
 
 RSpec.describe Theme, type: :model do
   describe "older_than?" do
@@ -32,8 +33,12 @@ RSpec.describe Theme, type: :model do
       allow(@theme).to receive_message_chain("screenshot.attach")
 
       allow(Kernel).to receive(:spawn).and_return :pid
-      allow(Process).to receive(:wait)
+
+      @status = double()
+      allow(@status).to receive(:success?).and_return true
+      allow(Process).to receive(:wait).and_return @status
       allow(Process).to receive(:kill)
+
       allow(Timeout).to receive(:timeout).and_yield
       allow(File).to receive(:open).and_return :file
     end
@@ -56,6 +61,7 @@ RSpec.describe Theme, type: :model do
 
       expect(Process).to have_received(:wait).with :pid
     end
+
     context "when the cmd exits properly" do
       it "stores the new version into the theme" do
         allow(@theme).to receive(:update_attributes!)
@@ -72,6 +78,18 @@ RSpec.describe Theme, type: :model do
                           .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + "foo.png")
         expect(@theme.screenshot).to have_received(:attach)
                        .with(io: :file, filename: "foo.png")
+      end
+    end
+
+    context "when the Emacs subprocess fails" do
+      before :each do
+      end
+
+      it "raises the error" do
+        pending "need to implement a finer-grained error-raising mechanism"
+        allow(@status).to receive(:success?).and_return false
+        expect{ @theme.update_screenshots! @mock_args }
+          .to raise_error(PeachMelpa::Errors::EmacsError)
       end
     end
 
