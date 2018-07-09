@@ -23,7 +23,7 @@ module PeachMelpa
 
       theme = Theme.find_or_create_by(name: name)
 
-      if theme.older_than? version
+      if theme.older_than? version and not theme.blacklisted?
         theme.update_screenshots!(version: version, description: description, url: url)
       end
     end

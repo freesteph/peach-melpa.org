@@ -75,6 +75,7 @@ RSpec.describe PeachMelpa::Parsing do
       @theme = double()
       allow(@theme).to receive(:older_than?)
       allow(@theme).to receive(:update_screenshots!)
+      allow(@theme).to receive(:blacklisted?).and_return false
 
       allow(Theme).to receive(:find_or_create_by).and_return @theme
     end
