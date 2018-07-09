@@ -1,7 +1,5 @@
 #+TITLE: Peach Melpa
 
-* Description
-
 Peach Melpa is an Emacs themes showcase automatically retrieved from
 [[https://melpa.org][MELPA]]. Themes are refreshed daily and automatically screenshot for
 browsing at https://peach-melpa.org
