@@ -1,7 +1,7 @@
 class Theme < ApplicationRecord
   has_one_attached :screenshot
 
-  CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\")'"
+  CMD = "emacs --batch -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\")'"
 
   def to_param
     name
