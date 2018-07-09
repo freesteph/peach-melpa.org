@@ -93,7 +93,7 @@ RSpec.describe PeachMelpa::Parsing do
       expect(@theme).to have_received(:older_than?).with "0.1"
     end
 
-    describe "if the theme needs updating" do
+    context "if the theme needs updating" do
       before :each do
         allow(@theme).to receive(:older_than?).and_return true
       end
@@ -109,6 +109,17 @@ RSpec.describe PeachMelpa::Parsing do
                             )
       end
 
+      context "but the theme is blacklisted" do
+        before :each do
+          allow(@theme).to receive(:blacklisted?).and_return true
+        end
+
+        it "does not call update_screenshots!" do
+          PeachMelpa::Parsing.parse_theme mock_theme
+
+          expect(@theme).to_not have_received(:update_screenshots!)
+        end
+      end
 
       context "if there is no MELPA props available" do
         it "does not crash trying to access URL" do
