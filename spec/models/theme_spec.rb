@@ -33,10 +33,7 @@ RSpec.describe Theme, type: :model do
       allow(@theme).to receive_message_chain("screenshot.attach")
 
       allow(Kernel).to receive(:spawn).and_return :pid
-
-      @status = double()
-      allow(@status).to receive(:success?).and_return true
-      allow(Process).to receive(:wait).and_return @status
+      allow(Process).to receive(:wait) { `(exit 0)` }
       allow(Process).to receive(:kill)
 
       allow(Timeout).to receive(:timeout).and_yield
@@ -83,27 +80,15 @@ RSpec.describe Theme, type: :model do
 
     context "when the Emacs subprocess fails" do
       before :each do
+        allow(Process).to receive(:wait) { `(exit 1)` }
       end
 
-      it "raises the error" do
-        pending "need to implement a finer-grained error-raising mechanism"
-        allow(@status).to receive(:success?).and_return false
-        expect{ @theme.update_screenshots! @mock_args }
-          .to raise_error(PeachMelpa::Errors::EmacsError)
-      end
-    end
-
-    context "when the command fails" do
-      before :each do
-        allow(Kernel).to receive(:spawn).and_raise("zut")
-      end
-
-      it "handles the error" do
-        expect{ @theme.update_screenshots!("foo") }.to_not raise_error
+      it "does not raises the error" do
+        expect{ @theme.update_screenshots! @mock_args }.to_not raise_error
       end
 
       it "does not touch the theme version" do
-        @theme.update_screenshots!("baz")
+        @theme.update_screenshots! @mock_args
 
         expect(@theme.version).to eq(nil)
       end
@@ -123,6 +108,17 @@ RSpec.describe Theme, type: :model do
       end
 
       it "should collect some debug information"
+    end
+
+    context "when any other error arise" do
+      before :each do
+        allow(Kernel).to receive(:spawn).and_raise "zut"
+      end
+
+      it "raises the error" do
+        expect{ @theme.update_screenshots! @mock_args }
+          .to raise_error
+      end
     end
   end
 end

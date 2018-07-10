@@ -3,7 +3,7 @@ require_relative '../../lib/errors'
 class Theme < ApplicationRecord
   has_one_attached :screenshot
 
-  CMD = "emacs --batch -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\")'"
+  CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\")'"
 
   def to_param
     name
@@ -23,9 +23,9 @@ class Theme < ApplicationRecord
     begin
       Timeout::timeout(5) do
         pid = Kernel.spawn CMD % [self.name, new_attrs[:version]]
-        process = Process.wait pid
+        Process.wait pid
 
-        if not process.success?
+        if not $?.success?
           raise PeachMelpa::Errors::EmacsError
         end
 
@@ -41,10 +41,8 @@ class Theme < ApplicationRecord
     rescue Timeout::Error
       # the process hung
       Process.kill "TERM", pid
-      # FIXME: handle this properly
-      # rescue PeachMelpa::Errors::EmacsError
-    rescue => e
-      # something else happened
+    rescue PeachMelpa::Errors::EmacsError
+      # something bad happened in Emacs
     end
   end
 end
