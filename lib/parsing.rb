@@ -14,7 +14,7 @@ module PeachMelpa
     end
 
     def self.parse_theme obj
-      name = obj.first.partition("-theme").first
+      name = extract_theme_name obj
 
       meta = obj.last
       version = meta["ver"].join(".")
@@ -28,9 +28,17 @@ module PeachMelpa
       end
     end
 
-    def self.pick_updated_themes
+    def self.pick_updated_themes opts = {}
       data = JSON.parse(IO.read(PeachMelpa::Retrieval::ARCHIVE_PATH))
-      themes = self.select_themes data
+
+      # FIXME: harmonise interface so it can be something predicate-based like
+      # filters = opts[:only] ? self.find_theme(opts[:only]) : self.looks_like_theme?
+      # themes = data.select(filters)
+      themes = if opts[:only] then
+                 data.select { |entry| self.extract_theme_name(entry) === opts[:only] }
+               else
+                 self.select_themes data
+               end
 
       if not Dir.exists? SCREENSHOT_FOLDER
         Dir.mkdir SCREENSHOT_FOLDER
@@ -39,6 +47,11 @@ module PeachMelpa
       themes.each do |theme|
         self.parse_theme(theme)
       end
+    end
+
+    private
+    def self.extract_theme_name data
+      data.first.partition("-theme").first
     end
   end
 end

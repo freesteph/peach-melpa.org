@@ -6,11 +6,28 @@ require './lib/retrieval'
 RSpec.describe PeachMelpa::Parsing do
   include PeachMelpa::Parsing
 
+  before :each do
+    @mock_theme = [
+      "foo-theme", {
+        "ver" => [0, 1],
+        "deps" => "deps",
+        "desc" => "some theme",
+        "type" => "single",
+        "props" => {
+          "commit" => "commit hash",
+          "keywords" => ["keyword"],
+          "url" => "https://some.url/to/theme"
+        }
+      }
+    ]
+  end
+
   describe "pick_updated_themes" do
     before :each do
-      allow(JSON).to receive(:parse)
+      allow(JSON).to receive(:parse).and_return [@mock_theme]
       allow(IO).to receive(:read).and_return :res
-      allow(PeachMelpa::Parsing).to receive(:select_themes).and_return []
+      allow(PeachMelpa::Parsing).to receive(:select_themes).and_return [@mock_theme]
+      allow(PeachMelpa::Parsing).to receive(:parse_theme)
     end
 
     it "parses the archive file" do
@@ -23,6 +40,36 @@ RSpec.describe PeachMelpa::Parsing do
       expect(JSON)
         .to have_received(:parse)
               .with(:res)
+    end
+
+    context "if an `only' argument is given" do
+      it "runs solely for that theme" do
+        PeachMelpa::Parsing.pick_updated_themes only: "foo"
+
+        expect(PeachMelpa::Parsing).to have_received(:parse_theme).once
+      end
+
+      it "does not run select_themes" do
+        PeachMelpa::Parsing.pick_updated_themes only: "foo"
+
+        expect(PeachMelpa::Parsing).to_not have_received(:select_themes)
+      end
+
+      it "does not run if not matching theme found" do
+        PeachMelpa::Parsing.pick_updated_themes only: "bar"
+
+        expect(PeachMelpa::Parsing).not_to have_received(:parse_theme)
+      end
+    end
+
+    context "if no arguments are given" do
+      it "parses every returned theme" do
+        allow(PeachMelpa::Parsing).to receive(:select_themes).and_return Array.new(10)
+
+        PeachMelpa::Parsing.pick_updated_themes
+
+        expect(PeachMelpa::Parsing).to have_received(:parse_theme).exactly(10).times
+      end
     end
 
     it "selects all themes ending with -name" do
@@ -57,20 +104,6 @@ RSpec.describe PeachMelpa::Parsing do
   end
 
   describe "parse_theme" do
-    mock_theme = [
-      "foo-theme", {
-        "ver" => [0, 1],
-        "deps" => "deps",
-        "desc" => "some theme",
-        "type" => "single",
-        "props" => {
-          "commit" => "commit hash",
-          "keywords" => ["keyword"],
-          "url" => "https://some.url/to/theme"
-        }
-      }
-    ]
-
     before :each do
       @theme = double()
       allow(@theme).to receive(:older_than?)
@@ -81,7 +114,7 @@ RSpec.describe PeachMelpa::Parsing do
     end
 
     it "finds or creates a theme with the theme radical" do
-      PeachMelpa::Parsing.parse_theme mock_theme
+      PeachMelpa::Parsing.parse_theme @mock_theme
 
       expect(Theme)
         .to have_received(:find_or_create_by)
@@ -90,7 +123,7 @@ RSpec.describe PeachMelpa::Parsing do
 
     context "when the theme has a dash in it" do
       it "parses everything but the last -theme token" do
-        dash_theme = mock_theme.dup
+        dash_theme = @mock_theme.dup
         dash_theme[0] = "good-looking-theme"
 
         PeachMelpa::Parsing.parse_theme dash_theme
@@ -102,7 +135,7 @@ RSpec.describe PeachMelpa::Parsing do
     end
 
     it "checks if the theme needs updating" do
-      PeachMelpa::Parsing.parse_theme mock_theme
+      PeachMelpa::Parsing.parse_theme @mock_theme
 
       expect(@theme).to have_received(:older_than?).with "0.1"
     end
@@ -113,7 +146,7 @@ RSpec.describe PeachMelpa::Parsing do
       end
 
       it "calls update_screenshots on it with the formatted attributes" do
-        PeachMelpa::Parsing.parse_theme mock_theme
+        PeachMelpa::Parsing.parse_theme @mock_theme
 
         expect(@theme).to have_received(:update_screenshots!)
                             .with(
@@ -129,7 +162,7 @@ RSpec.describe PeachMelpa::Parsing do
         end
 
         it "does not call update_screenshots!" do
-          PeachMelpa::Parsing.parse_theme mock_theme
+          PeachMelpa::Parsing.parse_theme @mock_theme
 
           expect(@theme).to_not have_received(:update_screenshots!)
         end
