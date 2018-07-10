@@ -21,7 +21,7 @@ class Theme < ApplicationRecord
     pid = nil
 
     begin
-      Timeout::timeout(5) do
+      Timeout::timeout(10) do
         pid = Kernel.spawn CMD % [self.name, new_attrs[:version]]
         Process.wait pid
 
