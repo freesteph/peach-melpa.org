@@ -31,21 +31,34 @@
   (unless (package-installed-p pkg)
     (package-install pkg))))
 
-(defun fetch-and-load-theme (theme-name version)
-  "Get and install THEME-NAME at VERSION before taking a screenshot of it."
-  (peach--install-if-necessary theme-name version)
-  (let* (
-         (screenshot-path (concat default-directory "tmp/screenshots/" theme-name ".png"))
+(defun peach--capture-screenshot-for-mode (theme-name mode)
+  "Find the correct MODE sample for THEME-NAME and screenshot it."
+  (let* ((screenshot-path (format "%stmp/screenshots/%s_%s.png" default-directory theme-name mode))
+         (sample-path (format "%slib/samples/%s.*" default-directory mode))
          (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path)))
-    (load-theme (intern theme-name) t)
-    (setq frame-resize-pixelwise t)
-    (toggle-frame-fullscreen)
-    (find-file (concat default-directory "lib/sample.js"))
+    (find-file sample-path t)
+    (cd "../../")
     (redisplay t)
     (sleep-for 1)
-    (shell-command cmd-name nil nil)
-    (disable-theme theme-name)
-    (kill-emacs)))
+    (shell-command cmd-name nil nil)))
+
+(defun fetch-and-load-theme (theme-name version)
+  "Get and install THEME-NAME at VERSION beforetaking a screenshot of it."
+  (peach--install-if-necessary theme-name version)
+
+  (load-theme (intern theme-name) t)
+  (setq frame-resize-pixelwise t)
+  (toggle-frame-fullscreen)
+
+  (let ((modes '(lisp js)))
+    (while modes
+      (setq mode (car modes))
+      (peach--capture-screenshot-for-mode theme-name mode)
+      (setq modes (cdr modes))))
+
+  (disable-theme theme-name)
+  (kill-emacs 0))
+
 
 (provide 'take-screenshot)
 ;;; take-screenshot.el ends here

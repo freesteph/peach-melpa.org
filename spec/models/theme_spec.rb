@@ -30,7 +30,7 @@ RSpec.describe Theme, type: :model do
       }
 
       @theme = Theme.new(name: "foo")
-      allow(@theme).to receive_message_chain("screenshot.attach")
+      allow(@theme).to receive_message_chain("screenshots.attach")
 
       allow(Kernel).to receive(:spawn).and_return :pid
       allow(Process).to receive(:wait) { `(exit 0)` }
@@ -60,21 +60,40 @@ RSpec.describe Theme, type: :model do
     end
 
     context "when the cmd exits properly" do
+      before do
+        allow(Dir).to receive(:chdir)
+        allow(Dir).to receive(:glob).and_return ["1", "2"]
+      end
+
       it "stores the new version into the theme" do
         allow(@theme).to receive(:update_attributes!)
 
         @theme.update_screenshots! @mock_args
 
-        expect(@theme).to have_received(:update_attributes!).with(@mock_args)
+        expect(@theme).to have_received(:update_attributes!).once.with(@mock_args)
       end
 
-      it "infers the screenshot path and attach it to the screenshot field" do
+      it "changes to the screenshot folder directory" do
         @theme.update_screenshots! @mock_args
 
-        expect(File).to have_received(:open)
-                          .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + "foo.png")
-        expect(@theme.screenshot).to have_received(:attach)
-                       .with(io: :file, filename: "foo.png")
+        expect(Dir).to have_received(:chdir).with(PeachMelpa::Parsing::SCREENSHOT_FOLDER)
+      end
+
+      it "uses Dir.glob to capture all the screenshots created" do
+        @theme.update_screenshots! @mock_args
+
+        expect(Dir).to have_received(:glob).with("foo_*")
+      end
+
+      %w(1 2).each do |entry|
+        it "infers the screenshot path and attach it to the screenshot field" do
+          @theme.update_screenshots! @mock_args
+
+          expect(File).to have_received(:open)
+                            .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry)
+          expect(@theme.screenshots).to have_received(:attach)
+                                         .with(io: :file, filename: entry)
+        end
       end
     end
 

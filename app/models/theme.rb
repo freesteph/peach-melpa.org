@@ -1,7 +1,7 @@
 require_relative '../../lib/errors'
 
 class Theme < ApplicationRecord
-  has_one_attached :screenshot
+  has_many_attached :screenshots
 
   CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\")'"
 
@@ -29,12 +29,15 @@ class Theme < ApplicationRecord
           raise PeachMelpa::Errors::EmacsError
         end
 
-        asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + self.name + ".png"
+        Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER
+        Dir.glob("#{self.name}_*").each do |entry|
+          asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry
 
-        self.screenshot.attach(
-          io: File.open(asset_path),
-          filename: "#{self.name}.png"
-        )
+          self.screenshots.attach(
+            io: File.open(asset_path),
+            filename: entry
+          )
+        end
 
         self.update_attributes!(new_attrs)
       end
