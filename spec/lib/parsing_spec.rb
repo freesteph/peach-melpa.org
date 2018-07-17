@@ -9,15 +9,11 @@ RSpec.describe PeachMelpa::Parsing do
   before :each do
     @mock_theme = [
       "foo-theme", {
-        "ver" => [0, 1],
-        "deps" => "deps",
-        "desc" => "some theme",
-        "type" => "single",
-        "props" => {
-          "commit" => "commit hash",
-          "keywords" => ["keyword"],
-          "url" => "https://some.url/to/theme"
-        }
+        "ver"=>[0, 1],
+        "deps"=>"deps",
+        "desc"=>"some theme",
+        "type"=>"single",
+        "props"=>nil
       }
     ]
   end
@@ -151,8 +147,7 @@ RSpec.describe PeachMelpa::Parsing do
         expect(@theme).to have_received(:update_screenshots!)
                             .with(
                               version: "0.1",
-                              description: "some theme",
-                              url: "https://some.url/to/theme"
+                              description: "some theme"
                             )
       end
 
@@ -165,27 +160,6 @@ RSpec.describe PeachMelpa::Parsing do
           PeachMelpa::Parsing.parse_theme @mock_theme
 
           expect(@theme).to_not have_received(:update_screenshots!)
-        end
-      end
-
-      context "if there is no MELPA props available" do
-        it "does not crash trying to access URL" do
-          empty_theme = [
-            "foo-theme", {
-              "ver" => [0, 1],
-              "deps" => "deps",
-              "desc" => "some theme",
-              "type" => "single",
-            }
-          ]
-
-          expect{ PeachMelpa::Parsing.parse_theme empty_theme }.to_not raise_error
-          expect(@theme).to have_received(:update_screenshots!)
-                              .with(
-                                version: "0.1",
-                                description: "some theme",
-                                url: nil
-                              )
         end
       end
     end

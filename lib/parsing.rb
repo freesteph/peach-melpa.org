@@ -14,17 +14,16 @@ module PeachMelpa
     end
 
     def self.parse_theme obj
-      name = extract_theme_name obj
+      name = extract_theme_name obj.first
 
       meta = obj.last
       version = meta["ver"].join(".")
       description = meta["desc"]
-      url = meta["props"]["url"] unless meta["props"].nil?
 
       theme = Theme.find_or_create_by(name: name)
 
       if theme.older_than? version and not theme.blacklisted?
-        theme.update_screenshots!(version: version, description: description, url: url)
+        theme.update_screenshots!(version: version, description: description)
       end
     end
 
@@ -35,7 +34,7 @@ module PeachMelpa
       # filters = opts[:only] ? self.find_theme(opts[:only]) : self.looks_like_theme?
       # themes = data.select(filters)
       themes = if opts[:only] then
-                 data.select { |entry| self.extract_theme_name(entry) === opts[:only] }
+                 data.select { |entry,| self.extract_theme_name(entry) == opts[:only] }
                else
                  self.select_themes data
                end
@@ -51,7 +50,7 @@ module PeachMelpa
 
     private
     def self.extract_theme_name data
-      data.first.partition("-theme").first
+      data.partition("-theme").first
     end
   end
 end
