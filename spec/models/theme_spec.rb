@@ -107,6 +107,13 @@ RSpec.describe Theme, type: :model do
         expect(Process).to have_received(:kill).with("TERM", :pid)
       end
 
+
+      it "does not touch the theme version" do
+        @theme.update_screenshots! @mock_args
+
+        expect(@theme.version).to eq(nil)
+      end
+
       it "should collect some debug information"
     end
 
