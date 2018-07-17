@@ -3,8 +3,16 @@
     %h1.name= @theme.name
     %h2.description= @theme.description
     %span.cmd M-x package-install #{@theme.name}-theme
-  %section.screenshot
-    %img{src: url_for(@theme.screenshot)}
+  %section.screenshots
+    .modes
+      %ul
+        %li.active
+          %button Lisp
+        %li
+          %button Javascript
+    .image_container
+      - @theme.screenshots.each do |screenshot|
+        %img.screenshot{src: url_for(screenshot)}
   %section.props
     %dl
       %dt.version Version

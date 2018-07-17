@@ -38,10 +38,39 @@
     }
   }
 
-  .screenshot {
+  .screenshots {
+    .modes {
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0 0 2rem 0;
+
+        li {
+          font-size: 1.2rem;
+          display: inline-block;
+          margin-right: 0.6rem;
+        }
+      }
+    }
+    .image_container {
+      position: relative;
+      height: calc(100vw / 1.333);
+      overflow: hidden;
+    }
+
     img {
+      position: absolute;
       border-radius: 6px;
       max-width: 100%;
+
+      &:nth-of-type(1) {
+        transform: translateX(0%);
+      }
+
+      &:nth-of-type(2) {
+        transform: translateX(100%);
+      }
+
     }
   }
 }
