@@ -10,15 +10,17 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+@import "fonts";
+@import "reset";
+@import "themes";
+@import "layout";
 
 body {
   padding: 2% 6%;
   margin: 0;
-  font-family: "Iosevka";
-  font-size: 1rem;
+  font-family: $primary-font;
+  font-size: $default-font-size;
   background: #555;
   color: #DDD;
 }
