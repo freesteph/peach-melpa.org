@@ -1,18 +1,18 @@
-.theme
+.theme{data: { controller: 'theme' }}
   %section.name
     %h1.name= @theme.name
     %h2.description= @theme.description
     %span.cmd M-x package-install #{@theme.name}-theme
   %section.screenshots
     .modes
-      %ul
-        %li.active
-          %button Lisp
-        %li
-          %button Javascript
-    .image_container
-      - @theme.screenshots.each do |screenshot|
-        %img.screenshot{src: url_for(screenshot)}
+      %ul{"data-target" => "theme.modes"}
+        - ["Lisp", "Javascript"].each_with_index do |lang, index|
+          %li{:class => index == 0 && "active"}
+            %button{"data-action" => "click->theme#handleLangClick"}
+              = lang
+    .image_container{"data-target" => "theme.screenshots"}
+      - @theme.screenshots.each_with_index do |screenshot, index|
+        %img.screenshot{src: url_for(screenshot), :class => index == 0 && "active"}
   %section.props
     %dl
       %dt.version Version
