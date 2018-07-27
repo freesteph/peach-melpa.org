@@ -13,7 +13,7 @@ module PeachMelpa
       data.select { |name,val| self.looks_like_theme? name }
     end
 
-    def self.parse_theme obj
+    def self.parse_theme obj, opts = {}
       name = extract_theme_name obj.first
 
       meta = obj.last
@@ -22,7 +22,7 @@ module PeachMelpa
 
       theme = Theme.find_or_create_by(name: name)
 
-      if theme.older_than? version and not theme.blacklisted?
+      if theme.older_than? version and not theme.blacklisted? or opts[:force] == true
         theme.update_screenshots!(version: version, description: description)
       end
     end
@@ -43,8 +43,11 @@ module PeachMelpa
         Dir.mkdir SCREENSHOT_FOLDER
       end
 
+      args = nil
+      args = {force: true } if not opts[:force].nil?
+
       themes.each do |theme|
-        self.parse_theme(theme)
+        self.send :parse_theme, theme, *[args].reject(&:nil?)
       end
     end
 

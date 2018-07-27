@@ -14,7 +14,7 @@ namespace :themes do
   end
 
   desc "grabs tmp JSON file and store themes"
-  task :parse, [:theme_name] => :environment do |task, args|
-    PeachMelpa::Parsing.pick_updated_themes only: args[:theme_name]
+  task :parse, [:theme_name, :force] => :environment do |task, args|
+    PeachMelpa::Parsing.pick_updated_themes only: args[:theme_name], force: args[:force]
   end
 end

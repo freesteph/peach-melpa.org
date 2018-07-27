@@ -58,6 +58,15 @@ RSpec.describe PeachMelpa::Parsing do
       end
     end
 
+    context "if a `force' argument is given" do
+      it "forwards it to parse_them" do
+        PeachMelpa::Parsing.pick_updated_themes force: "yes"
+
+        expect(PeachMelpa::Parsing)
+          .to have_received(:parse_theme).with(@mock_theme, { force: true })
+      end
+    end
+
     context "if no arguments are given" do
       it "parses every returned theme" do
         allow(PeachMelpa::Parsing).to receive(:select_themes).and_return Array.new(10)
@@ -160,6 +169,20 @@ RSpec.describe PeachMelpa::Parsing do
           PeachMelpa::Parsing.parse_theme @mock_theme
 
           expect(@theme).to_not have_received(:update_screenshots!)
+        end
+      end
+    end
+
+    context "if the theme does not need updating" do
+      before :each do
+        allow(@theme).to receive(:older_than?).and_return false
+      end
+
+      context "but the force option is given" do
+        it "updates the theme nevertheless" do
+          PeachMelpa::Parsing.parse_theme @mock_theme, force: true
+
+          expect(@theme).to have_received(:update_screenshots!)
         end
       end
     end
