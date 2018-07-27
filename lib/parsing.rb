@@ -1,5 +1,6 @@
 require 'json'
 require_relative './retrieval'
+require_relative './logger'
 
 module PeachMelpa
   module Parsing
@@ -15,6 +16,7 @@ module PeachMelpa
 
     def self.parse_theme obj, opts = {}
       name = extract_theme_name obj.first
+      PeachMelpa::Log.info(name) { "trying to find theme" }
 
       meta = obj.last
       version = meta["ver"].join(".")
@@ -23,11 +25,13 @@ module PeachMelpa
       theme = Theme.find_or_create_by(name: name)
 
       if theme.older_than? version and not theme.blacklisted? or opts[:force] == true
+        PeachMelpa::Log.info(name) { "theme eligible for update..." }
         theme.update_screenshots!(version: version, description: description)
       end
     end
 
     def self.pick_updated_themes opts = {}
+      PeachMelpa::Log::info { "starting to parse themes" }
       data = JSON.parse(IO.read(PeachMelpa::Retrieval::ARCHIVE_PATH))
 
       # FIXME: harmonise interface so it can be something predicate-based like
@@ -38,6 +42,8 @@ module PeachMelpa
                else
                  self.select_themes data
                end
+
+      PeachMelpa::Log::info { "captured #{themes.length} themes to update " }
 
       if not Dir.exists? SCREENSHOT_FOLDER
         Dir.mkdir SCREENSHOT_FOLDER

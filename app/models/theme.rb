@@ -1,4 +1,5 @@
 require_relative '../../lib/errors'
+require_relative '../../lib/logger'
 
 class Theme < ApplicationRecord
   has_many_attached :screenshots
@@ -22,7 +23,9 @@ class Theme < ApplicationRecord
 
     begin
       Timeout::timeout(10) do
-        pid = Kernel.spawn CMD % [self.name, new_attrs[:version]]
+        cmd = CMD % [self.name, new_attrs[:version]]
+        PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
+        pid = Kernel.spawn cmd
         Process.wait pid
 
         if not $?.success?
@@ -42,9 +45,15 @@ class Theme < ApplicationRecord
         self.update_attributes!(new_attrs)
       end
     rescue Timeout::Error
-      # the process hung
+     # the process hung
+      PeachMelpa::Log.info(self.name) {
+        "the Emacs process is taking too much time, killing it now."
+      }
       Process.kill "TERM", pid
-    rescue PeachMelpa::Errors::EmacsError
+    rescue PeachMelpa::Errors::EmacsError => e
+      PeachMelpa::Log.info(self.name) {
+        "the Emacs process exited with an error:going to launch #{e}"
+      }
       # something bad happened in Emacs
     end
   end
