@@ -23,7 +23,7 @@
 *** DONE rework Peach TDD
 ** 0.4
 *** TODO Logo
-*** TODO Other samples of code
+*** DONE Other samples of code
 *** TODO Load other fonts
 *** TODO Lazy loading images
 
