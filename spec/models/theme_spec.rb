@@ -26,7 +26,8 @@ RSpec.describe Theme, type: :model do
       @mock_args = {
         version: "2",
         description: "text",
-        url: "url"
+        url: "url",
+        authors: "John, Doe",
       }
 
       @theme = Theme.new(name: "foo")

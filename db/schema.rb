@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_123214) do
+ActiveRecord::Schema.define(version: 2018_08_07_221954) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_07_09_123214) do
     t.string "url"
     t.float "brightness"
     t.boolean "blacklisted"
+    t.string "authors"
   end
 
 end
