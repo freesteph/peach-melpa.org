@@ -23,6 +23,8 @@ class Theme < ApplicationRecord
 
     begin
       Timeout::timeout(15) do
+        cleanup_old_screenshots!
+
         cmd = CMD % [self.name, new_attrs[:version]]
         PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
@@ -33,6 +35,7 @@ class Theme < ApplicationRecord
         end
 
         PeachMelpa::Log.info(self.name) { "success! picking up screenshots..." }
+        self.screenshots.purge
 
         Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
           Dir.glob("#{self.name}_*").each do |entry|
@@ -62,5 +65,10 @@ class Theme < ApplicationRecord
       }
       # something bad happened in Emacs
     end
+  end
+
+  private
+
+  def cleanup_old_screenshots!
   end
 end

@@ -32,6 +32,9 @@ RSpec.describe Theme, type: :model do
 
       @theme = Theme.new(name: "foo")
       allow(@theme).to receive_message_chain("screenshots.attach")
+      allow(@theme).to receive_message_chain("screenshots.purge")
+
+      allow(@theme).to receive(:cleanup_old_screenshots!)
 
       allow(Kernel).to receive(:spawn).and_return :pid
       allow(Process).to receive(:wait) { `(exit 0)` }
@@ -39,6 +42,12 @@ RSpec.describe Theme, type: :model do
 
       allow(Timeout).to receive(:timeout).and_yield
       allow(File).to receive(:open).and_return :file
+    end
+
+    it "calls cleanup_old_screenshots! before starting" do
+      @theme.update_screenshots! @mock_args
+
+      expect(@theme).to have_received(:cleanup_old_screenshots!).once
     end
 
     it "wraps the command between a Timeout block" do
@@ -64,6 +73,14 @@ RSpec.describe Theme, type: :model do
       before do
         allow(Dir).to receive(:chdir).and_yield
         allow(Dir).to receive(:glob).and_return ["1", "2"]
+      end
+
+      it "deletes the old screenshots" do
+        allow(@theme).to receive(:update_attributes!)
+
+        @theme.update_screenshots! @mock_args
+
+        expect(@theme.screenshots).to have_received(:purge).once
       end
 
       it "stores the new version into the theme" do
@@ -147,5 +164,9 @@ RSpec.describe Theme, type: :model do
           .to raise_error
       end
     end
+  end
+
+  describe "cleanup_old_screenshots!" do
+    pending "I need to go to bed"
   end
 end
