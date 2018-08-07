@@ -21,12 +21,17 @@ module PeachMelpa
       version = meta["ver"].join(".")
       description = meta["desc"]
       url = meta["props"]["url"]
+      authors = meta["props"]["authors"].join(", ")
 
       theme = Theme.find_or_create_by(name: name)
 
       if theme.older_than? version and not theme.blacklisted? or opts[:force] == true
         PeachMelpa::Log.info(name) { "theme eligible for update..." }
-        theme.update_screenshots!(version: version, description: description, url: url)
+        theme.update_screenshots!(
+          version: version,
+          description: description,
+          url: url,
+          authors: authors)
       end
     end
 

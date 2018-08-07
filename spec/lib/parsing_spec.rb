@@ -22,9 +22,9 @@ RSpec.describe PeachMelpa::Parsing do
     "props": {
       "commit": "7f45ab9e23164d65538edb2beb9692ecdc24c31e",
       "authors": [
-        "Stéphane Maniaci <steph@rspec.com>"
+        "Stéphane Maniaci <steph@rspec.org>"
       ],
-      "maintainer": "Stéphane Maniaci <steph@rspec.com>",
+      "maintainer": "Stéphane Maniaci <steph@rspec.org>",
       "url": "http://github.com/freesteph/peach-melpa"
     }
   }
@@ -166,13 +166,26 @@ THEME
       end
 
       it "calls update_screenshots on it with the formatted attributes" do
-      PeachMelpa::Parsing.parse_theme @name, @props
+        PeachMelpa::Parsing.parse_theme @name, @props
 
         expect(@theme).to have_received(:update_screenshots!)
                             .with(
                               version: "0.1",
                               description: "some theme",
-                              url: "http://github.com/freesteph/peach-melpa"
+                              url: "http://github.com/freesteph/peach-melpa",
+                              authors: "Stéphane Maniaci <steph@rspec.org>"
+                            )
+      end
+
+      it "formats the authors into a single string" do
+        multi = @props.dup
+        multi["props"]["authors"] = ["John", "Doe"]
+
+        PeachMelpa::Parsing.parse_theme @name, multi
+
+        expect(@theme).to have_received(:update_screenshots!)
+                            .with(
+                              a_hash_including(authors: "John, Doe")
                             )
       end
 
