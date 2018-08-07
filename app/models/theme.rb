@@ -34,20 +34,21 @@ class Theme < ApplicationRecord
 
         PeachMelpa::Log.info(self.name) { "success! picking up screenshots..." }
 
-        Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER
-        Dir.glob("#{self.name}_*").each do |entry|
-          asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry
+        Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
+          Dir.glob("#{self.name}_*").each do |entry|
+            asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry
 
-          self.screenshots.attach(
-            io: File.open(asset_path),
-            filename: entry
-          )
+            self.screenshots.attach(
+              io: File.open(asset_path),
+              filename: entry
+            )
+          end
+
+          PeachMelpa::Log.info(self.name) { "updating attributes..." }
+          self.update_attributes!(new_attrs)
+
+          PeachMelpa::Log.info(self.name) { "done..." }
         end
-
-        PeachMelpa::Log.info(self.name) { "updating attributes..." }
-        self.update_attributes!(new_attrs)
-
-        PeachMelpa::Log.info(self.name) { "done..." }
       end
     rescue Timeout::Error
      # the process hung

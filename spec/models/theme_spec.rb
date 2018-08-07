@@ -62,7 +62,7 @@ RSpec.describe Theme, type: :model do
 
     context "when the cmd exits properly" do
       before do
-        allow(Dir).to receive(:chdir)
+        allow(Dir).to receive(:chdir).and_yield
         allow(Dir).to receive(:glob).and_return ["1", "2"]
       end
 
