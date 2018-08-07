@@ -1,36 +1,35 @@
-;;; Commentary:
+; http://www.rosettacode.org/wiki/Knapsack_problem/0-1#Emacs_Lisp
+(defun ks (max-w items)
+  (let ((cache (make-vector (1+ (length items)) nil)))
+    (dotimes (n (1+ (length items)))
+      (setf (aref cache n) (make-hash-table :test 'eql)))
+    (defun ks-emb (spc items)
+      (let ((slot (gethash spc (aref cache (length items)))))
+        (cond
+         ((null items) (list 0 0 '()))
+         (slot slot)
+         (t (puthash spc
+                  (let*
+                      ((i (car items))
+                       (w (nth 1 i))
+                       (v (nth 2 i))
+                       (x (ks-emb spc (cdr items))))
+                    (cond
+                     ((> w spc) x)
+                     (t
+                      (let* ((y (ks-emb (- spc w) (cdr items)))
+                             (v (+ v (car y))))
+                        (cond
+                         ((< v (car x)) x)
+                         (t
+                          (list v (+ w (nth 1 y)) (cons i (nth 2 y)))))))))
+                  (aref cache (length items)))))))
+    (ks-emb max-w items)))
 
-;; This package provides functions for manipulating colors, including
-;; converting between color representations, computing color
-;; complements, and computing CIEDE2000 color distances.
-;;
-;; Supported color representations include RGB (red, green, blue), HSV
-;; (hue, saturation, value), HSL (hue, saturation, luminance), sRGB,
-;; CIE XYZ, and CIE L*a*b* color components.
-
-;;; Code:
-
-;; Emacs < 23.3
-(eval-and-compile
-  (unless (boundp 'float-pi)
-    (defconst float-pi (* 4 (atan 1)) "The value of Pi (3.1415926...).")))
-
-(defun color-rgb-to-hex  (red green blue &optional digits-per-component)
-  "Return hexadecimal #RGB notation for the color specified by RED GREEN BLUE.
-RED, GREEN, and BLUE should be numbers between 0.0 and 1.0, inclusive.
-Optional argument DIGITS-PER-COMPONENT can be either 4 (the default)
-or 2; use the latter if you need a 24-bit specification of a color."
-  (or digits-per-component (setq digits-per-component 4))
-  (let* ((maxval (if (= digits-per-component 2) 255 65535))
-         (fmt (if (= digits-per-component 2) "#%02x%02x%02x" "#%04x%04x%04x")))
-    (format fmt (* red maxval) (* green maxval) (* blue maxval))))
-
-(defun color-complement (color-name)
-  "Return the color that is the complement of COLOR-NAME.
-COLOR-NAME should be a string naming a color (e.g. \"white\"), or
-a string specifying a color's RGB
-components (e.g. \"#ffff1212ecec\")."
-  (let ((color (color-name-to-rgb color-name)))
-    (list (- 1.0 (nth 0 color))
-          (- 1.0 (nth 1 color))
-          (- 1.0 (nth 2 color)))))
+(ks 400
+    '((map 9 150) (compass 13 35) (water 153 200) (sandwich 50 160)
+      (glucose 15 60) (tin 68 45)(banana 27 60) (apple 39 40)
+      (cheese 23 30) (beer 52 10) (cream 11 70) (camera 32 30)
+      (T-shirt 24 15) (trousers 48 10) (umbrella 73 40)
+      (waterproof-trousers 42 70) (overclothes 43 75) (notecase 22 80)
+      (glasses 7 20) (towel 18 12) (socks 4 50) (book 30 10)))
