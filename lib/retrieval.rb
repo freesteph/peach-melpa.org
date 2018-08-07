@@ -8,6 +8,7 @@ module PeachMelpa
 
     def self.refresh_melpa_archive
       archive = Net::HTTP.get(MELPA_HOST, MELPA_ARCHIVE_NAME)
+                  .encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
       File.write(ARCHIVE_PATH, archive)
     end
   end
