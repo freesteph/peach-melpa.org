@@ -32,6 +32,8 @@ module PeachMelpa
           description: description,
           url: url,
           authors: authors)
+      else
+        PeachMelpa::Log.info(name) { "skipped because either up-to-date or blacklisted." }
       end
     end
 

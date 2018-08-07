@@ -32,6 +32,8 @@ class Theme < ApplicationRecord
           raise PeachMelpa::Errors::EmacsError
         end
 
+        PeachMelpa::Log.info(self.name) { "success! picking up screenshots..." }
+
         Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER
         Dir.glob("#{self.name}_*").each do |entry|
           asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry
@@ -42,7 +44,10 @@ class Theme < ApplicationRecord
           )
         end
 
+        PeachMelpa::Log.info(self.name) { "updating attributes..." }
         self.update_attributes!(new_attrs)
+
+        PeachMelpa::Log.info(self.name) { "done..." }
       end
     rescue Timeout::Error
      # the process hung
