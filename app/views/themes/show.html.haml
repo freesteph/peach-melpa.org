@@ -6,13 +6,15 @@
   %section.screenshots
     .modes
       %ul{"data-target" => "theme.modes"}
-        - ["Lisp", "Javascript"].each_with_index do |lang, index|
+        - @modes.each_with_index do |mode, index|
+          - lang = mode.first
           %li{:class => index == 0 && "active"}
             %button{"data-action" => "click->theme#handleLangClick"}
               = lang
     .image_container{"data-target" => "theme.screenshots"}
-      - ["lisp", "js"].each_with_index do |lang, index|
-        - screenshot = @theme.screenshots.find { |s| s.filename.to_s.include? "_#{lang}" }
+      - @modes.each_with_index do |mode, index|
+        - ext = "_#{mode.last}".downcase
+        - screenshot = @theme.screenshots.find { |s| s.filename.to_s.include? ext }
         %img.screenshot{src: url_for(screenshot), :class => index == 0 && "active"}
   %section.props
     %dl

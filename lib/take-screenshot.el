@@ -34,7 +34,7 @@
 (defun peach--capture-screenshot-for-mode (theme-name mode)
   "Find the correct MODE sample for THEME-NAME and screenshot it."
   (let* ((screenshot-path (format "%stmp/screenshots/%s_%s.png" default-directory theme-name mode))
-         (sample-path (format "%slib/samples/%s.*" default-directory mode))
+         (sample-path (format "%slib/samples/*.%s" default-directory mode))
          (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path)))
     (find-file sample-path t)
     (cd "../../")
@@ -50,7 +50,7 @@
   (setq frame-resize-pixelwise t)
   (toggle-frame-fullscreen)
 
-  (let ((modes '(lisp js)))
+  (let ((modes '(el js c)))
     (while modes
       (setq mode (car modes))
       (peach--capture-screenshot-for-mode theme-name mode)
