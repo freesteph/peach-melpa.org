@@ -177,16 +177,34 @@ THEME
                             )
       end
 
-      it "formats the authors into a single string" do
-        multi = @props.dup
-        multi["props"]["authors"] = ["John", "Doe"]
+      describe "authors parsing" do
+        context "when there are multiple authors" do
+          it "formats them in a single string" do
+            multi = @props.dup
+            multi["props"]["authors"] = ["John", "Doe"]
 
-        PeachMelpa::Parsing.parse_theme @name, multi
+            PeachMelpa::Parsing.parse_theme @name, multi
 
-        expect(@theme).to have_received(:update_screenshots!)
-                            .with(
-                              a_hash_including(authors: "John, Doe")
-                            )
+            expect(@theme).to have_received(:update_screenshots!)
+                                .with(
+                                  a_hash_including(authors: "John, Doe")
+                                )
+          end
+        end
+
+        context "when the field doesn't exist" do
+          it "sends an empty string" do
+            none = @props.dup
+            none["props"].delete "authors"
+
+            PeachMelpa::Parsing.parse_theme @name, none
+
+            expect(@theme).to have_received(:update_screenshots!)
+                                .with(
+                                  a_hash_including(authors: "")
+                                )
+          end
+        end
       end
 
       context "but the theme is blacklisted" do

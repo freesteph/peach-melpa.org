@@ -21,7 +21,7 @@ module PeachMelpa
       version = meta["ver"].join(".")
       description = meta["desc"]
       url = meta["props"]["url"]
-      authors = meta["props"]["authors"].join(", ")
+      authors = [].concat(meta["props"]["authors"] || []).join(", ")
 
       theme = Theme.find_or_create_by(name: name)
 
