@@ -14,13 +14,12 @@ module PeachMelpa
       data.select { |name,val| self.looks_like_theme? name }
     end
 
-    def self.parse_theme obj, opts = {}
-      name = extract_theme_name obj.first
+    def self.parse_theme full_name, props, opts = {}
+      name = extract_theme_name full_name
       PeachMelpa::Log.info(name) { "trying to find theme" }
 
-      meta = obj.last
-      version = meta["ver"].join(".")
-      description = meta["desc"]
+      version = props["ver"].join(".")
+      description = props["desc"]
 
       theme = Theme.find_or_create_by(name: name)
 
@@ -52,8 +51,8 @@ module PeachMelpa
       args = nil
       args = {force: true } if not opts[:force].nil?
 
-      themes.each do |theme|
-        self.send :parse_theme, theme, *[args].reject(&:nil?)
+      themes.each do |name, props|p
+        self.send :parse_theme, name, props, *[args].reject(&:nil?)
       end
     end
 

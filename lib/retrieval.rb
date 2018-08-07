@@ -1,4 +1,5 @@
 require 'net/http'
+require 'rails'
 
 module PeachMelpa
   module Retrieval

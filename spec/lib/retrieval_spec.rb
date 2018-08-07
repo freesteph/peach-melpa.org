@@ -7,7 +7,9 @@ RSpec.describe PeachMelpa::Retrieval do
 
   describe "refresh_melpa_archive" do
     before :each do
-      allow(Net::HTTP).to receive(:get).and_return :response
+      @resp = double
+      allow(@resp).to receive(:encode).and_return :response
+      allow(Net::HTTP).to receive(:get).and_return @resp
       allow(File).to receive(:write)
     end
 
