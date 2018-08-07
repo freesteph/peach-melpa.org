@@ -11,7 +11,8 @@
             %button{"data-action" => "click->theme#handleLangClick"}
               = lang
     .image_container{"data-target" => "theme.screenshots"}
-      - @theme.screenshots.each_with_index do |screenshot, index|
+      - ["lisp", "js"].each_with_index do |lang, index|
+        - screenshot = @theme.screenshots.find { |s| s.filename.to_s.include? "_#{lang}" }
         %img.screenshot{src: url_for(screenshot), :class => index == 0 && "active"}
   %section.props
     %dl
