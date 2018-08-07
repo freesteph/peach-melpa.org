@@ -1,5 +1,5 @@
 require_relative '../../lib/errors'
-require_relative '../../lib/logger'
+require_relative '../../lib/logging'
 
 class Theme < ApplicationRecord
   has_many_attached :screenshots

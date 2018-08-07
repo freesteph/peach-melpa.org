@@ -1,6 +1,6 @@
 require 'json'
 require_relative './retrieval'
-require_relative './logger'
+require_relative './logging'
 
 module PeachMelpa
   module Parsing
