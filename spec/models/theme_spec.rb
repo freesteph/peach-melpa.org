@@ -44,7 +44,7 @@ RSpec.describe Theme, type: :model do
     it "wraps the command between a Timeout block" do
       @theme.update_screenshots! @mock_args
 
-      expect(Timeout).to have_received(:timeout).with(10)
+      expect(Timeout).to have_received(:timeout).with(15)
     end
 
     it "calls the Kernel.spawn method with the name and new version" do

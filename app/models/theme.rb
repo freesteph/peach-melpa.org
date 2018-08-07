@@ -22,7 +22,7 @@ class Theme < ApplicationRecord
     pid = nil
 
     begin
-      Timeout::timeout(10) do
+      Timeout::timeout(15) do
         cmd = CMD % [self.name, new_attrs[:version]]
         PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
