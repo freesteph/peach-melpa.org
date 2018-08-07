@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   MODES = {
     "Lisp" => "el",
     "Javascript" => "js",
-    "C" => "c"
+    "C" => "c",
+    "Ruby" => "rb"
   }
 end

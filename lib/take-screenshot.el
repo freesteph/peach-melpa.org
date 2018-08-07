@@ -50,7 +50,7 @@
   (setq frame-resize-pixelwise t)
   (toggle-frame-fullscreen)
 
-  (let ((modes '(el js c)))
+  (let ((modes '(el js c rb)))
     (while modes
       (setq mode (car modes))
       (peach--capture-screenshot-for-mode theme-name mode)
