@@ -171,7 +171,8 @@ THEME
         expect(@theme).to have_received(:update_screenshots!)
                             .with(
                               version: "0.1",
-                              description: "some theme"
+                              description: "some theme",
+                              url: "http://github.com/freesteph/peach-melpa"
                             )
       end
 

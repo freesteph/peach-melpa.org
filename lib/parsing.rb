@@ -14,18 +14,19 @@ module PeachMelpa
       data.select { |name,val| self.looks_like_theme? name }
     end
 
-    def self.parse_theme full_name, props, opts = {}
+    def self.parse_theme full_name, meta, opts = {}
       name = extract_theme_name full_name
       PeachMelpa::Log.info(name) { "trying to find theme" }
 
-      version = props["ver"].join(".")
-      description = props["desc"]
+      version = meta["ver"].join(".")
+      description = meta["desc"]
+      url = meta["props"]["url"]
 
       theme = Theme.find_or_create_by(name: name)
 
       if theme.older_than? version and not theme.blacklisted? or opts[:force] == true
         PeachMelpa::Log.info(name) { "theme eligible for update..." }
-        theme.update_screenshots!(version: version, description: description)
+        theme.update_screenshots!(version: version, description: description, url: url)
       end
     end
 
