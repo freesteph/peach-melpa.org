@@ -18,8 +18,8 @@
         %img.screenshot{src: url_for(screenshot), :class => index == 0 && "active"}
   %section.props
     %dl
-      %dt.authors Author(s)
-      %dd= @theme.authors
+      -# %dt.authors Author(s)
+      -# %dd= @theme.authors
       %dt.url URL
       - if @theme.url.present?
         %dd.link= link_to @theme.url, @theme.url
