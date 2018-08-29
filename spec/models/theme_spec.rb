@@ -28,6 +28,7 @@ RSpec.describe Theme, type: :model do
         description: "text",
         url: "url",
         authors: "John, Doe",
+        kind: "single"
       }
 
       @theme = Theme.new(name: "foo")
@@ -60,7 +61,7 @@ RSpec.describe Theme, type: :model do
       @theme.update_screenshots! @mock_args
 
       expect(Kernel).to have_received(:spawn)
-                          .with(Theme::CMD % [@theme.name, @mock_args[:version]])
+                          .with "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"foo\" \"2\" \"single\")'"
     end
 
     it "waits for the process to finish" do

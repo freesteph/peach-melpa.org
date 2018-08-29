@@ -4,7 +4,7 @@ require_relative '../../lib/logging'
 class Theme < ApplicationRecord
   has_many_attached :screenshots
 
-  CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\")'"
+  CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\" \"%s\")'"
 
   def to_param
     name
@@ -25,7 +25,7 @@ class Theme < ApplicationRecord
       Timeout::timeout(15) do
         cleanup_old_screenshots!
 
-        cmd = CMD % [self.name, new_attrs[:version]]
+        cmd = CMD % [self.name, new_attrs[:version], new_attrs[:kind]]
         PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
         Process.wait pid
