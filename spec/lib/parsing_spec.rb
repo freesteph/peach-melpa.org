@@ -173,7 +173,8 @@ THEME
                               version: "0.1",
                               description: "some theme",
                               url: "http://github.com/freesteph/peach-melpa",
-                              authors: "Stéphane Maniaci <steph@rspec.org>"
+                              authors: "Stéphane Maniaci <steph@rspec.org>",
+                              kind: "single"
                             )
       end
 

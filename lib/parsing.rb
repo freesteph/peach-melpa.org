@@ -22,6 +22,7 @@ module PeachMelpa
       description = meta["desc"]
       url = meta["props"]["url"]
       authors = [].concat(meta["props"]["authors"] || []).join(", ")
+      kind = meta["type"]
 
       theme = Theme.find_or_create_by(name: name)
 
@@ -31,7 +32,8 @@ module PeachMelpa
           version: version,
           description: description,
           url: url,
-          authors: authors)
+          authors: authors,
+          kind: kind)
       else
         PeachMelpa::Log.info(name) { "skipped because either up-to-date or blacklisted." }
       end
