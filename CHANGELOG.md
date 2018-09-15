@@ -7,8 +7,13 @@ Release date: Tue 19 Dec 21:04:35 GMT 2017
 - Retrieve themes from MELPA
 
 # 0.2
-Release date: N/A
+Release date: don't remember
 
 - SSL
-- filters (brightness, name)
 - test suite
+
+# 0.3
+Release date: Fri Jul 27 16:21:05 2018 +0100
+
+- Handle all packages types (tar vs single)
+- Add different types of samples: Lisp, C, Javascript, Python;

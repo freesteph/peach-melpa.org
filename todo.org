@@ -22,15 +22,16 @@
 ** 0.3
 *** DONE rework Peach TDD
 ** 0.4
-*** TODO Logo
 *** DONE Other samples of code
-*** TODO Load other fonts
-*** TODO Lazy loading images
-
 ** 0.5
+*** TODO Better styling
+The current styling is duplicated across the app which leads to
+visual inconsistencies and harder maintenance.
+** 0.6
+*** TODO Load other fonts
 *** TODO Filters
 **** DONE Brightness
 **** TODO Name
-*** TODO Better styling
+*** TODO Lazy loading images
 *** TODO Some responsive template
 *** TODO ActionPack caching
