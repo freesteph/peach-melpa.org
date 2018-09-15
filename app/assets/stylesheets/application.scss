@@ -15,12 +15,26 @@
 @import "reset";
 @import "themes";
 @import "layout";
+@import "colors";
 
 body {
-  padding: 2% 6%;
+  padding: $spacer * 4;
   margin: 0;
   font-family: $primary-font;
   font-size: $default-font-size;
-  background: #555;
-  color: #DDD;
+  background: $background-color;
+  color: $primary-text-color;
+}
+
+h1 {
+  font-size: $first-header-size;
+  color: $secondary-text-color;
+  margin: $spacer 0;
+  font-weight: bold;
+}
+
+h2 {
+  color: $secondary-text-color;
+  font-size: $secondary-header-size;
+  margin: $spacer 0;
 }
