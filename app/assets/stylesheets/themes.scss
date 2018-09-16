@@ -76,6 +76,11 @@
         display: block;
       }
     }
+
+    h5 {
+      padding: $spacer 0;
+      color: $secondary-text-color;
+    }
   }
 }
 
