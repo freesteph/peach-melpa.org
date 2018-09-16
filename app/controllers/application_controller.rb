@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     "Lisp" => "el",
     "Javascript" => "js",
     "C" => "c",
-    "Ruby" => "rb"
+    "Ruby" => "rb",
+    "Org-mode" => "org"
   }
 end

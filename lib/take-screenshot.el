@@ -9,6 +9,8 @@
                     :weight 'light
                     :width 'normal
                     :height 180)
+
+(setq org-startup-folded nil)
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -50,7 +52,7 @@
   (setq frame-resize-pixelwise t)
   (toggle-frame-fullscreen)
 
-  (let ((modes '(el js c rb)))
+  (let ((modes '(el js c rb org)))
     (while modes
       (setq mode (car modes))
       (peach--capture-screenshot-for-mode theme-name mode)
