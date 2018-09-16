@@ -22,12 +22,14 @@
   }
 
   .props {
+    margin: $spacer * 2 0;
+
     dl > * {
-      padding: 0.2rem 0;
+      padding: $spacer / 2 0;
     }
 
     dt {
-      color: #888;
+      color: $secondary-text-color;
     }
   }
 
@@ -84,7 +86,7 @@
   #wrapper {
     display: flex;
     width: 100%;
-    flex-wrap:  wrap;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     .theme-thumbnail {
@@ -107,6 +109,7 @@
       .meta {
         @extend %label;
 
+	font-weight: normal;
         padding:1.2em 0;
       }
     }

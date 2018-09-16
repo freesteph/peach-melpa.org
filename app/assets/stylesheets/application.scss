@@ -38,3 +38,21 @@ h2 {
   font-size: $secondary-header-size;
   margin: $spacer 0;
 }
+
+a {
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid $secondary-text-color;
+  font-weight: bold;
+  padding: 0.2em;
+  transition: border-color 0.2s ease-out;
+
+  &:visited {
+    color: $primary-text-color;
+  }
+
+  &:hover {
+    color: #fff;
+    border-color: white;
+  }
+}
