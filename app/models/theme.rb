@@ -22,7 +22,7 @@ class Theme < ApplicationRecord
     pid = nil
 
     begin
-      Timeout::timeout(15) do
+      Timeout::timeout(17) do
         cleanup_old_screenshots!
 
         cmd = CMD % [self.name, new_attrs[:version], new_attrs[:kind]]
