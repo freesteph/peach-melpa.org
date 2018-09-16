@@ -34,11 +34,12 @@
   }
 
   .screenshots {
+    margin: $spacer 0;
+
     .modes {
       ul {
         list-style: none;
-        margin: 0;
-        padding: 0 0 2rem 0;
+	margin-bottom: $spacer;
 
         li {
           font-size: $larger-font-size;
