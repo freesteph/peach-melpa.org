@@ -38,27 +38,37 @@
   (let* ((screenshot-path (format "%stmp/screenshots/%s_%s.png" default-directory theme-name mode))
          (sample-path (format "%slib/samples/*.%s" default-directory mode))
          (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path)))
-    (find-file sample-path t)
-    (cd "../../")
-    (redisplay t)
-    (sleep-for 1)
-    (shell-command cmd-name nil nil)))
+    (save-excursion
+      (find-file sample-path t)
+      (redisplay t)
+      (shell-command cmd-name nil nil))))
 
 (defun fetch-and-load-theme (theme-name version kind)
   "Get and install THEME-NAME of package type TYPE and VERSION before taking a screenshot of it."
   (peach--install-if-necessary theme-name version kind)
 
-  (load-theme (intern theme-name) t)
+  (setq
+   possible-themes
+	(seq-filter
+	 (lambda (th)
+	   (string-prefix-p theme-name (symbol-name th)))
+	   (custom-available-themes)))
   (setq frame-resize-pixelwise t)
   (toggle-frame-fullscreen)
 
-  (let ((modes '(el js c rb org)))
-    (while modes
-      (setq mode (car modes))
-      (peach--capture-screenshot-for-mode theme-name mode)
-      (setq modes (cdr modes))))
+  (dolist
+      (variant possible-themes)
+    (condition-case nil
+	(progn
+	  (load-theme variant t)
+	  (let ((modes '(el js c rb org)))
+	    (while modes
+	      (setq mode (car modes))
+	      (peach--capture-screenshot-for-mode variant mode)
+	      (setq modes (cdr modes))))
+	  (disable-theme variant))
+      (error nil)))
 
-  (disable-theme theme-name)
   (kill-emacs 0))
 
 
