@@ -31,10 +31,15 @@ RSpec.describe Theme, type: :model do
         kind: "single"
       }
 
-      @theme = Theme.new(name: "foo")
+      @theme = Theme.create!(name: "foo")
+      @variant = @theme.variants.create!(name: "bar")
+      allow(@variant).to receive(:parse!)
       allow(@theme).to receive_message_chain("screenshots.attach")
       allow(@theme).to receive_message_chain("screenshots.purge")
-
+      allow(@theme)
+        .to receive_message_chain("variants.find_or_create_by")
+              .and_return @variant
+      allow(@theme).to receive(:devise_variants).and_return [:variant]
       allow(@theme).to receive(:cleanup_old_screenshots!)
 
       allow(Kernel).to receive(:spawn).and_return :pid
@@ -42,7 +47,6 @@ RSpec.describe Theme, type: :model do
       allow(Process).to receive(:kill)
 
       allow(Timeout).to receive(:timeout).and_yield
-      allow(File).to receive(:open).and_return :file
     end
 
     it "calls cleanup_old_screenshots! before starting" do
@@ -73,7 +77,7 @@ RSpec.describe Theme, type: :model do
     context "when the cmd exits properly" do
       before do
         allow(Dir).to receive(:chdir).and_yield
-        allow(Dir).to receive(:glob).and_return ["1", "2"]
+        allow(Dir).to receive(:glob).and_return ["one", "two"]
       end
 
       it "deletes the old screenshots" do
@@ -101,18 +105,27 @@ RSpec.describe Theme, type: :model do
       it "uses Dir.glob to capture all the screenshots created" do
         @theme.update_screenshots! @mock_args
 
-        expect(Dir).to have_received(:glob).with("foo_*")
+        expect(Dir).to have_received(:glob).with("foo*")
       end
 
-      %w(1 2).each do |entry|
-        it "infers the screenshot path and attach it to the screenshot field" do
-          @theme.update_screenshots! @mock_args
+      it "calls devise_variants with the results" do
+        @theme.update_screenshots! @mock_args
 
-          expect(File).to have_received(:open)
-                            .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry)
-          expect(@theme.screenshots).to have_received(:attach)
-                                         .with(io: :file, filename: entry)
-        end
+        expect(@theme).to have_received(:devise_variants).with(["one", "two"])
+      end
+
+      it "finds or create a variant with the resulting names" do
+        @theme.update_screenshots! @mock_args
+
+        expect(@theme.variants)
+          .to have_received(:find_or_create_by)
+                .with(name: :variant)
+      end
+
+      it "calls parse! on each variant" do
+        @theme.update_screenshots! @mock_args
+
+        expect(@variant).to have_received(:parse!)
       end
     end
 
@@ -169,5 +182,32 @@ RSpec.describe Theme, type: :model do
 
   describe "cleanup_old_screenshots!" do
     pending "I need to go to bed"
+  end
+
+  describe "devise_variants" do
+    it "infers the theme variants based on the list of screenshots" do
+      test_data = %w(
+        poet_c.png
+        poet-dark-monochrome_c.png
+        poet-dark-monochrome_el.png
+        poet-dark-monochrome_js.png
+        poet-dark-monochrome_org.png
+        poet-dark-monochrome_rb.png
+        poet_el.png
+        poet_js.png
+        poet-monochrome_c.png
+        poet-monochrome_el.png
+        poet-monochrome_js.png
+        poet-monochrome_org.png
+        poet-monochrome_rb.png
+        poet_org.png
+        poet_rb.png
+      )
+
+      theme = Theme.create!(name: 'poet')
+
+      expect(theme.devise_variants(test_data))
+        .to match_array ["poet", "poet-monochrome", "poet-dark-monochrome"]
+    end
   end
 end

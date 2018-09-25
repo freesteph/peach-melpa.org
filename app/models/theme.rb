@@ -39,13 +39,14 @@ class Theme < ApplicationRecord
         self.screenshots.purge
 
         Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
-          Dir.glob("#{self.name}_*").each do |entry|
-            asset_path = PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry
+          variant_names = self.devise_variants(Dir.glob("#{self.name}*"))
 
-            self.screenshots.attach(
-              io: File.open(asset_path),
-              filename: entry
-            )
+          PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
+
+          variant_names.each do |name|
+            PeachMelpa::Log.info(self.name) { "capturing: #{name}"}
+            variant = self.variants.find_or_create_by(name: name)
+            variant.parse!
           end
 
           PeachMelpa::Log.info(self.name) { "updating attributes..." }
@@ -66,6 +67,12 @@ class Theme < ApplicationRecord
       }
       # something bad happened in Emacs
     end
+  end
+
+  def devise_variants screenshots
+    endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).png$")
+
+    screenshots.map { |s| s.gsub!(endings, '') }.uniq
   end
 
   private
