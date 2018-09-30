@@ -3,20 +3,24 @@
     %h1.name= @theme.name
     %h2.description= @theme.description
     %span.cmd M-x package-install #{@theme.name}-theme
-  %section.screenshots
-    .modes
-      %ul{"data-target" => "theme.modes"}
-        - @modes.each_with_index do |mode, index|
-          - lang = mode.first
-          %li{:class => index == 0 && "active"}
-            %button{"data-action" => "click->theme#handleLangClick"}
-              = lang
-    .image_container{"data-target" => "theme.screenshots"}
-      - @modes.each_with_index do |mode, index|
-        - ext = "_#{mode.last}".downcase
-        - screenshot = @theme.screenshots.find { |s| s.filename.to_s.include? ext }
-        %img.screenshot{src: url_for(screenshot), :class => index == 0 && "active"}
-      %h5 All sample files are edited to better highlight the theme properties. The original license and full source code can be found in the top comment.
+
+  %section.variants
+    - @theme.variants.each do |variant|
+      = image_tag variant.screenshots.find { |s| s.filename.to_s.include? "el" }
+  -# %section.screenshots
+  -#   .modes
+  -#     %ul{"data-target" => "theme.modes"}
+  -#       - @modes.each_with_index do |mode, index|
+  -#         - lang = mode.first
+  -#         %li{:class => index == 0 && "active"}
+  -#           %button{"data-action" => "click->theme#handleLangClick"}
+  -#             = lang
+  -#   .image_container{"data-target" => "theme.screenshots"}
+  -#     - @modes.each_with_index do |mode, index|
+  -#       - ext = "_#{mode.last}".downcase
+  -#       - screenshot = @theme.screenshots.find { |s| s.filename.to_s.include? ext }
+  -#       %img.screenshot{src: url_for(screenshot), :class => index == 0 && "active"}
+  -#     %h5 All sample files are edited to better highlight the theme properties. The original license and full source code can be found in the top comment.
 
   %section.props
     %dl

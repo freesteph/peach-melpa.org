@@ -33,6 +33,11 @@
     }
   }
 
+  .variants {
+    img {
+      max-width: calc(100% * 2 /3);
+    }
+  }
   .screenshots {
     margin: $spacer 0;
 

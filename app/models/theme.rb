@@ -3,7 +3,7 @@ require_relative '../../lib/logging'
 
 class Theme < ApplicationRecord
   has_many_attached :screenshots
-  has_many :variants
+  has_many :variants, dependent: :destroy
 
   CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\" \"%s\")'"
 
@@ -23,7 +23,7 @@ class Theme < ApplicationRecord
     pid = nil
 
     begin
-      Timeout::timeout(17) do
+      Timeout::timeout(45) do
         cleanup_old_screenshots!
 
         cmd = CMD % [self.name, new_attrs[:version], new_attrs[:kind]]
