@@ -1,0 +1,98 @@
+.theme {
+  .name {
+    h1 {
+      font-weight: bold;
+    }
+
+    .cmd {
+      display: inline-block;
+      margin: $spacer/2 0;
+      letter-spacing: 1px;
+      font-weight: 100;
+      background: #444;
+      padding: $spacer;
+    }
+  }
+
+  .props {
+    margin: $spacer * 2 0;
+
+    dl > * {
+      padding: $spacer / 2 0;
+    }
+
+    dt {
+      color: $secondary-text-color;
+    }
+  }
+
+  .variants {
+    ul {
+      list-style: none;
+      padding: $spacer * 2 0;
+
+      li {
+	display: inline-block;
+
+	button {
+	  color: $secondary-text-color;
+	  font-variant: small-caps;
+	  font-size: $larger-font-size;
+	}
+      }
+    }
+
+    .viewfinder {
+      position: relative;
+
+      .screenshots {
+	position: relative;
+	max-width: calc(100vw * 0.75);
+	overflow: hidden;
+	width: 100%;
+	display: inline-block;
+	height: calc(100vw * 0.75 * 0.75);
+
+	.gallery {
+	  position: absolute;
+	  width: max-content;
+	  left: 0;
+	  top: 0;
+	  transition: left ease-out 0.25s,
+		      top ease-out 0.25s;
+	  font-size:  0;
+
+	  .roll {
+	    display: inline-block;
+	    max-width: calc(100vw * 0.75);
+
+	    img {
+	      width: 100%;
+	    }
+	  }
+	}
+      }
+
+      .modes {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: auto;
+
+	ul {
+	  margin: 0;
+	  padding: 0;
+
+	  li {
+	    display: block;
+	    margin-bottom: $spacer;
+
+	    button {
+	      text-transform: lowercase;
+	    }
+	  }
+	}
+      }
+    }
+  }
+}
