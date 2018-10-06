@@ -5,7 +5,7 @@ class Theme < ApplicationRecord
   has_many_attached :screenshots
   has_many :variants, dependent: :destroy
 
-  CMD = "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"%s\" \"%s\" \"%s\")'"
+  CMD = "emacsclient -s peach -n -c -eval '(fetch-and-load-theme \"%s\" \"%s\" \"%s\")'"
 
   def to_param
     name
@@ -23,7 +23,7 @@ class Theme < ApplicationRecord
     pid = nil
 
     begin
-      Timeout::timeout(45) do
+      Timeout::timeout(30) do
         cleanup_old_screenshots!
 
         cmd = CMD % [self.name, new_attrs[:version], new_attrs[:kind]]
@@ -40,6 +40,9 @@ class Theme < ApplicationRecord
 
         Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
           files = Dir.glob("#{self.radical}*")
+
+          PeachMelpa::Log.info(self.name) { "deleting all variants" }
+          self.variants.destroy_all
 
           variant_names = self.devise_variants(files)
           PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
@@ -67,7 +70,7 @@ class Theme < ApplicationRecord
       Process.kill "TERM", pid
     rescue PeachMelpa::Errors::EmacsError => e
       PeachMelpa::Log.info(self.name) {
-        "the Emacs process exited with an error:going to launch #{e}"
+        "the Emacs process exited with an error:going to launch #{e.inspect}"
       }
       # something bad happened in Emacs
     end

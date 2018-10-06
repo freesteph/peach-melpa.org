@@ -38,7 +38,14 @@ module PeachMelpa
       end
     end
 
+    def self.start_daemon
+      PeachMelpa::Log::info { "start Emacs daemon..." }
+      `emacs --daemon=peach -Q -l lib/take-screenshot.el`
+    end
+
     def self.pick_updated_themes opts = {}
+      self.start_daemon
+
       PeachMelpa::Log::info { "starting to parse themes" }
       data = JSON.parse(IO.read(PeachMelpa::Retrieval::ARCHIVE_PATH))
 

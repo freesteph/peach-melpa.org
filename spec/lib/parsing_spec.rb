@@ -39,6 +39,7 @@ THEME
       allow(JSON).to receive(:parse).and_return @mock_theme
       allow(IO).to receive(:read).and_return :res
       allow(PeachMelpa::Parsing).to receive(:select_themes).and_return @mock_theme
+      allow(PeachMelpa::Parsing).to receive(:start_daemon)
       allow(PeachMelpa::Parsing).to receive(:parse_theme)
     end
 

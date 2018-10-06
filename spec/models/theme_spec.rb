@@ -38,6 +38,8 @@ RSpec.describe Theme, type: :model do
       allow(@theme).to receive_message_chain("screenshots.attach")
       allow(@theme).to receive_message_chain("screenshots.purge")
       allow(@theme)
+        .to receive_message_chain("variants.destroy_all")
+      allow(@theme)
         .to receive_message_chain("variants.find_or_create_by")
               .and_return @variant
       allow(@theme).to receive(:devise_variants).and_return [:variant]
@@ -63,6 +65,7 @@ RSpec.describe Theme, type: :model do
     end
 
     it "calls the Kernel.spawn method with the name and new version" do
+      pending "need to update with the daemon arch"
       @theme.update_screenshots! @mock_args
 
       expect(Kernel).to have_received(:spawn)
@@ -115,6 +118,13 @@ RSpec.describe Theme, type: :model do
         @theme.update_screenshots! @mock_args
 
         expect(@theme).to have_received(:devise_variants).with(["one", "two"])
+      end
+
+      it "deletes all variants beforehand" do
+        @theme.update_screenshots! @mock_args
+
+        expect(@theme.variants)
+          .to have_received(:destroy_all)
       end
 
       it "finds or create a variant with the resulting names" do
