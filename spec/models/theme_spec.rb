@@ -65,11 +65,11 @@ RSpec.describe Theme, type: :model do
     end
 
     it "calls the Kernel.spawn method with the name and new version" do
-      pending "need to update with the daemon arch"
       @theme.update_screenshots! @mock_args
 
-      expect(Kernel).to have_received(:spawn)
-                          .with "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"foo-theme\" \"2\" \"single\")'"
+      expect(Kernel)
+        .to have_received(:spawn)
+              .with "emacsclient -s peach -n -c -eval '(fetch-and-load-theme \"foo-theme\")'"
     end
 
     it "waits for the process to finish" do

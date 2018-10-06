@@ -43,6 +43,11 @@ module PeachMelpa
       `emacs --daemon=peach -Q -l lib/take-screenshot.el`
     end
 
+    def self.stop_daemon
+      PeachMelpa::Log::info { "stopping Emacs daemon..." }
+      `emacsclient -s peach -e '(kill-emacs)'`
+    end
+
     def self.pick_updated_themes opts = {}
       self.start_daemon
 
@@ -70,6 +75,8 @@ module PeachMelpa
       themes.each do |name, props|p
         self.send :parse_theme, name, props, *[args].reject(&:nil?)
       end
+
+      self.stop_daemon
     end
   end
 end

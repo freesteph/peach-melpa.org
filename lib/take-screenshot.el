@@ -4,7 +4,6 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-default font
 (set-face-attribute 'default nil
                     :family "Iosevka"
                     :weight 'light
@@ -48,7 +47,7 @@ default font
       (redisplay t)
       (shell-command cmd-name nil nil))))
 
-(defun fetch-and-load-theme (theme-name version kind)
+(defun fetch-and-load-theme (theme-name)
   "Get and install THEME-NAME of package type KIND and VERSION before taking a screenshot of it."
   (peach--ensure-clean-install theme-name)
   (setq current-themes (custom-available-themes))

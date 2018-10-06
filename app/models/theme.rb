@@ -5,7 +5,7 @@ class Theme < ApplicationRecord
   has_many_attached :screenshots
   has_many :variants, dependent: :destroy
 
-  CMD = "emacsclient -s peach -n -c -eval '(fetch-and-load-theme \"%s\" \"%s\" \"%s\")'"
+  CMD = "emacsclient -s peach -n -c -eval '(fetch-and-load-theme \"%s\")'"
 
   def to_param
     name
@@ -26,7 +26,7 @@ class Theme < ApplicationRecord
       Timeout::timeout(30) do
         cleanup_old_screenshots!
 
-        cmd = CMD % [self.name, new_attrs[:version], new_attrs[:kind]]
+        cmd = CMD % [self.name]
         PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
         Process.wait pid
