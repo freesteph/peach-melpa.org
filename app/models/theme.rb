@@ -39,7 +39,9 @@ class Theme < ApplicationRecord
         self.screenshots.purge
 
         Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
-          variant_names = self.devise_variants(Dir.glob("#{self.radical}*"))
+          files = Dir.glob("#{self.radical}*")
+
+          variant_names = self.devise_variants(files)
           PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
 
           variant_names.each do |name|
@@ -51,7 +53,10 @@ class Theme < ApplicationRecord
           PeachMelpa::Log.info(self.name) { "updating attributes..." }
           self.update_attributes!(new_attrs)
 
-          PeachMelpa::Log.info(self.name) { "done..." }
+          PeachMelpa::Log.info(self.name) { "cleaning up screenshots..." }
+          File.delete(*files)
+
+          PeachMelpa::Log.info(self.name) { "done." }
         end
       end
     rescue Timeout::Error
@@ -71,7 +76,7 @@ class Theme < ApplicationRecord
   def devise_variants screenshots
     endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).png$")
 
-    screenshots.map { |s| s.gsub!(endings, '') }.uniq
+    screenshots.map { |s| s.gsub(endings, '') }.uniq
   end
 
   def radical

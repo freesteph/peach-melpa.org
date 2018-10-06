@@ -59,7 +59,7 @@ RSpec.describe Theme, type: :model do
     it "wraps the command between a Timeout block" do
       @theme.update_screenshots! @mock_args
 
-      expect(Timeout).to have_received(:timeout).with(45)
+      expect(Timeout).to have_received(:timeout).with(30)
     end
 
     it "calls the Kernel.spawn method with the name and new version" do
@@ -79,6 +79,7 @@ RSpec.describe Theme, type: :model do
       before do
         allow(Dir).to receive(:chdir).and_yield
         allow(Dir).to receive(:glob).and_return ["one", "two"]
+        allow(File).to receive(:delete)
         allow(@theme).to receive(:radical).and_return :rad
       end
 
@@ -128,6 +129,12 @@ RSpec.describe Theme, type: :model do
         @theme.update_screenshots! @mock_args
 
         expect(@variant).to have_received(:parse!)
+      end
+
+      it "deletes all the files after" do
+        @theme.update_screenshots! @mock_args
+
+        expect(File).to have_received(:delete).with("one", "two")
       end
     end
 
@@ -180,10 +187,6 @@ RSpec.describe Theme, type: :model do
           .to raise_error
       end
     end
-  end
-
-  describe "cleanup_old_screenshots!" do
-    pending "I need to go to bed"
   end
 
   describe "devise_variants" do
