@@ -31,8 +31,9 @@ RSpec.describe Theme, type: :model do
         kind: "single"
       }
 
-      @theme = Theme.create!(name: "foo")
+      @theme = Theme.create!(name: "foo-theme")
       @variant = @theme.variants.create!(name: "bar")
+
       allow(@variant).to receive(:parse!)
       allow(@theme).to receive_message_chain("screenshots.attach")
       allow(@theme).to receive_message_chain("screenshots.purge")
@@ -58,14 +59,14 @@ RSpec.describe Theme, type: :model do
     it "wraps the command between a Timeout block" do
       @theme.update_screenshots! @mock_args
 
-      expect(Timeout).to have_received(:timeout).with(17)
+      expect(Timeout).to have_received(:timeout).with(45)
     end
 
     it "calls the Kernel.spawn method with the name and new version" do
       @theme.update_screenshots! @mock_args
 
       expect(Kernel).to have_received(:spawn)
-                          .with "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"foo\" \"2\" \"single\")'"
+                          .with "emacs -Q -l lib/take-screenshot.el -eval '(fetch-and-load-theme \"foo-theme\" \"2\" \"single\")'"
     end
 
     it "waits for the process to finish" do
@@ -78,6 +79,7 @@ RSpec.describe Theme, type: :model do
       before do
         allow(Dir).to receive(:chdir).and_yield
         allow(Dir).to receive(:glob).and_return ["one", "two"]
+        allow(@theme).to receive(:radical).and_return :rad
       end
 
       it "deletes the old screenshots" do
@@ -102,10 +104,10 @@ RSpec.describe Theme, type: :model do
         expect(Dir).to have_received(:chdir).with(PeachMelpa::Parsing::SCREENSHOT_FOLDER)
       end
 
-      it "uses Dir.glob to capture all the screenshots created" do
+      it "uses Dir.glob and the theme radical to capture all the screenshots" do
         @theme.update_screenshots! @mock_args
 
-        expect(Dir).to have_received(:glob).with("foo*")
+        expect(Dir).to have_received(:glob).with("rad*")
       end
 
       it "calls devise_variants with the results" do
@@ -204,10 +206,23 @@ RSpec.describe Theme, type: :model do
         poet_rb.png
       )
 
-      theme = Theme.create!(name: 'poet')
+      theme = Theme.create!(name: 'poet-theme')
+      puts theme.inspect
 
       expect(theme.devise_variants(test_data))
         .to match_array ["poet", "poet-monochrome", "poet-dark-monochrome"]
+    end
+  end
+
+  describe ".radical" do
+    it "gets the theme name without the suffix" do
+      [
+        ["foo-theme", "foo"],
+        ["some-rad-theme", "some-rad"],
+        ["combo-themes", "combo"]
+      ].each do |name, radical|
+        expect(Theme.new(name: name).radical).to eq radical
+      end
     end
   end
 end

@@ -39,8 +39,7 @@ class Theme < ApplicationRecord
         self.screenshots.purge
 
         Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
-          variant_names = self.devise_variants(Dir.glob("#{self.name}*"))
-
+          variant_names = self.devise_variants(Dir.glob("#{self.radical}*"))
           PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
 
           variant_names.each do |name|
@@ -73,6 +72,10 @@ class Theme < ApplicationRecord
     endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).png$")
 
     screenshots.map { |s| s.gsub!(endings, '') }.uniq
+  end
+
+  def radical
+    self.name.partition("-theme").first
   end
 
   private

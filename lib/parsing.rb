@@ -7,15 +7,14 @@ module PeachMelpa
     SCREENSHOT_FOLDER = "#{::Rails.root}/tmp/screenshots/"
 
     def self.looks_like_theme? name
-      name.end_with? "-theme"
+      name.end_with? "-theme", "-themes"
     end
 
     def self.select_themes data
       data.select { |name,val| self.looks_like_theme? name }
     end
 
-    def self.parse_theme full_name, meta, opts = {}
-      name = extract_theme_name full_name
+    def self.parse_theme name, meta, opts = {}
       PeachMelpa::Log.info(name) { "trying to find theme" }
 
       version = meta["ver"].join(".")
@@ -47,7 +46,7 @@ module PeachMelpa
       # filters = opts[:only] ? self.find_theme(opts[:only]) : self.looks_like_theme?
       # themes = data.select(filters)
       themes = if opts[:only] then
-                 data.select { |entry,| self.extract_theme_name(entry) == opts[:only] }
+                 data.select { |entry| entry == opts[:only] }
                else
                  self.select_themes data
                end
@@ -64,11 +63,6 @@ module PeachMelpa
       themes.each do |name, props|p
         self.send :parse_theme, name, props, *[args].reject(&:nil?)
       end
-    end
-
-    private
-    def self.extract_theme_name data
-      data.partition("-theme").first
     end
   end
 end

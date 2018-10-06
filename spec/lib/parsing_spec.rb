@@ -56,19 +56,19 @@ THEME
 
     context "if an `only' argument is given" do
       it "runs solely for that theme" do
-        PeachMelpa::Parsing.pick_updated_themes only: "foo"
+        PeachMelpa::Parsing.pick_updated_themes only: "foo-theme"
 
         expect(PeachMelpa::Parsing).to have_received(:parse_theme).once
       end
 
       it "does not run select_themes" do
-        PeachMelpa::Parsing.pick_updated_themes only: "foo"
+        PeachMelpa::Parsing.pick_updated_themes only: "foo-theme"
 
         expect(PeachMelpa::Parsing).to_not have_received(:select_themes)
       end
 
       it "does not run if not matching theme found" do
-        PeachMelpa::Parsing.pick_updated_themes only: "bar"
+        PeachMelpa::Parsing.pick_updated_themes only: "bar-theme"
 
         expect(PeachMelpa::Parsing).not_to have_received(:parse_theme)
       end
@@ -95,7 +95,7 @@ THEME
       end
     end
 
-    it "selects all themes ending with -name" do
+    it "selects all themes ending with -theme" do
       allow(JSON).to receive(:parse).and_return :res
 
       PeachMelpa::Parsing.pick_updated_themes
@@ -136,22 +136,12 @@ THEME
       allow(Theme).to receive(:find_or_create_by).and_return @theme
     end
 
-    it "finds or creates a theme with the theme radical" do
+    it "finds or creates a theme" do
       PeachMelpa::Parsing.parse_theme @name, @props
 
       expect(Theme)
         .to have_received(:find_or_create_by)
-              .with(name: "foo")
-    end
-
-    context "when the theme has a dash in it" do
-      it "parses everything but the last -theme token" do
-        PeachMelpa::Parsing.parse_theme "good-looking-theme", @props
-
-        expect(Theme)
-          .to have_received(:find_or_create_by)
-                .with(name: "good-looking")
-      end
+              .with(name: "foo-theme")
     end
 
     it "checks if the theme needs updating" do
@@ -236,27 +226,30 @@ THEME
     end
   end
 
+  describe "looks_like_theme?" do
+    it "select names ending with theme[s]?" do
+      ["foo-theme", "bar-baz-theme", "some-themes"].each do |theme|
+        expect(PeachMelpa::Parsing.looks_like_theme? theme).to be_truthy
+      end
+
+      ["foo_theme", "foo-theme-pkg", "bartheme"].each do |pkg|
+        expect(PeachMelpa::Parsing.looks_like_theme? pkg).to_not be_truthy
+      end
+    end
+  end
+
   describe "select_themes" do
-    # FIXME: could go to jail for writing code like that
-    def make_melpa_struct name
-      [name, :data]
+    before :each do
+      allow(PeachMelpa::Parsing).to receive(:looks_like_theme?).and_return false
     end
 
-    it "selects members whose object key name ends with -theme " do
-      foo_theme = make_melpa_struct "foo-theme"
-      bar_theme = make_melpa_struct "bar-theme"
-      foo = make_melpa_struct "foo"
-      bar = make_melpa_struct "bar"
+    it "selects members who pass looks_like_theme?" do
+      themes = PeachMelpa::Parsing.select_themes @mock_theme
 
-      [
-        [[foo_theme, bar_theme], [foo_theme, bar_theme]],
-        [[foo_theme, bar], [foo_theme]],
-        [[foo_theme, bar, make_melpa_struct("bar-theme-foo")], [foo_theme]],
-        [[], []],
-        [[foo], []]
-      ].map do |data, result|
-        expect(PeachMelpa::Parsing.select_themes(data)).to eq(result)
-      end
+      expect(PeachMelpa::Parsing)
+        .to have_received(:looks_like_theme?).with @name
+
+      expect(themes).to be_empty
     end
   end
 end

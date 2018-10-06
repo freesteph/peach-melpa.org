@@ -11,6 +11,7 @@
                     :height 180)
 
 (setq org-startup-folded nil)
+
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -25,7 +26,7 @@
 (defun peach--install-if-necessary (theme-name version kind)
   "Install THEME-NAME of type KIND at VERSION revision if not already installed on the system."
   (let ((pkg (package-desc-create
-              :name (make-symbol (concat theme-name "-theme"))
+              :name (make-symbol theme-name)
               :version (version-to-list version)
               :kind (intern kind)
               :archive "melpa"
@@ -47,30 +48,28 @@
   "Get and install THEME-NAME of package type TYPE and VERSION before taking a screenshot of it."
   (peach--install-if-necessary theme-name version kind)
 
-  (setq
-   possible-themes
-	(seq-filter
-	 (lambda (th)
-	   (string-prefix-p theme-name (symbol-name th)))
-	   (custom-available-themes)))
-  (setq frame-resize-pixelwise t)
-  (toggle-frame-fullscreen)
+  (let* ((theme-radical (replace-regexp-in-string "-themes?$" "" theme-name))
+	 (possible-themes
+	  (seq-filter
+	   (lambda (th)
+	     (string-prefix-p theme-radical (symbol-name th)))
+	   (custom-available-themes))))
+    (setq frame-resize-pixelwise t)
+    (toggle-frame-fullscreen)
 
-  (dolist
-      (variant possible-themes)
-    (condition-case nil
-	(progn
-	  (load-theme variant t)
-	  (let ((modes '(el js c rb org)))
-	    (while modes
-	      (setq mode (car modes))
-	      (peach--capture-screenshot-for-mode variant mode)
-	      (setq modes (cdr modes))))
-	  (disable-theme variant))
-      (error nil)))
-
-  (kill-emacs 0))
-
+    (dolist
+	(variant possible-themes)
+      (condition-case nil
+	  (progn
+	    (load-theme variant t)
+	    (let ((modes '(el js c rb org)))
+	      (while modes
+		(setq mode (car modes))
+		(peach--capture-screenshot-for-mode variant mode)
+		(setq modes (cdr modes))))
+	    (disable-theme variant))
+	(error nil)))
+    (kill-emacs 0)))
 
 (provide 'take-screenshot)
 ;;; take-screenshot.el ends here
