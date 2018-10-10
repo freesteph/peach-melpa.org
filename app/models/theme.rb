@@ -24,8 +24,6 @@ class Theme < ApplicationRecord
 
     begin
       Timeout::timeout(30) do
-        cleanup_old_screenshots!
-
         cmd = CMD % [self.name]
         PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
@@ -87,7 +85,4 @@ class Theme < ApplicationRecord
   end
 
   private
-
-  def cleanup_old_screenshots!
-  end
 end

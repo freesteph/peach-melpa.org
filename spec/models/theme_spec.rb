@@ -43,19 +43,12 @@ RSpec.describe Theme, type: :model do
         .to receive_message_chain("variants.find_or_create_by")
               .and_return @variant
       allow(@theme).to receive(:devise_variants).and_return [:variant]
-      allow(@theme).to receive(:cleanup_old_screenshots!)
 
       allow(Kernel).to receive(:spawn).and_return :pid
       allow(Process).to receive(:wait) { `(exit 0)` }
       allow(Process).to receive(:kill)
 
       allow(Timeout).to receive(:timeout).and_yield
-    end
-
-    it "calls cleanup_old_screenshots! before starting" do
-      @theme.update_screenshots! @mock_args
-
-      expect(@theme).to have_received(:cleanup_old_screenshots!).once
     end
 
     it "wraps the command between a Timeout block" do
