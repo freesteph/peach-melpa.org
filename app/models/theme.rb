@@ -34,7 +34,6 @@ class Theme < ApplicationRecord
         end
 
         PeachMelpa::Log.info(self.name) { "success! picking up screenshots..." }
-        self.screenshots.purge
 
         self.capture_artifacts! new_attrs
       end
@@ -64,28 +63,33 @@ class Theme < ApplicationRecord
 
   def capture_artifacts! new_attrs
     Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
-      files = Dir.glob("#{self.radical}*")
+      Dir.chdir(self.name) do
+        files = Dir.glob("*")
 
-      PeachMelpa::Log.info(self.name) { "deleting all variants" }
-      self.variants.destroy_all
+        PeachMelpa::Log.info(self.name) { "deleting all variants" }
+        self.variants.destroy_all
 
-      variant_names = self.devise_variants(files)
-      PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
+        variant_names = self.devise_variants(files)
+        PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
 
-      variant_names.each do |name|
-        PeachMelpa::Log.info(self.name) { "capturing: #{name}"}
-        variant = self.variants.find_or_create_by(name: name)
-        variant.parse!
+        variant_names.each do |name|
+          PeachMelpa::Log.info(self.name) { "capturing: #{name}"}
+          variant = self.variants.find_or_create_by(name: name)
+          variant.parse!
+        end
+
+        PeachMelpa::Log.info(self.name) { "updating attributes..." }
+        self.update_attributes!(new_attrs)
+
+        PeachMelpa::Log.info(self.name) { "cleaning up screenshots..." }
+        File.delete(*files)
+
+        PeachMelpa::Log.info(self.name) { "done." }
       end
 
-      PeachMelpa::Log.info(self.name) { "updating attributes..." }
-      self.update_attributes!(new_attrs)
-
-      PeachMelpa::Log.info(self.name) { "cleaning up screenshots..." }
-      File.delete(*files)
-
-      PeachMelpa::Log.info(self.name) { "done." }
+      Dir.rmdir(self.name)
     end
   end
+
   private
 end

@@ -37,14 +37,16 @@
     (and (null desc) (error "The theme is not available"))
     (package-install desc)))
 
-(defun peach--capture-screenshot-for-mode (theme-name mode)
+(defun peach--capture-screenshot-for-mode (theme-name variant mode)
   "Find the correct MODE sample for THEME-NAME of package type KIND and screenshot it."
-  (let* ((screenshot-path (format "%stmp/screenshots/%s_%s.png" default-directory theme-name mode))
+  (let* ((screenshot-path (format "%stmp/screenshots/%s/" default-directory theme-name))
+	 (file-name (format "%s_%s.png" variant mode))
          (sample-path (format "%slib/samples/*.%s" default-directory mode))
-         (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path)))
+         (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path file-name)))
     (save-excursion
       (find-file sample-path t)
       (redisplay t)
+      (mkdir screenshot-path t)
       (shell-command cmd-name nil nil))))
 
 (defun fetch-and-load-theme (theme-name)
@@ -64,7 +66,7 @@
 	  (let ((modes '(el js c rb org)))
 	    (while modes
 	      (setq mode (car modes))
-	      (peach--capture-screenshot-for-mode variant mode)
+	      (peach--capture-screenshot-for-mode theme-name variant mode)
 	      (setq modes (cdr modes))))
 	  (disable-theme variant))
       (error nil))))

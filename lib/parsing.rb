@@ -40,6 +40,7 @@ module PeachMelpa
 
     def self.start_daemon
       PeachMelpa::Log::info { "start Emacs daemon..." }
+      `ps aux | grep "emacs --daemon=peach" | grep -v "grep" | awk '{ print $2 }' | xargs kill`
       `emacs --daemon=peach -Q -l lib/take-screenshot.el`
     end
 
