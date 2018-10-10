@@ -4,6 +4,19 @@ require_relative '../../lib/parsing'
 require_relative '../../lib/errors'
 
 RSpec.describe Theme, type: :model do
+  before do
+    @mock_args = {
+      version: "2",
+      description: "text",
+      url: "url",
+      authors: "John, Doe",
+      kind: "single"
+    }
+
+    @theme = Theme.create!(name: "foo-theme")
+    @variant = @theme.variants.create!(name: "bar")
+  end
+
   describe "older_than?" do
     it "is true if the theme has no version" do
       t = Theme.new
@@ -23,32 +36,12 @@ RSpec.describe Theme, type: :model do
 
   describe "update_screenshots!" do
     before :each do
-      @mock_args = {
-        version: "2",
-        description: "text",
-        url: "url",
-        authors: "John, Doe",
-        kind: "single"
-      }
-
-      @theme = Theme.create!(name: "foo-theme")
-      @variant = @theme.variants.create!(name: "bar")
-
-      allow(@variant).to receive(:parse!)
-      allow(@theme).to receive_message_chain("screenshots.attach")
-      allow(@theme).to receive_message_chain("screenshots.purge")
-      allow(@theme)
-        .to receive_message_chain("variants.destroy_all")
-      allow(@theme)
-        .to receive_message_chain("variants.find_or_create_by")
-              .and_return @variant
-      allow(@theme).to receive(:devise_variants).and_return [:variant]
-
       allow(Kernel).to receive(:spawn).and_return :pid
       allow(Process).to receive(:wait) { `(exit 0)` }
       allow(Process).to receive(:kill)
 
       allow(Timeout).to receive(:timeout).and_yield
+      allow(@theme).to receive(:capture_artifacts!)
     end
 
     it "wraps the command between a Timeout block" do
@@ -69,76 +62,6 @@ RSpec.describe Theme, type: :model do
       @theme.update_screenshots! @mock_args
 
       expect(Process).to have_received(:wait).with :pid
-    end
-
-    context "when the cmd exits properly" do
-      before do
-        allow(Dir).to receive(:chdir).and_yield
-        allow(Dir).to receive(:glob).and_return ["one", "two"]
-        allow(File).to receive(:delete)
-        allow(@theme).to receive(:radical).and_return :rad
-      end
-
-      it "deletes the old screenshots" do
-        allow(@theme).to receive(:update_attributes!)
-
-        @theme.update_screenshots! @mock_args
-
-        expect(@theme.screenshots).to have_received(:purge).once
-      end
-
-      it "stores the new version into the theme" do
-        allow(@theme).to receive(:update_attributes!)
-
-        @theme.update_screenshots! @mock_args
-
-        expect(@theme).to have_received(:update_attributes!).once.with(@mock_args)
-      end
-
-      it "changes to the screenshot folder directory" do
-        @theme.update_screenshots! @mock_args
-
-        expect(Dir).to have_received(:chdir).with(PeachMelpa::Parsing::SCREENSHOT_FOLDER)
-      end
-
-      it "uses Dir.glob and the theme radical to capture all the screenshots" do
-        @theme.update_screenshots! @mock_args
-
-        expect(Dir).to have_received(:glob).with("rad*")
-      end
-
-      it "calls devise_variants with the results" do
-        @theme.update_screenshots! @mock_args
-
-        expect(@theme).to have_received(:devise_variants).with(["one", "two"])
-      end
-
-      it "deletes all variants beforehand" do
-        @theme.update_screenshots! @mock_args
-
-        expect(@theme.variants)
-          .to have_received(:destroy_all)
-      end
-
-      it "finds or create a variant with the resulting names" do
-        @theme.update_screenshots! @mock_args
-
-        expect(@theme.variants)
-          .to have_received(:find_or_create_by)
-                .with(name: :variant)
-      end
-
-      it "calls parse! on each variant" do
-        @theme.update_screenshots! @mock_args
-
-        expect(@variant).to have_received(:parse!)
-      end
-
-      it "deletes all the files after" do
-        @theme.update_screenshots! @mock_args
-
-        expect(File).to have_received(:delete).with("one", "two")
-      end
     end
 
     context "when the Emacs subprocess fails" do
@@ -229,6 +152,78 @@ RSpec.describe Theme, type: :model do
       ].each do |name, radical|
         expect(Theme.new(name: name).radical).to eq radical
       end
+    end
+  end
+
+  describe ".capture_artifacts!" do
+    before do
+      allow(@variant).to receive(:parse!)
+      allow(@theme).to receive_message_chain("screenshots.attach")
+      allow(@theme).to receive_message_chain("screenshots.purge")
+      allow(@theme)
+        .to receive_message_chain("variants.destroy_all")
+      allow(@theme)
+        .to receive_message_chain("variants.find_or_create_by")
+              .and_return @variant
+      allow(@theme).to receive(:devise_variants).and_return [:variant]
+
+      allow(Dir).to receive(:chdir).and_yield
+      allow(Dir).to receive(:glob).and_return ["one", "two"]
+      allow(File).to receive(:delete)
+      allow(@theme).to receive(:radical).and_return :rad
+    end
+
+    it "stores the new version into the theme" do
+      allow(@theme).to receive(:update_attributes!)
+
+      @theme.capture_artifacts! @mock_args
+
+      expect(@theme).to have_received(:update_attributes!).once.with(@mock_args)
+    end
+
+    it "changes to the screenshot folder directory" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(Dir).to have_received(:chdir).with(PeachMelpa::Parsing::SCREENSHOT_FOLDER)
+    end
+
+    it "uses Dir.glob and the theme radical to capture all the screenshots" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(Dir).to have_received(:glob).with("rad*")
+    end
+
+    it "calls devise_variants with the results" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(@theme).to have_received(:devise_variants).with(["one", "two"])
+    end
+
+    it "deletes all variants beforehand" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(@theme.variants)
+        .to have_received(:destroy_all)
+    end
+
+    it "finds or create a variant with the resulting names" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(@theme.variants)
+        .to have_received(:find_or_create_by)
+              .with(name: :variant)
+    end
+
+    it "calls parse! on each variant" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(@variant).to have_received(:parse!)
+    end
+
+    it "deletes all the files after" do
+      @theme.capture_artifacts! @mock_args
+
+      expect(File).to have_received(:delete).with("one", "two")
     end
   end
 end
