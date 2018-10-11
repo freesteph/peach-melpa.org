@@ -26,6 +26,25 @@
     }
   }
 
+  button {
+    color: $secondary-text-color;
+    font-variant: small-caps;
+    font-size: $larger-font-size;
+    transition: background-color 0.2s ease-in-out;
+    padding: $spacer $spacer / 2;
+    border: 0;
+
+    &:focus {
+      color: $light-text-color;
+      outline: 0;
+    }
+
+    &.current {
+      color: white;
+      border-bottom: 1px solid white;
+    }
+  }
+
   .variants {
     ul {
       list-style: none;
@@ -33,17 +52,12 @@
 
       li {
 	display: inline-block;
-
-	button {
-	  color: $secondary-text-color;
-	  font-variant: small-caps;
-	  font-size: $larger-font-size;
-	}
       }
     }
 
     .viewfinder {
       position: relative;
+      margin-bottom: $spacer;
 
       .screenshots {
 	position: relative;
@@ -74,10 +88,10 @@
       }
 
       .modes {
-	position: absolute;
-	top: 0;
-	right: 0;
+	display: inline-block;
 	width: auto;
+	vertical-align: top;
+	padding: 0 $spacer * 2;
 
 	ul {
 	  margin: 0;

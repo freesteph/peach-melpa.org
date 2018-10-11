@@ -5,7 +5,7 @@
     %span.cmd M-x package-install #{@theme.name}-theme
 
   %section.variants
-    %ul{"data-target" => "theme.variants"}
+    %ul.names{"data-target" => "theme.variants"}
       - @theme.variants.each do |variant|
         %li
           %button{"data-action" => "click->theme#handleVariantClick"}
