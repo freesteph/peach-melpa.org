@@ -46,9 +46,11 @@
   }
 
   .variants {
+    margin: $spacer 0;
+
     ul {
       list-style: none;
-      padding: $spacer * 2 0;
+      margin-bottom: $spacer * 2;
 
       li {
 	display: inline-block;
