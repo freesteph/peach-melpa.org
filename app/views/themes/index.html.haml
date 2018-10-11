@@ -15,4 +15,4 @@
         = link_to(theme_path(theme), { class: "theme-thumbnail" , data: { brightness: theme.brightness }}) do
           - screenshot = theme.variants.first.screenshots.find { |s| s.filename.to_s.include?("_el") }
           %img{src: url_for(screenshot.variant(resize: "600x"))}
-          .meta= theme.name
+          .meta= theme.radical
