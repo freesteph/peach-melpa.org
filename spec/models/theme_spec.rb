@@ -156,6 +156,8 @@ RSpec.describe Theme, type: :model do
   end
 
   describe ".capture_artifacts!" do
+    let(:folder_path) { PeachMelpa::Parsing::SCREENSHOT_FOLDER + "foo-theme" }
+
     before do
       allow(@variant).to receive(:parse!)
       allow(@theme).to receive_message_chain("screenshots.attach")
@@ -169,6 +171,7 @@ RSpec.describe Theme, type: :model do
 
       allow(Dir).to receive(:chdir).and_yield
       allow(Dir).to receive(:glob).and_return ["one", "two"]
+      allow(Dir).to receive(:rmdir)
       allow(File).to receive(:delete)
       allow(@theme).to receive(:radical).and_return :rad
     end
@@ -181,16 +184,19 @@ RSpec.describe Theme, type: :model do
       expect(@theme).to have_received(:update_attributes!).once.with(@mock_args)
     end
 
-    it "changes to the screenshot folder directory" do
+    it "changes to the screenshot/theme folder" do
       @theme.capture_artifacts! @mock_args
 
-      expect(Dir).to have_received(:chdir).with(PeachMelpa::Parsing::SCREENSHOT_FOLDER)
+      expect(Dir).to have_received(:chdir)
+                       .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER).ordered
+      expect(Dir).to have_received(:chdir)
+                       .with("foo-theme").ordered
     end
 
-    it "uses Dir.glob and the theme radical to capture all the screenshots" do
+    it "uses Dir.glob to capture all the screenshots" do
       @theme.capture_artifacts! @mock_args
 
-      expect(Dir).to have_received(:glob).with("rad*")
+      expect(Dir).to have_received(:glob).with("*")
     end
 
     it "calls devise_variants with the results" do
@@ -224,6 +230,7 @@ RSpec.describe Theme, type: :model do
       @theme.capture_artifacts! @mock_args
 
       expect(File).to have_received(:delete).with("one", "two")
+      expect(Dir).to have_received(:rmdir).with("foo-theme")
     end
   end
 end

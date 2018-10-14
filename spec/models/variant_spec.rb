@@ -41,7 +41,8 @@ RSpec.describe Variant, type: :model do
       @variant.parse!
 
       expect(Dir)
-        .to have_received(:chdir).with(PeachMelpa::Parsing::SCREENSHOT_FOLDER)
+        .to have_received(:chdir)
+              .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + @theme.name)
       end
 
     it "scans the screenshots directory for its own screenshots" do
@@ -54,8 +55,12 @@ RSpec.describe Variant, type: :model do
       @variant.parse!
 
       ["v1", "v2"].each do |entry|
-        expect(File).to have_received(:open)
-                          .with(PeachMelpa::Parsing::SCREENSHOT_FOLDER + entry)
+        expect(File)
+          .to have_received(:open)
+                .with(File.join(
+                        PeachMelpa::Parsing::SCREENSHOT_FOLDER,
+                        @theme.name,
+                        entry))
         expect(@variant.screenshots).to have_received(:attach)
                                           .with(io: :file, filename: entry)
       end
