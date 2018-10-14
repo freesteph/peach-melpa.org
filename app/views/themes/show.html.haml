@@ -18,7 +18,9 @@
           - @theme.variants.each do |variant|
             .roll
               - @modes.each do |mode, ext|
-                = image_tag variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
+                - screenshot = variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
+                %img{src: url_for(screenshot)}
+
       .modes
         %ul{"data-target" => "theme.modes"}
           - @modes.each_with_index do |mode, index|
