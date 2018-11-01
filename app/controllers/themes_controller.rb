@@ -5,6 +5,8 @@ class ThemesController < ApplicationController
   # GET /themes
   # GET /themes.json
   def index
+    @title = "Browse Emacs themes from MELPA"
+
     all = Theme.order(version: :desc).includes(:variants)
 
     @themes = all.reject { |t| t.variants.empty? }
@@ -17,6 +19,7 @@ class ThemesController < ApplicationController
   # GET /themes/1
   # GET /themes/1.json
   def show
+    @title = @theme.name
   end
 
 private
