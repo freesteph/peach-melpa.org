@@ -11,6 +11,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %script{src: "https://www.googletagmanager.com/gtag/js?id=UA-119680842-1", async: true}
     %script
+      window['ga-disable-UA-119680842-1'] = #{not Rails.env.production?};
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
