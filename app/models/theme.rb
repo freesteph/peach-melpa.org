@@ -23,7 +23,7 @@ class Theme < ApplicationRecord
     pid = nil
 
     begin
-      Timeout::timeout(30) do
+      Timeout::timeout(90) do
         cmd = CMD % [self.name]
         PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
@@ -63,6 +63,11 @@ class Theme < ApplicationRecord
 
   def capture_artifacts! new_attrs
     Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
+      if not Dir.exists? self.name
+        PeachMelpa::Log.info(self.name) { "something went wrong, skipping" }
+        return
+      end
+
       Dir.chdir(self.name) do
         files = Dir.glob("*")
 
