@@ -12,12 +12,12 @@ RSpec.describe Variant, type: :model do
   end
 
   it "belongs to a theme" do
-    @variant.update_attributes(theme: nil)
+    @variant.update(theme: nil)
     expect(@variant).not_to be_valid
   end
 
   it "needs a theme" do
-    @variant.update_attributes(name: nil)
+    @variant.update(name: nil)
     expect(@variant).not_to be_valid
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Variant, type: :model do
     other = Variant.new(theme: @theme, name: "test")
     expect(other).not_to be_valid
 
-    other.update_attributes(theme: Theme.create!)
+    other.update(theme: Theme.create!)
     expect(other).to be_valid
   end
 

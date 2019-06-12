@@ -177,11 +177,11 @@ RSpec.describe Theme, type: :model do
     end
 
     it "stores the new version into the theme" do
-      allow(@theme).to receive(:update_attributes!)
+      allow(@theme).to receive(:update!)
 
       @theme.capture_artifacts! @mock_args
 
-      expect(@theme).to have_received(:update_attributes!).once.with(@mock_args)
+      expect(@theme).to have_received(:update!).once.with(@mock_args)
     end
 
     it "changes to the screenshot/theme folder" do

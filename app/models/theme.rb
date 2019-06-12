@@ -84,7 +84,7 @@ class Theme < ApplicationRecord
         end
 
         PeachMelpa::Log.info(self.name) { "updating attributes..." }
-        self.update_attributes!(new_attrs)
+        self.update!(new_attrs)
 
         PeachMelpa::Log.info(self.name) { "cleaning up screenshots..." }
         File.delete(*files)
