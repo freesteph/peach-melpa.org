@@ -19,9 +19,10 @@
           %li
             %button{:class => index == 0 && "current", "data-action" => "click->theme#handleLangClick"}
               = lang
+  %section.props
+    .description
+      .content= @theme.description
 
-
-              %section.props
     %dl
       -# %dt.authors Author(s)
       -# %dd= @theme.authors
