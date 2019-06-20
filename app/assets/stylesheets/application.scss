@@ -22,23 +22,20 @@ body, html {
 }
 
 .header {
-  padding: 1rem;
-  background: #CCC;
-  border-bottom: 1px solid #BBB;
+  padding: 2rem;
   line-height: 1.2rem;
 
   h1 {
     color: #333;
     font-weight: bold;
     display: inline-block;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   h2 {
     display: inline-block;
     color: #333;
     font-size: 1rem;
-    line-height: 1.2rem;
 
     a {
       font-weight: bold;
@@ -48,15 +45,15 @@ body, html {
 }
 
 #themes-list {
-  padding: 1rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
   .theme {
-    margin: 1rem 0;
-    max-width: 360px;
+    flex-basis: 300px;
+    flex-grow: 1;
+    margin: 1rem 2rem;
 
     &:hover {
       img {
@@ -82,7 +79,7 @@ body, html {
     }
 
     .meta {
-      display: inline-block;
+      display: table;
       transition: text-shadow 0.33s ease-in, color 0.25s, border 0.25s;
       padding: 0.5rem 0;
       margin-bottom: 1.5rem;
