@@ -1,113 +1,59 @@
 .theme {
+  margin:0 1rem;
+
   .name {
-    h1 {
-      font-weight: bold;
-    }
+    font-weight: bold;
+  }
 
-    .cmd {
+  .description {
+    font-weight: normal;
+    font-size: 0.8rem;
+  }
+
+  .cmd {
+    font-size: .8rem;
+    font-weight: normal;
+    background: #999;
+  }
+
+  .gallery {
+    white-space: nowrap;
+    overflow: hidden;
+
+    img {
       display: inline-block;
-      margin: $spacer/2 0;
-      letter-spacing: 1px;
-      font-weight: 100;
-      background: #444;
-      padding: $spacer;
+      margin-bottom: 1rem;
+      border-radius: 3px;
+      width: 100%;
     }
   }
 
-  .props {
-    margin: $spacer * 2 0;
+  .modes {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 
-    dl > * {
-      padding: $spacer / 2 0;
+    li {
+      flex-grow: 1;
+      display: inline-block;
     }
 
-    dt {
-      color: $secondary-text-color;
-    }
-  }
+    button {
+      padding: 0.5rem;
+      width: 100%;
+      height: 100%;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: #333;
 
-  button {
-    color: $secondary-text-color;
-    font-variant: small-caps;
-    font-size: $larger-font-size;
-    transition: background-color 0.2s ease-in-out;
-    padding: $spacer $spacer / 2;
-    border: 0;
-
-    &:focus {
-      color: $light-text-color;
-      outline: 0;
-    }
-
-    &.current {
-      color: white;
-      border-bottom: 1px solid white;
-    }
-  }
-
-  .variants {
-    margin: $spacer 0;
-
-    ul {
-      list-style: none;
-      margin-bottom: $spacer * 2;
-
-      li {
-	display: inline-block;
-      }
-    }
-
-    .viewfinder {
-      position: relative;
-      margin-bottom: $spacer;
-
-      .screenshots {
-	position: relative;
-	max-width: calc(100vw * 0.75);
-	overflow: hidden;
-	width: 100%;
-	display: inline-block;
-	height: calc(100vw * 0.75 * 0.75);
-
-	.gallery {
-	  position: absolute;
-	  width: max-content;
-	  left: 0;
-	  top: 0;
-	  transition: left ease-out 0.25s,
-		      top ease-out 0.25s;
-	  font-size:  0;
-
-	  .roll {
-	    display: inline-block;
-	    max-width: calc(100vw * 0.75);
-
-	    img {
-	      width: 100%;
-	    }
-	  }
-	}
+      &.current {
+        font-weight: bold;
+        border-bottom: 1px solid #666;
       }
 
-      .modes {
-	display: inline-block;
-	width: auto;
-	vertical-align: top;
-	padding: 0 $spacer * 2;
-
-	ul {
-	  margin: 0;
-	  padding: 0;
-
-	  li {
-	    display: block;
-	    margin-bottom: $spacer;
-
-	    button {
-	      text-transform: lowercase;
-	    }
-	  }
-	}
+      &:active, &:focus {
+        background: #EEE;
+        outline: 0;
       }
     }
   }

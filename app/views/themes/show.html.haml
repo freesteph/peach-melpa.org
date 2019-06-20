@@ -1,9 +1,4 @@
 .theme{data: { controller: 'theme' }}
-  %section.name
-    %h1.name= @theme.name
-    %h2.description= @theme.description
-    %span.cmd M-x package-install #{@theme.name}
-
   %section.variants
     - unless @theme.variants.length < 2
       %ul.names{"data-target" => "theme.variants"}
@@ -12,26 +7,21 @@
             %button{class: index == 0 && "current", "data-action" => "click->theme#handleVariantClick"}
               = variant.name
 
-    .viewfinder
-      .screenshots
-        .gallery
-          - @theme.variants.each do |variant|
-            .roll
-              - @modes.each do |mode, ext|
-                - screenshot = variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
-                %img{src: url_for(screenshot)}
+    .gallery
+      - @theme.variants.each do |variant|
+        - @modes.each do |mode, ext|
+          - screenshot = variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
+          %img{src: url_for(screenshot)}
 
-      .modes
-        %ul{"data-target" => "theme.modes"}
-          - @modes.each_with_index do |mode, index|
-            - lang = mode.first
-            %li
-              %button{:class => index == 0 && "current", "data-action" => "click->theme#handleLangClick"}
-                = lang
+      %ul.modes{"data-target" => "theme.modes"}
+        - @modes.each_with_index do |mode, index|
+          - lang = mode.first
+          %li
+            %button{:class => index == 0 && "current", "data-action" => "click->theme#handleLangClick"}
+              = lang
 
-  %h5 All sample files are edited to better highlight the theme properties. The original license and full source code can be found in the top comment.
 
-  %section.props
+              %section.props
     %dl
       -# %dt.authors Author(s)
       -# %dd= @theme.authors

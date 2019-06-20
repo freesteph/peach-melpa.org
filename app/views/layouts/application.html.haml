@@ -22,6 +22,11 @@
   %body
     .header
       %h1 Peach Melpa 🍑
-      %h2 An automated preview of all Emacs themes available on <a href="https://melpa.org">Melpa</a>.
+      %h2
+        - if @title.present?
+          =@title
+        - else
+          An automated preview of all Emacs themes available on <a href="https://melpa.org">Melpa</a>.
+
     = yield
     = javascript_pack_tag 'application'
