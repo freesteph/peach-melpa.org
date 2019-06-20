@@ -18,6 +18,10 @@
 
       gtag('config', 'UA-119680842-1');
     = favicon_link_tag asset_path("logo.png")
+    %meta{name:"viewport", content:"width=device-width, initial-scale=1"}
   %body
+    .header
+      %h1 Peach Melpa 🍑
+      %h2 An automated preview of all Emacs themes available on <a href="https://melpa.org">Melpa</a>.
     = yield
     = javascript_pack_tag 'application'
