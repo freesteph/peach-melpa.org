@@ -5,3 +5,4 @@ tmp
 app/assets/screenshots
 .dockerignore
 Dockerfile
+public/packs
