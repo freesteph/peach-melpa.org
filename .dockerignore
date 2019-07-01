@@ -1,5 +1,7 @@
 node_modules
 .git
-log
+log/*
 tmp
 app/assets/screenshots
+.dockerignore
+Dockerfile
