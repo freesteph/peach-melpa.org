@@ -1,36 +1,29 @@
 .theme{data: { controller: 'theme' }}
+  %h1.title= @theme.name
+  %h3.description= @theme.description
   %section.variants
-    - unless @theme.variants.length < 2
-      %ul.names{"data-target" => "theme.variants"}
-        - @theme.variants.each_with_index do |variant, index|
-          %li
-            %button{class: index == 0 && "current", "data-action" => "click->theme#handleVariantClick"}
-              = variant.name
-
     .gallery
       - @theme.variants.each do |variant|
         - @modes.each do |mode, ext|
           - screenshot = variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
           %img{src: url_for(screenshot)}
 
-      %ul.modes{"data-target" => "theme.modes"}
-        - @modes.each_with_index do |mode, index|
-          - lang = mode.first
-          %li
-            %button{:class => index == 0 && "current", "data-action" => "click->theme#handleLangClick"}
-              = lang
-  %section.props
-    .description
-      .content= @theme.description
 
-    %dl
-      -# %dt.authors Author(s)
-      -# %dd= @theme.authors
-      %dt.url URL
-      - if @theme.url.present?
-        %dd.link= link_to @theme.url, @theme.url
-      - else
-        %dd.link No URL available for this theme.
-      %dt.version Version
-      %dd= @theme.version
-  = link_to 'Back', themes_path
+  %section.props
+    .controls
+      %ul
+        %li
+          %label{for: "mode"}
+            language
+          %select#mode
+            - @modes.each_with_index do |mode, index|
+              %option= mode.first
+
+        - unless @theme.variants.length < 2
+          %li
+            %label{for: "variant"}
+              variant
+            %select#variant
+              - @theme.variants.each_with_index do |variant, index|
+                %option= variant.name
+  -# = link_to 'Back', themes_path, { class: 'back' }

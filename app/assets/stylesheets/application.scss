@@ -22,31 +22,55 @@ body, html {
   width: 100%;
   color: #333;
   background-color: #DDD;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 2px;
+}
+
+select {
+  min-width: 5rem;
+  padding: 0.5rem;
+  background: #EEE;
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+
+.content {
+  flex-grow: 1;
 }
 
 .header {
-  padding: 1rem;
+  flex-grow: 0;
+  padding: 2rem 1rem;
   line-height: 1.8rem;
+  text-align: center;
 
   h1 {
     font-weight: bold;
     display: inline-block;
     font-size: 1.9rem;
+
+    a {
+      font-style: italic;
+      font-family: monospace;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+      text-decoration: none;
+      padding: 0.5rem 0;
+      color: #333;
+    }
   }
 
   #peach {
-    display: inline-block;
+    display: none;
     font-size: 1.9rem;
     margin: 0 0.5rem;
   }
 
-  h2 {
-    display: inline-block;
-    font-size: 1.1rem;
-
-    a {
-      font-weight: bold;
-      color: black;
-    }
+  hr {
+    box-shadow: 0;
+    border: 0;
+    border-top: 1px solid #AAA;
   }
 }

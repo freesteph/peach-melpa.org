@@ -21,13 +21,8 @@
     %meta{name:"viewport", content:"width=device-width, initial-scale=1"}
   %body
     .header
-      %h1 Peach Melpa
+      %h1= link_to 'Peach Melpa', root_path
       #peach 🍑
-      %h2
-        - if @title.present?
-          =@title
-        - else
-          An automated preview of all Emacs themes available on <a href="https://melpa.org">Melpa</a>.
-
-    = yield
+    .main
+      = yield
     = javascript_pack_tag 'application'
