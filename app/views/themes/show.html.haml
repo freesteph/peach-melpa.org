@@ -2,7 +2,7 @@
   %h1.title= @theme.name
   %h3.description= @theme.description
   %section.variants
-    .gallery
+    .gallery{data: { target: 'theme.gallery'}}
       - @theme.variants.each do |variant|
         - @modes.each do |mode, ext|
           - screenshot = variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
@@ -15,7 +15,7 @@
         %li
           %label{for: "mode"}
             language
-          %select#mode
+          %select#mode{data: { action: "change->theme#onLangChange"}}
             - @modes.each_with_index do |mode, index|
               %option= mode.first
 
