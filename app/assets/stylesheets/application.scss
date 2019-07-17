@@ -40,6 +40,25 @@ select {
   flex-grow: 1;
 }
 
+
+.link {
+  transition: text-shadow 0.33s ease-in, color 0.25s, border 0.25s;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid transparent;
+  color: #777;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-decoration: none;
+  border-bottom: 1px dotted transparent;
+  display: table;
+
+  &:hover {
+    color: #333;
+    border-bottom: 1px solid #888;
+    font-weight: bold;
+  }
+}
+
 .header {
   flex-grow: 0;
   padding: 2rem 1rem;
@@ -49,16 +68,9 @@ select {
   h1 {
     font-weight: bold;
     display: inline-block;
-    font-size: 1.9rem;
 
     a {
-      font-style: italic;
-      font-family: monospace;
-      letter-spacing: 2px;
-      text-transform: lowercase;
-      text-decoration: none;
-      padding: 0.5rem 0;
-      color: #333;
+      font-size: 1.9rem;
     }
   }
 

@@ -9,21 +9,5 @@
           %img{src: url_for(screenshot)}
 
 
-  %section.props
-    .controls
-      %ul
-        %li
-          %label{for: "mode"}
-            language
-          %select#mode{data: { action: "change->theme#onLangChange"}}
-            - @modes.each_with_index do |mode, index|
-              %option= mode.first
 
-        - unless @theme.variants.length < 2
-          %li
-            %label{for: "variant"}
-              variant
-            %select#variant
-              - @theme.variants.each_with_index do |variant, index|
-                %option= variant.name
-  -# = link_to 'Back', themes_path, { class: 'back' }
+  = link_to 'Back', themes_path, { class: 'link' }
