@@ -22,7 +22,7 @@
   %body
     .header
       %h1= link_to 'Peach Melpa', root_path, { class: 'link' }
-      #peach 🍑
+      %h2= @title
     .main
       = yield
     = javascript_pack_tag 'application'

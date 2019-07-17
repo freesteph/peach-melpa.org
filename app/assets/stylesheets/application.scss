@@ -17,6 +17,7 @@
 @import "theme";
 
 body, html {
+  padding: 0.5rem 0;
   font-family: monospace;
   height: 100%;
   width: 100%;
@@ -61,7 +62,7 @@ select {
 
 .header {
   flex-grow: 0;
-  padding: 2rem 1rem;
+  padding: 0;
   line-height: 1.8rem;
   text-align: center;
 
