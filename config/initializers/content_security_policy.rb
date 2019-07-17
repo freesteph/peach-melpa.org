@@ -23,12 +23,3 @@
 # For further information see the following documentation:
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
 # Rails.application.config.content_security_policy_report_only = true
-
-Rails.application.config.content_security_policy do |policy|
-  if Rails.env.development?
-    policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035"
-    policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035"
-    policy.script_src  :self, :https, :unsafe_inline, 'http://localhost:35729'
-    policy.connect_src 'http://localhost:35729', 'ws://localhost:35729'
-  end
-end
