@@ -2,12 +2,15 @@
   -# %h1.title= @theme.name
   %h3.description= @theme.description
   %section.variants
+    .modes.selector
+      %button.prev{disabled: true} ⟵
+      %h3.mode= @mode[0]
+      %button.next ⟶
+    .variants.selector
+      %button.prev{disabled: true} ⟵
+      %h3.name= @variant.name
+      %button.next ⟶
     .gallery{data: { target: 'theme.gallery'}}
-      - @theme.variants.each do |variant|
-        - @modes.each do |mode, ext|
-          - screenshot = variant.screenshots.find { |s| s.filename.to_s.end_with? "#{ext}.png" }
-          %img{src: url_for(screenshot)}
-
-
+      %img{src: url_for(@variant.screenshots.first)}
 
   = link_to 'Back', themes_path, { class: 'link' }

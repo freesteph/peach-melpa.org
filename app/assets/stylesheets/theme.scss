@@ -17,6 +17,29 @@
     line-height: 120%;
   }
 
+  .selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+
+    a {
+      border: 0;
+      font-size: 1.3rem;
+      padding: 0.5rem 1rem;
+
+      &:hover {
+	font-weight: bold;
+      }
+    }
+
+    h3 {
+      min-width:10rem;
+      text-align: center;
+      text-transform: lowercase;
+    }
+  }
+
   .gallery {
     white-space: nowrap;
     overflow: hidden;

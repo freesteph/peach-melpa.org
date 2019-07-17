@@ -20,9 +20,13 @@ class ThemesController < ApplicationController
   # GET /themes/1.json
   def show
     @title = @theme.name
+
+    @variant = @theme.variants.first
+    @multi = @them.variants.length > 1
+    @mode = @variant.mode_for @variant.screenshots.first.filename.to_s, @modes
   end
 
-private
+  private
     # Use callbacks to share common setup or constraints between actions.
     def set_theme
       @theme = Theme.find_by(name: params[:name])

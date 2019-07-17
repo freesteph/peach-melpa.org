@@ -5,6 +5,10 @@ class Variant < ApplicationRecord
   has_many_attached :screenshots
   validates :name, presence: true, uniqueness: { scope: :theme }
 
+  def to_param
+    name
+  end
+
   def parse!
     assets_path = File.join PeachMelpa::Parsing::SCREENSHOT_FOLDER, self.theme.name
 
@@ -16,5 +20,15 @@ class Variant < ApplicationRecord
         )
       end
     end
+  end
+
+  def mode_for filename, modes
+    ext = File.basename(filename, ".*").split("_").last
+
+    modes.find { |name, e| ext == e }
+  end
+
+  def to_s
+    name
   end
 end
