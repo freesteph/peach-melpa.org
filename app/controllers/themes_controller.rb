@@ -10,11 +10,6 @@ class ThemesController < ApplicationController
     all = Theme.order(version: :desc).includes(:variants)
 
     @themes = all.reject { |t| t.variants.empty? }
-
-    # brightness_range = @themes.map(&:brightness)
-
-    # @lowest = brightness_range.min
-    # @highest = brightness_range.max
   end
   # GET /themes/1
   # GET /themes/1.json
