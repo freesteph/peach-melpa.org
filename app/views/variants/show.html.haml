@@ -2,10 +2,10 @@
   -# %h1.title= @theme.name
   %h3.description= @theme.description
   %section.variants
-    .modes.selector
-      = link_to "⟵", [@theme, @previous], { class: 'link' }
-      %h3.mode= @mode[0]
-      = link_to "⟶", [@theme, @previous], { class: 'link' }
+    -# .modes.selector
+    -#   = link_to "⟵", [@theme, @previous], { class: 'link' }
+    -#   %h3.mode= @mode[0]
+    -#   = link_to "⟶", [@theme, @previous], { class: 'link' }
     .variants.selector
       - if @previous
         = link_to "⟵", [@theme, @previous], { class: 'link' }
