@@ -6,17 +6,18 @@
     -#   = link_to "⟵", [@theme, @previous], { class: 'link' }
     -#   %h3.mode= @mode[0]
     -#   = link_to "⟶", [@theme, @previous], { class: 'link' }
-    .variants.selector
-      - if @previous
-        = link_to "⟵", [@theme, @previous], { class: 'link' }
-      - else
-        = link_to "⟵", "#", { class: 'disabled link' }
-      %h3.name= @variant.name
-      - if @next
-        = link_to "⟶", [@theme, @next], { class: 'link' }
-      - else
-        %a.link{ disabled: true }
-          ⟶
+    - if @multi
+      .variants.selector
+        - if @previous
+          = link_to "⟵", [@theme, @previous], { class: 'link' }
+        - else
+          = link_to "⟵", "#", { class: 'disabled link' }
+        %h3.name= @variant.name
+        - if @next
+          = link_to "⟶", [@theme, @next], { class: 'link' }
+        - else
+          %a.link.disabled
+            ⟶
     .gallery{data: { target: 'theme.gallery'}}
       %img{src: url_for(@variant.screenshots.first)}
 

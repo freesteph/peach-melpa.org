@@ -31,6 +31,10 @@
       &:hover {
 	font-weight: bold;
       }
+
+      &.disabled {
+	color: #BBB;
+      }
     }
 
     h3 {
