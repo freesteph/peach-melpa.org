@@ -47,7 +47,7 @@ RSpec.describe Theme, type: :model do
     it "wraps the command between a Timeout block" do
       @theme.update_screenshots! @mock_args
 
-      expect(Timeout).to have_received(:timeout).with(30)
+      expect(Timeout).to have_received(:timeout).with(90)
     end
 
     it "calls the Kernel.spawn method with the name and new version" do
@@ -136,7 +136,6 @@ RSpec.describe Theme, type: :model do
       )
 
       theme = Theme.create!(name: 'poet-theme')
-      puts theme.inspect
 
       expect(theme.devise_variants(test_data))
         .to match_array ["poet", "poet-monochrome", "poet-dark-monochrome"]
@@ -160,8 +159,8 @@ RSpec.describe Theme, type: :model do
 
     before do
       allow(@variant).to receive(:parse!)
-      allow(@theme).to receive_message_chain("screenshots.attach")
-      allow(@theme).to receive_message_chain("screenshots.purge")
+      allow(@variant).to receive_message_chain("screenshots.attach")
+      allow(@variant).to receive_message_chain("screenshots.purge")
       allow(@theme)
         .to receive_message_chain("variants.destroy_all")
       allow(@theme)
@@ -173,7 +172,19 @@ RSpec.describe Theme, type: :model do
       allow(Dir).to receive(:glob).and_return ["one", "two"]
       allow(Dir).to receive(:rmdir)
       allow(File).to receive(:delete)
+      allow(Dir).to receive(:exists?).and_return true
       allow(@theme).to receive(:radical).and_return :rad
+    end
+
+    describe "if the screenshots folder does not exist" do
+      before do
+        allow(Dir).to receive(:exists?).and_return false
+      end
+
+      it "aborts the operation" do
+        expect{ @theme.capture_artifacts! @mock_args }
+          .to raise_error(PeachMelpa::Errors::NoScreenshotsFolder)
+      end
     end
 
     it "stores the new version into the theme" do

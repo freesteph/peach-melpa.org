@@ -2,7 +2,6 @@ require_relative '../../lib/errors'
 require_relative '../../lib/logging'
 
 class Theme < ApplicationRecord
-  has_many_attached :screenshots
   has_many :variants, dependent: :destroy
 
   CMD = "emacsclient -s peach -n -c -eval '(fetch-and-load-theme \"%s\")'"
@@ -64,8 +63,7 @@ class Theme < ApplicationRecord
   def capture_artifacts! new_attrs
     Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
       if not Dir.exists? self.name
-        PeachMelpa::Log.info(self.name) { "something went wrong, skipping" }
-        return
+        raise PeachMelpa::Errors::NoScreenshotsFolder
       end
 
       Dir.chdir(self.name) do
