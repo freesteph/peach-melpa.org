@@ -27,22 +27,6 @@ class Variant < ApplicationRecord
     end
   end
 
-  def mode_for filename, modes
-    ext = File.basename(filename, ".*").split("_").last
-
-    modes.find { |name, e| ext == e }
-  end
-
-  def screenshot_for lang, modes
-    extension = modes[lang]
-
-    self.screenshots.find do |s|
-      ext = File.basename(s.filename.to_s, ".*").split("_").last
-
-      ext == extension
-    end
-  end
-
   def to_s
     name
   end
