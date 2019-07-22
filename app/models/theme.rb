@@ -94,5 +94,9 @@ class Theme < ApplicationRecord
     end
   end
 
+  def thumbnail
+    @lisp = Mode.find_by(name: "Lisp")
+    self.variants.first.screenshots.find_by(mode: @lisp)
+  end
   private
 end

@@ -2,7 +2,7 @@ require_relative '../../lib/parsing'
 
 class Variant < ApplicationRecord
   belongs_to :theme
-  has_many_attached :screenshots
+  has_many :screenshots, dependent: :destroy
   validates :name, presence: true, uniqueness: { scope: :theme }
 
   def to_param
@@ -14,10 +14,15 @@ class Variant < ApplicationRecord
 
     Dir.chdir(assets_path) do
       Dir.glob("#{self.name}_*").each do |name|
-        self.screenshots.attach(
-          io: File.open(File.join(assets_path, name)),
-          filename: name
+        mode = self.extract_mode name
+
+        s = self.screenshots.create!(
+          mode: mode,
         )
+
+        s.image.attach(
+          io: File.open(File.join(assets_path, name)),
+          filename: name)
       end
     end
   end
@@ -40,5 +45,11 @@ class Variant < ApplicationRecord
 
   def to_s
     name
+  end
+
+  def extract_mode filename
+    ext = File.basename(filename, ".*").split("_").last
+
+    Mode.find_by(extension: ext)
   end
 end

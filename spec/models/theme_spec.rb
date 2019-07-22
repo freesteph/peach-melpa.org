@@ -176,7 +176,7 @@ RSpec.describe Theme, type: :model do
       allow(@theme).to receive(:radical).and_return :rad
     end
 
-    describe "if the screenshots folder does not exist" do
+    context "when the screenshots folder does not exist" do
       before do
         allow(Dir).to receive(:exists?).and_return false
       end

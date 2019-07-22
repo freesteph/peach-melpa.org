@@ -50,6 +50,7 @@ module PeachMelpa
     end
 
     def self.pick_updated_themes opts = {}
+      self.stop_daemon
       self.start_daemon
 
       PeachMelpa::Log::info { "starting to parse themes" }

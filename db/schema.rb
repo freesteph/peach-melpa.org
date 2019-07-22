@@ -35,7 +35,8 @@ ActiveRecord::Schema.define(version: 2019_07_19_115121) do
 
   create_table "modes", force: :cascade do |t|
     t.string "name", null: false
-    t.index ["name"], name: "index_modes_on_name", unique: true
+    t.string "extension", null: false
+    t.index ["extension"], name: "index_modes_on_extension", unique: true
   end
 
   create_table "screenshots", force: :cascade do |t|

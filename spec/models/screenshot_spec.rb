@@ -4,7 +4,7 @@ RSpec.describe Screenshot, type: :model do
   before do
     @theme = Theme.create!
     @variant = @theme.variants.create!(name: "foo")
-    @mode = Mode.create!(name: "Lisp")
+    @mode = Mode.create!(name: "Lisp", extension: "el")
   end
 
   it "is valid with the default attributes" do

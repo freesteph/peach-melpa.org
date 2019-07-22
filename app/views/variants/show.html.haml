@@ -2,23 +2,30 @@
   -# %h1.title= @theme.name
   %h3.description= @theme.description
   %section.variants
-    -# .modes.selector
-    -#   = link_to "⟵", [@theme, @previous], { class: 'link' }
-    -#   %h3.mode= @mode[0]
-    -#   = link_to "⟶", [@theme, @previous], { class: 'link' }
+    .modes.selector
+      - if @previous_mode
+        = link_to "⟵", { controller: "variants", action: "show", name: @variant.name, lang: @previous_mode.extension }, {class: "link"}
+      - else
+        = link_to "⟵", "#", { class: 'disabled link' }
+      %h3.mode= @mode.name
+      - if @next_mode
+        = link_to "⟶", { controller: "variants", action: "show", name: @variant.name, lang: @next_mode.extension }, {class: "link"}
+      - else
+        %a.link.disabled
+          ⟶
     - if @multi
       .variants.selector
         - if @previous
-          = link_to "⟵", [@theme, @previous], { class: 'link' }
+          = link_to "⟵", { controller: "variants", action: "show", name: @previous.name, lang: @mode.extension }, {class: "link"}
         - else
           = link_to "⟵", "#", { class: 'disabled link' }
         %h3.name= @variant.name
         - if @next
-          = link_to "⟶", [@theme, @next], { class: 'link' }
+          = link_to "⟶", { controller: "variants", action: "show", name: @next.name, lang: @mode.extension }, {class: "link"}
         - else
           %a.link.disabled
             ⟶
     .gallery{data: { target: 'theme.gallery'}}
-      %img{src: url_for(@variant.screenshots.first)}
+      %img{src: url_for(@screenshot.image)}
 
   = link_to 'Back', themes_path, { class: 'link' }
