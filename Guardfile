@@ -75,7 +75,6 @@ guard 'livereload' do
     scss: :css,
     sass: :css,
     js: :js,
-    coffee: :js,
     html: :html,
     png: :png,
     gif: :gif,
