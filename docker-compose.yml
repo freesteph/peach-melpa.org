@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - RAILS_ENV=production
+      - RAILS_MASTER_KEY=ecc76e143bee23c1e11561d244df5451
+    ports:
+      - "3000:3000"
+    container_name: peachweb
+  db:
+    environment:
+      - POSTGRES_DB=peach_prod
+    image: postgres:latest
