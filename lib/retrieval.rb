@@ -1,3 +1,4 @@
+require_relative './logging'
 require 'net/http'
 require 'rails'
 
@@ -8,9 +9,12 @@ module PeachMelpa
     ARCHIVE_PATH = "#{Rails.root}/tmp/archive.json"
 
     def self.refresh_melpa_archive
+      PeachMelpa::Log::info { "fetching JSON archive from MELPA" }
       archive = Net::HTTP.get(MELPA_HOST, MELPA_ARCHIVE_NAME)
                   .encode('UTF-8', invalid: :replace, undef: :replace, replace: '?')
       File.write(ARCHIVE_PATH, archive)
+      PeachMelpa::Log::info { "wrote #{MELPA_ARCHIVE_NAME} to #{ARCHIVE_PATH}" }
+      PeachMelpa::Log::info { "done fetching!" }
     end
   end
 end
