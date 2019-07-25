@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+MODES = {
+  "Lisp" => "el",
+  "Javascript" => "js",
+  "C" => "c",
+  "Ruby" => "rb",
+  "Org-mode" => "org"
+}
+
+MODES.each { |n, e| Mode.find_or_create_by(name: n, extension: e) }

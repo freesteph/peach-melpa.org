@@ -14,6 +14,4 @@ WORKDIR /var/peach
 COPY . ./
 RUN rake assets:precompile
 
-EXPOSE 80 443 3000
-
-CMD rails db:migrate && rails s
+/CMD sh -c

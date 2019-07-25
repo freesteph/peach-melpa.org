@@ -1,5 +1,13 @@
-FROM alpine:latest
+FROM peach-melpa:latest
 
-RUN apk add emacs-x11 xvfb
+ENV DISPLAY=":13"
 
-CMD sh
+RUN apk add emacs-x11 xvfb imagemagick curl
+
+RUN chmod +x ./install-font.sh
+RUN ./install-font.sh
+
+COPY wrapper.sh .
+RUN chmod +x ./wrapper.sh
+
+ENTRYPOINT ["/bin/sh", "./wrapper.sh"]

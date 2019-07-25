@@ -1,13 +1,24 @@
 version: '3'
 services:
-  web:
-    build: .
+  server:
+    build: ./docker/server
     environment:
       - RAILS_ENV=production
-      - RAILS_MASTER_KEY=ecc76e143bee23c1e11561d244df5451
+    depends_on:
+      - db
     ports:
       - "3000:3000"
-    container_name: peachweb
+    container_name: peach-server
+    image: peach-melpa-server
+  updater:
+    build: ./docker/emacs
+    environment:
+      - RAILS_ENV=production
+    container_name: peach-updater
+    image: peach-melpa-updater
+    depends_on:
+      - server
+    command: rake themes:all
   db:
     environment:
       - POSTGRES_DB=peach_prod
