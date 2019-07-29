@@ -15,7 +15,7 @@
 
 (require 'package)
 (package-initialize)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-refresh-contents)
 
 (defun peach--get-screenshot-cmd ()
