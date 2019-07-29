@@ -32,19 +32,20 @@
 	 (package-delete (cadr pkg)))))
 
 (defun peach--install (theme-name)
-  "Installs the theme designed by THEME-NAME."
+  "Install the theme designed by THEME-NAME."
   (let ((desc (cadr (assoc (intern theme-name) package-archive-contents))))
     (and (null desc) (error "The theme is not available"))
     (package-install desc)))
 
 (defun peach--capture-screenshot-for-mode (theme-name variant mode)
-  "Find the correct MODE sample for THEME-NAME of package type KIND and screenshot it."
+  "Find the correct MODE sample for THEME-NAME's VARIANT and screenshot it."
   (let* ((screenshot-path (format "%stmp/screenshots/%s/" default-directory theme-name))
 	 (file-name (format "%s_%s.png" variant mode))
          (sample-path (format "%slib/samples/*.%s" default-directory mode))
          (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path file-name)))
     (save-excursion
       (find-file sample-path t)
+      (delete-other-windows)
       (redisplay t)
       (mkdir screenshot-path t)
       (shell-command cmd-name nil nil))))
