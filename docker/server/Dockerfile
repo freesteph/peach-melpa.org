@@ -1,5 +1,7 @@
 FROM peach-melpa:latest
 
+RUN rake assets:precompile
+
 EXPOSE 80 443 3000
 
 COPY ./wrapper.sh .

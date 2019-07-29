@@ -12,6 +12,5 @@ RUN bundle install --without development test
 
 WORKDIR /var/peach
 COPY . ./
-RUN rake assets:precompile
 
-/CMD sh -c
+CMD sh -c
