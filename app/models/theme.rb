@@ -98,5 +98,8 @@ class Theme < ApplicationRecord
     @lisp = Mode.find_by(name: "Lisp")
     self.variants.first.screenshots.find_by(mode: @lisp)
   end
-  private
+
+  def preview
+    self.thumbnail.image.variant(resize_to_limit: [600, 600])
+  end
 end

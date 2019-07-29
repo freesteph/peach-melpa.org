@@ -3,5 +3,5 @@
     .theme
       -# going to prison for the code below
       = link_to([theme, theme.variants.first], { data: { brightness: theme.brightness }}) do
-        %img{src: url_for(theme.thumbnail.image)}
+        %img{src: url_for(theme.preview)}
         .meta= theme.radical
