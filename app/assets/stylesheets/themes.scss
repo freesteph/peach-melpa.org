@@ -19,7 +19,7 @@
       }
 
       .meta {
-	color: #333;
+	color: #111;
 	border-bottom: 1px solid #888;
       }
     }
@@ -38,13 +38,12 @@
 
     .meta {
       display: table;
-      transition: text-shadow 0.33s ease-in, color 0.25s, border 0.25s;
+      transition: color 0.25s, border 0.25s;
       padding: 0.5rem 0;
-      border-bottom: 1px solid transparent;
       color: #777;
       font-size: 1rem;
       letter-spacing: 2px;
-      border-bottom: 1px solid transparent;
+      border-bottom: 1px solid #DDD;
     }
   }
 }

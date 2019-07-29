@@ -45,18 +45,16 @@ select {
 .link {
   transition: text-shadow 0.33s ease-in, color 0.25s, border 0.25s;
   padding: 0.5rem 0;
-  border-bottom: 1px solid transparent;
   color: #777;
   font-size: 1rem;
   letter-spacing: 2px;
   text-decoration: none;
-  border-bottom: 1px dotted transparent;
+  border-bottom: 1px solid #DDD;
   display: table;
 
   &:hover {
     color: #333;
     border-bottom: 1px solid #888;
-    font-weight: bold;
   }
 }
 

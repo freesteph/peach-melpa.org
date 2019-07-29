@@ -2,6 +2,6 @@
   - @themes.each do |theme|
     .theme
       -# going to prison for the code below
-      = link_to([theme, theme.variants.first], { class: "theme-thumbnail" , data: { brightness: theme.brightness }}) do
+      = link_to([theme, theme.variants.first], { data: { brightness: theme.brightness }}) do
         %img{src: url_for(theme.thumbnail.image)}
         .meta= theme.radical
