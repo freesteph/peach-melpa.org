@@ -4,26 +4,26 @@
   %section.variants
     .modes.selector
       - if @previous_mode
-        = link_to "⟵", { controller: "variants", action: "show", name: @variant.name, lang: @previous_mode.extension }, {class: "link"}
+        = link_to "⟵", { controller: "variants", action: "show", name: @variant.name, lang: @previous_mode.extension }, {class: "button"}
       - else
-        = link_to "⟵", "#", { class: 'disabled link' }
-      %h3.mode= @mode.name
+        = link_to "⟵", "#", { class: 'disabled button' }
+      %h3.mode.button= @mode.name
       - if @next_mode
-        = link_to "⟶", { controller: "variants", action: "show", name: @variant.name, lang: @next_mode.extension }, {class: "link"}
+        = link_to "⟶", { controller: "variants", action: "show", name: @variant.name, lang: @next_mode.extension }, {class: "button"}
       - else
-        %a.link.disabled
+        %a.button.disabled
           ⟶
     - if @multi
       .variants.selector
         - if @previous
-          = link_to "⟵", { controller: "variants", action: "show", name: @previous.name, lang: @mode.extension }, {class: "link"}
+          = link_to "⟵", { controller: "variants", action: "show", name: @previous.name, lang: @mode.extension }, {class: "button"}
         - else
-          = link_to "⟵", "#", { class: 'disabled link' }
-        %h3.name= @variant.name
+          = link_to "⟵", "#", { class: 'disabled button' }
+        %h3.name.button= @variant.name
         - if @next
-          = link_to "⟶", { controller: "variants", action: "show", name: @next.name, lang: @mode.extension }, {class: "link"}
+          = link_to "⟶", { controller: "variants", action: "show", name: @next.name, lang: @mode.extension }, {class: "button"}
         - else
-          %a.link.disabled
+          %a.button.disabled
             ⟶
     .gallery{data: { target: 'theme.gallery'}}
       %img{src: url_for(@screenshot.image)}

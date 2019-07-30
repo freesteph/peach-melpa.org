@@ -50,18 +50,14 @@
 }
 
 .pagination {
-  position: relative;
-  padding: 3rem 1rem;
+  padding: 1rem;
   text-transform: lowercase;
+  text-align: center;
+  margin: 0 auto;
 
   .page {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-  }
-
-  .next {
-    right: 1rem;
+    display: inline-block;
+    margin: 0.5rem;
+    min-width: 12rem;
   }
 }

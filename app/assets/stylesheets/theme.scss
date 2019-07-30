@@ -17,6 +17,12 @@
     line-height: 120%;
   }
 
+  h3.description {
+    max-width: 80%;
+    text-align: center;
+    font-style: italic;
+  }
+
   .selector {
     display: flex;
     flex-direction: row;
@@ -24,23 +30,20 @@
     align-items: baseline;
 
     a {
-      border: 0;
-      font-size: 1.3rem;
-      padding: 0.5rem 1rem;
-
-      &:hover {
-	font-weight: bold;
-      }
-
-      &.disabled {
-	color: #BBB;
-      }
+      padding: 0.7rem 1rem;
     }
 
     h3 {
       min-width:10rem;
       text-align: center;
       text-transform: lowercase;
+      border: 0;
+      box-shadow: 0px 0px 1px #999;
+      z-index: 1;
+
+      &:hover {
+	background: #EEE;
+      }
     }
   }
 
@@ -71,5 +74,6 @@
 }
 
 .back.button {
-  margin: 1rem;
+  margin: 1rem auto;
+  margin-top: 0;
 }

@@ -75,19 +75,27 @@ select {
 }
 
 .button {
-  background: #333;
-  color: #AAA;
-  padding: 1rem;
+  background: #EEE;
+  color: #666;
+  padding: 0.7rem;
   border-radius: 3px;
-  text-shadow: 0 -1px 0px black;
   display: table;
-  transition: text-shadow 0.33s ease-in, background 0.25s, color 0.25s, border 0.25s;
   text-decoration: none;
-  border:1px solid transparent;
+  transition: border 0.25s, background 0.25s, color 0.25s;
+  border:1px solid #CCC;
 
   &:hover {
-    background: #444;
-    border: 1px solid #333;
-    color: #EEE;
+    background: white;
+    border: 1px solid #BBB;
+  }
+
+  &.disabled {
+    background: #DDD;
+    color: #999;
+    pointer-events: none;
+
+    &:hover {
+      border: 1px solid #EEE;
+    }
   }
 }
