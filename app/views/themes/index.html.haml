@@ -5,3 +5,8 @@
       = link_to([theme, theme.variants.first], { data: { brightness: theme.brightness }}) do
         %img{src: url_for(theme.preview)}
         .meta= theme.radical
+.pagination
+  - if @page > 1
+    = link_to "⟵ Previous page", @previous, { class: "button page prev"}
+  - if @next
+    = link_to "Next page ⟶", @next, { class: "button page next" }

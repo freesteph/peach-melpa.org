@@ -7,6 +7,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 1rem 0;
+  padding-bottom: 0;
 
   .theme {
     flex-basis: 300px;
@@ -45,5 +46,22 @@
       letter-spacing: 2px;
       border-bottom: 1px solid #DDD;
     }
+  }
+}
+
+.pagination {
+  position: relative;
+  padding: 3rem 1rem;
+  text-transform: lowercase;
+
+  .page {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+  }
+
+  .next {
+    right: 1rem;
   }
 }

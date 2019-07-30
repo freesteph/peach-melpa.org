@@ -4,6 +4,8 @@ require_relative '../../lib/logging'
 class Theme < ApplicationRecord
   has_many :variants, dependent: :destroy
 
+  scope :perfect, -> { joins(:variants) }
+
   CMD = "emacsclient -s peach -n -c -eval '(fetch-and-load-theme \"%s\")'"
 
   def to_param
