@@ -21,7 +21,7 @@ class ThemesController < ApplicationController
                   themes_path(page: @page - 1)
                 end
 
-    @next = if offset + @@page_size > @count
+    @next = if offset + @@page_size >= @count
               nil
             else
               themes_path(page: @page + 1)
