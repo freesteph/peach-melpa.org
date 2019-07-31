@@ -82,6 +82,18 @@ RSpec.describe Theme, type: :model do
       it "should collect some debug information"
     end
 
+    context "when the theme's screenshot folder doesn't exist" do
+      before :each do
+        allow(Process).to receive(:wait).and_raise(PeachMelpa::Errors::NoThemeScreenshotsFolder)
+      end
+
+      it "kills the process" do
+        @theme.update_screenshots! @mock_args
+
+        expect(Process).to have_received(:kill).with("TERM", :pid)
+      end
+    end
+
     context "when the command takes too long" do
       before :each do
         allow(Process).to receive(:wait).and_raise(Timeout::Error)
@@ -183,7 +195,7 @@ RSpec.describe Theme, type: :model do
 
       it "aborts the operation" do
         expect{ @theme.capture_artifacts! @mock_args }
-          .to raise_error(PeachMelpa::Errors::NoScreenshotsFolder)
+          .to raise_error(PeachMelpa::Errors::NoThemeScreenshotsFolder)
       end
     end
 

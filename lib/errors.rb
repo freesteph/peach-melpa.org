@@ -6,9 +6,9 @@ module PeachMelpa
       end
     end
 
-    class NoScreenshotsFolder < StandardError
+    class NoThemeScreenshotsFolder < StandardError
       def message
-        "the folder used to store the generated screenshots does not exist"
+        "the screenshots folder (for this specific theme) does not exist"
       end
     end
   end

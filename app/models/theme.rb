@@ -44,9 +44,14 @@ class Theme < ApplicationRecord
         "the Emacs process is taking too much time, killing it now."
       }
       Process.kill "TERM", pid
+    rescue PeachMelpa::Errors::NoThemeScreenshotsFolder => e
+      PeachMelpa::Log.info(self.name) {
+        "#{e.message}: it's likely the Emacs process is dodgy so terminating it."
+      }
+      Process.kill "TERM", pid
     rescue PeachMelpa::Errors::EmacsError => e
       PeachMelpa::Log.info(self.name) {
-        "the Emacs process exited with an error:going to launch #{e.inspect}"
+        "the Emacs process exited with an unknown error: #{e.inspect}"
       }
       # something bad happened in Emacs
     end
@@ -65,7 +70,7 @@ class Theme < ApplicationRecord
   def capture_artifacts! new_attrs
     Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
       if not Dir.exists? self.name
-        raise PeachMelpa::Errors::NoScreenshotsFolder
+        raise PeachMelpa::Errors::NoThemeScreenshotsFolder
       end
 
       Dir.chdir(self.name) do
