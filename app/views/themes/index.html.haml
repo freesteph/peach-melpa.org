@@ -1,4 +1,7 @@
 #themes-list{data: { controller: 'themes' }}
+  - unless @themes.any?
+    .oops
+      there are no themes yet. How strange.
   - @themes.each do |theme|
     .theme
       -# going to prison for the code below
