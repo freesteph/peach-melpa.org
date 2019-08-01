@@ -48,7 +48,10 @@ class Theme < ApplicationRecord
       PeachMelpa::Log.info(self.name) {
         "#{e.message}: it's likely the Emacs process is dodgy so terminating it."
       }
-      Process.kill "TERM", pid
+      begin
+        Process.kill "TERM", pid
+      rescue
+      end
     rescue PeachMelpa::Errors::EmacsError => e
       PeachMelpa::Log.info(self.name) {
         "the Emacs process exited with an unknown error: #{e.inspect}"
