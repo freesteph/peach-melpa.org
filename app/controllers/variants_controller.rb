@@ -4,6 +4,7 @@ class VariantsController < ApplicationController
   def show
     @multi = @theme.variants.length > 1
     @screenshot = @variant.screenshots.find_by(mode: @mode)
+    @url = @theme.url.nil? ? "https://melpa.org/#/#{@theme.name}" : @theme.url
   end
 
   private

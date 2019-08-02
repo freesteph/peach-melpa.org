@@ -1,6 +1,6 @@
 .theme{data: { controller: 'theme' }}
-  -# %h1.title= @theme.name
-  %h3.description= @theme.description
+  %h3.description
+    = link_to @theme.description, @url, { class: "link" }
   %section.variants
     .modes.selector
       - if @previous_mode
