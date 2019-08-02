@@ -15,6 +15,7 @@
 @import "reset";
 @import "themes";
 @import "theme";
+@import "header";
 
 body, html {
   padding: 0.5rem 0;
@@ -55,22 +56,6 @@ select {
   &:hover {
     color: #333;
     border-bottom: 1px solid #888;
-  }
-}
-
-.header {
-  flex-grow: 0;
-  padding: 0;
-  line-height: 1.8rem;
-  text-align: center;
-
-  h1 {
-    font-weight: bold;
-    display: inline-block;
-
-    a {
-      font-size: 1.9rem;
-    }
   }
 }
 

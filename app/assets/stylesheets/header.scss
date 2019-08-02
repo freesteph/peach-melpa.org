@@ -1,0 +1,25 @@
+.header {
+  flex-grow: 0;
+  padding: 0;
+  line-height: 1.8rem;
+  text-align: center;
+
+  h1 {
+    font-weight: bold;
+    display: inline-block;
+
+    a {
+      font-size: 1.9rem;
+    }
+  }
+
+  .logo {
+    display: inline-block;
+
+    img {
+      max-width: 42px;
+      margin: 0.6rem 0;
+      vertical-align: bottom;
+    }
+  }
+}

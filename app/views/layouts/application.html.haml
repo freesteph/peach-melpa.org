@@ -22,6 +22,7 @@
   %body
     .header
       %h1= link_to 'Peach Melpa', root_path, { class: 'link' }
+      .logo= image_tag 'logo.png'
       %h2= @title
     .main
       = yield
