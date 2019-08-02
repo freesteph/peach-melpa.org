@@ -110,6 +110,14 @@ class Theme < ApplicationRecord
   end
 
   def preview
-    self.thumbnail.image.variant(resize_to_limit: [600, 600])
+    factor = 2.49
+    dimensions = "#{1600 / factor}x#{1200 / factor}"
+
+    # FIXME: figure out if this operation is cached or not
+    self.thumbnail.image.variant(combine_options: {
+                                   gravity: "SouthWest",
+                                   crop: "#{dimensions}+0+0",
+                                   resize: "600x600^",
+                                 })
   end
 end

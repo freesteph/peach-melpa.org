@@ -28,10 +28,10 @@ class ThemesController < ApplicationController
             end
 
     @themes = Theme
-               .perfect
-               .offset(offset)
-               .limit(@@page_size)
-               .order(version: :desc)
+                .perfect
+                .offset(offset)
+                .limit(@@page_size)
+                .order(version: :desc)
   end
 
   # GET /themes/1
