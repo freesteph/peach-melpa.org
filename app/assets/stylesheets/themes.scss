@@ -18,6 +18,7 @@
   .theme {
     flex-basis: 300px;
     margin: 1rem;
+    position: relative;
 
     &:hover {
       img {
@@ -27,6 +28,11 @@
       .meta {
 	color: #111;
 	border-bottom: 1px solid #888;
+      }
+
+      .multi {
+	background: rgba(255, 255, 255, 0.90);
+	color: #333;
       }
     }
 
@@ -50,6 +56,21 @@
       font-size: 1rem;
       letter-spacing: 2px;
       border-bottom: 1px solid #DDD;
+    }
+
+    .multi {
+      background: rgba(255, 255, 255, 0.66);
+      transition: color 0.25s, background 0.25s;
+      color: #666;
+      font-weight: bold;
+      font-size: 1rem;
+      border: 1px solid #BBB;
+      border-radius: 100%;
+      display: inline-block;
+      padding: 0.6rem 0.7rem;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
     }
   }
 }

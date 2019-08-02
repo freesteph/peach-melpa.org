@@ -4,9 +4,10 @@
       there are no themes yet. How strange.
   - @themes.each do |theme|
     .theme
-      -# going to prison for the code below
       = link_to([theme, theme.variants.first], { data: { brightness: theme.brightness }}) do
         %img{src: url_for(theme.preview)}
+        - if theme.variants.count > 1
+          .multi= theme.variants.count
         .meta= theme.radical
 .pagination
   = link_to "⟵ Previous page", @previous, { class: "button page prev" + (@page < 2 ? " disabled": "")}
