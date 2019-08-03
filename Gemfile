@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'therubyracer'
 gem 'haml-rails'
 gem 'image_processing'
 gem 'aws-sdk-s3', require: false
