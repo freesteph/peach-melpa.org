@@ -21,8 +21,5 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: peach_prod
-  user: postgres
-  host: db
+  <<: *default
+  database: db/production.sqlite3
