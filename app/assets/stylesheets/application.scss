@@ -12,6 +12,7 @@
  *
  */
 
+@import "constants";
 @import "reset";
 @import "themes";
 @import "theme";
@@ -22,11 +23,12 @@ body, html {
   font-family: monospace;
   height: 100%;
   width: 100%;
-  color: #333;
-  background-color: #DDD;
+  color: $base-text-color;
+  background-color: $background-color;
   display: flex;
   flex-direction: column;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  font-size: $base-font-size;
 }
 
 select {
@@ -35,7 +37,6 @@ select {
   background: #EEE;
   border: 1px solid #CCC;
   border-radius: 3px;
-  letter-spacing: 1px;
 }
 
 .content {
@@ -46,16 +47,15 @@ select {
 .link {
   transition: text-shadow 0.33s ease-in, color 0.25s, border 0.25s;
   padding: 0.5rem 0;
-  color: #777;
-  font-size: 1rem;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-decoration: none;
-  border-bottom: 1px solid #DDD;
+  color: inherit;
+  border-bottom: $border-size solid #DDD;
   display: table;
 
   &:hover {
-    color: #333;
-    border-bottom: 1px solid #888;
+    color: $stronger-text-color;
+    border-bottom: $border-size solid #888;
   }
 }
 

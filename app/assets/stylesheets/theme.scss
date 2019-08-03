@@ -23,8 +23,18 @@
     font-style: italic;
 
     a {
-      color: #333;
-      border-bottom: 2px solid #da5d3e;
+      color: $base-text-color;
+      border-bottom: 1.5px solid #da5d3e;
+
+      &:after {
+	content: '⭜';
+	margin-left: 1rem;
+	font-size: 1rem;
+      }
+
+      &:hover {
+	font-weight: bold;
+      }
     }
   }
 
