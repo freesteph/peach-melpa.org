@@ -1,11 +1,11 @@
 !!!
-%html
+%html{ lang: "en-GB" }
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title
       PeachMelpa &vert;
       = @title
-    %meta{name: "description", content: "PeachMelpa is a collection of themes for GNU Emacs, retrieved from MELPA.org. Automatically refreshed on an hourly basis so can put a touch of colour on the most powerful editor in the world. "}
+      %meta{name: "description", content: "PeachMelpa is a collection of themes for GNU Emacs, retrieved from MELPA.org. Automatically refreshed on an hourly basis so can put a touch of colour on the most powerful editor in the world. "}
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
@@ -22,7 +22,7 @@
   %body
     .header
       %h1= link_to 'Peach Melpa', root_path, { class: 'link' }
-      .logo= image_tag 'logo.png'
+      .logo= image_tag 'logo.png', { alt: "PeachMelpa logo" }
       %h2= @title
     .main
       = yield

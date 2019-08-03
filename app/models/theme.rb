@@ -61,7 +61,7 @@ class Theme < ApplicationRecord
   end
 
   def devise_variants screenshots
-    endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).png$")
+    endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).webp$")
 
     screenshots.map { |s| s.gsub(endings, '') }.uniq
   end
@@ -117,7 +117,7 @@ class Theme < ApplicationRecord
     self.thumbnail.image.variant(combine_options: {
                                    gravity: "SouthWest",
                                    crop: "#{dimensions}+0+0",
-                                   resize: "600x600^",
+                                   resize: "300x300^",
                                  })
   end
 end

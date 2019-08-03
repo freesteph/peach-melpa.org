@@ -9,12 +9,6 @@
   padding: 1rem 0;
   padding-bottom: 0;
 
-  .oops {
-    padding: 1rem;
-    font-size: 1.2rem;
-    line-height: 120%;
-  }
-
   .theme {
     flex-basis: 300px;
     margin: 1rem;
@@ -86,4 +80,10 @@
     margin: 0.5rem;
     min-width: 12rem;
   }
+}
+
+.oops {
+  padding: 1rem;
+  font-size: 1.2rem;
+  line-height: 120%;
 }

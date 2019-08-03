@@ -130,21 +130,21 @@ RSpec.describe Theme, type: :model do
   describe "devise_variants" do
     it "infers the theme variants based on the list of screenshots" do
       test_data = %w(
-        poet_c.png
-        poet-dark-monochrome_c.png
-        poet-dark-monochrome_el.png
-        poet-dark-monochrome_js.png
-        poet-dark-monochrome_org.png
-        poet-dark-monochrome_rb.png
-        poet_el.png
-        poet_js.png
-        poet-monochrome_c.png
-        poet-monochrome_el.png
-        poet-monochrome_js.png
-        poet-monochrome_org.png
-        poet-monochrome_rb.png
-        poet_org.png
-        poet_rb.png
+        poet_c.webp
+        poet-dark-monochrome_c.webp
+        poet-dark-monochrome_el.webp
+        poet-dark-monochrome_js.webp
+        poet-dark-monochrome_org.webp
+        poet-dark-monochrome_rb.webp
+        poet_el.webp
+        poet_js.webp
+        poet-monochrome_c.webp
+        poet-monochrome_el.webp
+        poet-monochrome_js.webp
+        poet-monochrome_org.webp
+        poet-monochrome_rb.webp
+        poet_org.webp
+        poet_rb.webp
       )
 
       theme = Theme.create!(name: 'poet-theme')

@@ -1,8 +1,8 @@
 #themes-list{data: { controller: 'themes' }}
-  - unless @themes.any?
-    .oops
-      there are no themes yet. How strange.
   .grid
+    - unless @themes.any?
+      .oops
+        there are no themes yet. How strange.
     - @themes.each do |theme|
       .theme
         = link_to([theme, theme.variants.first], { data: { brightness: theme.brightness }}) do
