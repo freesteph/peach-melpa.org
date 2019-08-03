@@ -22,8 +22,8 @@
   "Use the environment to figure out the screenshot command."
   (let ((peach-env (getenv "PEACH_ENV")))
     (if (string-equal "OSX" peach-env)
-        "screencapture -C -o -t webp "
-          "import -define webp:lossless=true -window root ")))
+        "screencapture -C -o -t png "
+          "import -window root ")))
 
 (defun peach--ensure-clean-install (theme-name)
   "Ensure THEME-NAME of VERSION and KIND is removed before starting."
@@ -40,7 +40,7 @@
 (defun peach--capture-screenshot-for-mode (theme-name variant mode)
   "Find the correct MODE sample for THEME-NAME's VARIANT and screenshot it."
   (let* ((screenshot-path (format "%stmp/screenshots/%s/" default-directory theme-name))
-	 (file-name (format "%s_%s.webp" variant mode))
+	 (file-name (format "%s_%s.png" variant mode))
          (sample-path (format "%slib/samples/*.%s" default-directory mode))
          (cmd-name (concat (peach--get-screenshot-cmd) screenshot-path file-name)))
     (save-excursion

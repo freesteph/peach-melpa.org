@@ -63,7 +63,7 @@ class Theme < ApplicationRecord
   end
 
   def devise_variants screenshots
-    endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).webp$")
+    endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).png$")
 
     screenshots.map { |s| s.gsub(endings, '') }.uniq
   end
