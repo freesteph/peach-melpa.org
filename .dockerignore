@@ -12,3 +12,8 @@
 !vendor
 !log
 !install-font.sh
+
+# exceptions
+log/*
+public/packs
+app/assets/screenshots
