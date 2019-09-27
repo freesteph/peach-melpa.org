@@ -4,7 +4,7 @@ require_relative '../../lib/logging'
 class Theme < ApplicationRecord
   has_many :variants, dependent: :destroy
 
-  validates :name, { presence: true }
+  validates :name, { presence: true, uniqueness: true }
 
   scope :perfect, -> { joins(:variants).distinct }
 

@@ -21,6 +21,14 @@ RSpec.describe Theme, type: :model do
     it 'is not valid without a name' do
       expect(Theme.new(name: nil)).to_not be_valid
     end
+
+    context 'when another theme already exists under the same name' do
+      it 'is not valid' do
+        Theme.create!(name: 'great')
+
+        expect(Theme.new(name: 'great')).to_not be_valid
+      end
+    end
   end
 
   describe "older_than?" do
