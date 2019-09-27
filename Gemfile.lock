@@ -88,6 +88,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.7)
     execjs (2.7.0)
+    faker (2.4.0)
+      i18n (~> 1.6.0)
     ffi (1.11.1)
     formatador (0.2.5)
     globalid (0.4.2)
@@ -279,6 +281,7 @@ DEPENDENCIES
   aws-sdk-s3
   bootsnap
   byebug
+  faker
   guard-livereload (~> 2.5)
   guard-rspec
   haml-rails
