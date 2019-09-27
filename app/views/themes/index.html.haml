@@ -5,7 +5,7 @@
         there are no themes yet. How strange.
     - @themes.each do |theme|
       .theme
-        = link_to([theme, theme.variants.first], { data: { brightness: theme.brightness }}) do
+        = link_to([theme, theme.variants.first]) do
           %img{src: url_for(theme.preview), alt: "preview for #{theme.name}"}
           - if theme.variants.count > 1
             .multi= theme.variants.count
