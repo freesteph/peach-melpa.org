@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Screenshot, type: :model do
   before do
-    @theme = Theme.create!
-    @variant = @theme.variants.create!(name: "foo")
+    @theme = Theme.create!(name: "theme")
+    @variant = @theme.variants.create!(name: "variant")
     @mode = Mode.create!(name: "Lisp", extension: "el")
   end
 
