@@ -18,9 +18,9 @@
     = favicon_link_tag asset_path("logo.png")
     %meta{name:"viewport", content:"width=device-width, initial-scale=1"}
   %body
-    .header
+    %header
       %h1= link_to 'Peach Melpa', root_path, { class: 'link' }
       .logo= image_tag 'logo.png', { alt: "PeachMelpa logo" }
       %h2= @header
-    .main
+    %main
       = yield

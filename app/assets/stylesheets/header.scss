@@ -1,8 +1,9 @@
-.header {
+header {
   flex-grow: 0;
   padding: 0;
   line-height: 1.8rem;
   text-align: center;
+  margin-bottom: 1rem;
 
   h1 {
     font-weight: bold;
@@ -11,6 +12,10 @@
     a {
       font-size: 1.9rem;
     }
+  }
+
+  h2 {
+    font-size: 1rem;
   }
 
   .logo {
