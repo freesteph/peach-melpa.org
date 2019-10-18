@@ -8,7 +8,7 @@ class ThemesController < ApplicationController
   # GET /themes
   # GET /themes.json
   def index
-    @title = "Browse Emacs themes from MELPA"
+    set_page_title_for 'home'
     @page = (request.params[:page] || 1).to_i
 
     offset = (@page - 1) * @@page_size
@@ -37,11 +37,7 @@ class ThemesController < ApplicationController
   # GET /themes/1
   # GET /themes/1.json
   def show
-    @title = @theme.name
-
-    @variant = @theme.variants.first
-    @multi = @theme.variants.length > 1
-    @mode = @variant.mode_for @variant.screenshots.first.filename.to_s, @modes
+    # FIXME: redirect this to variants or do some transparent hoisting
   end
 
   private
@@ -53,9 +49,5 @@ class ThemesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def theme_params
       params.require(:theme).permit(:name, :version)
-    end
-
-    def page
-
     end
 end

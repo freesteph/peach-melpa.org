@@ -2,6 +2,11 @@ class VariantsController < ApplicationController
   before_action :set_variant, :set_mode_info, :set_other_variants_info
 
   def show
+    set_page_title_for 'show',
+                       name: @theme.name,
+                       description:
+                         @theme.description && @theme.description.prepend(": ")
+
     @multi = @theme.variants.length > 1
     @screenshot = @variant.screenshots.find_by(mode: @mode)
     @url = @theme.url.nil? ? "https://melpa.org/#/#{@theme.name}" : @theme.url

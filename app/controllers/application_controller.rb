@@ -8,4 +8,11 @@ class ApplicationController < ActionController::Base
   def set_modes
     @modes = Mode.all
   end
+
+
+  def set_page_title_for(descriptor, args = {})
+    @title = t("pages.#{descriptor}.title", args)
+    @description = t("pages.#{descriptor}.description", args)
+  end
+
 end

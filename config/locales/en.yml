@@ -30,4 +30,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  pages:
+    home:
+      title: "PeachMelpa | Emacs themes from MELPA"
+      description: "PeachMelpa is a collection of themes for GNU Emacs, retrieved from MELPA.org. Automatically refreshed on an hourly basis so can put a touch of colour on the most powerful editor in the world."
+    show:
+      title: "%{name} | PeachMelpa"
+      description: "%{name} on PeachMelpa%{description}"
