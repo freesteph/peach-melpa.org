@@ -18,8 +18,8 @@
 @import "theme";
 @import "header";
 
-body, html {
-  padding: 0.5rem 0;
+body {
+  box-sizing: border-box;
   font-family: monospace;
   height: 100%;
   width: 100%;
@@ -29,6 +29,7 @@ body, html {
   flex-direction: column;
   letter-spacing: 1px;
   font-size: $base-font-size;
+  padding: 1rem;
 }
 
 select {
