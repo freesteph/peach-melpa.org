@@ -29,6 +29,7 @@ gem 'haml-rails'
 gem 'image_processing'
 gem 'aws-sdk-s3', require: false
 gem 'faker'
+gem 'sqlite3'
 
 group :production do
   gem 'faker'
@@ -39,7 +40,6 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'guard-rspec'
-  gem 'sqlite3'
 end
 
 group :development do
