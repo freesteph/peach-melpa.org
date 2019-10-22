@@ -28,9 +28,10 @@ gem 'therubyracer'
 gem 'haml-rails'
 gem 'image_processing'
 gem 'aws-sdk-s3', require: false
+gem 'faker'
 
 group :production do
-  gem "pg"
+  gem 'faker'
 end
 
 group :development, :test do
@@ -39,7 +40,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec'
   gem 'sqlite3'
-  gem 'faker'
 end
 
 group :development do
@@ -52,4 +52,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'guard-livereload', '~> 2.5', require: false
   gem 'rack-livereload'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-dotenv'
 end
