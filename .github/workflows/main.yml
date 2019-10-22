@@ -5,8 +5,8 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-    
+    runs-on: ruby:2.6.5-alpine
+
     steps:
     - uses: actions/checkout@v1
     - name: Install gems
