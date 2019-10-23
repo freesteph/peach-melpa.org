@@ -42,7 +42,7 @@ server "3.10.165.203", user: "peach-dev", roles: %w{app db web}, my_property: :m
 # Global options
 # --------------
  set :ssh_options, {
-   keys: %w(/home/freesteph/.ssh/id_rsa_peach_ec2),
+   keys: %w(/home/freesteph/Downloads/peach-melpa-dev.pem),
    forward_agent: true,
    auth_methods: %w(publickey password)
  }
