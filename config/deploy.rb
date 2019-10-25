@@ -29,10 +29,7 @@ set :deploy_to, "/home/peach-dev/deploy/www/peach"
 
 set :tmp_dir, "/home/peach-dev/deploy/tmp"
 # Default value for default_env is {}
-set :default_env, {
-  'RAILS_MASTER_KEY' => ENV["RAILS_MASTER_KEY"],
-  'RAILS_ENV' => 'production'
-}
+set :default_env, {}
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
@@ -42,3 +39,5 @@ set :default_env, {
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+before 'deploy:migrate', 'aws:grab_db_credentials'
