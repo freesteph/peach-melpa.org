@@ -4,8 +4,7 @@ class VariantsController < ApplicationController
   def show
     set_page_title_for 'show',
                        name: @theme.name,
-                       description:
-                         @theme.description && @theme.description.prepend(": ")
+                       description: @theme.description
 
     @multi = @theme.variants.length > 1
     @screenshot = @variant.screenshots.find_by(mode: @mode)
