@@ -32,8 +32,8 @@
 en:
   pages:
     home:
-      title: "PeachMelpa | Emacs themes from MELPA"
+      title: "PeachMelpa | Emacs themes"
       description: "PeachMelpa is a collection of themes for GNU Emacs, retrieved from MELPA.org. Automatically refreshed on an hourly basis so can put a touch of colour on the most powerful editor in the world."
     show:
-      title: "%{name} | PeachMelpa"
+      title: "%{name} | PeachMelpa | Emacs themes"
       description: "%{name} on PeachMelpa: %{description}"
