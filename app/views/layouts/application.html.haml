@@ -7,14 +7,14 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    %script{src: "https://www.googletagmanager.com/gtag/js?id=UA-119680842-1", async: true}
-    %script
-      window['ga-disable-UA-119680842-1'] = #{not Rails.env.production?};
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    - if Rails.env.production?
+      %script{src: "https://www.googletagmanager.com/gtag/js?id=UA-119680842-1", async: true}
+      %script
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-119680842-1');
 
-      gtag('config', 'UA-119680842-1');
     = favicon_link_tag asset_path("logo.png")
     %meta{name:"viewport", content:"width=device-width, initial-scale=1"}
   %body
