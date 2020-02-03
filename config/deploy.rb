@@ -9,7 +9,7 @@ set :repo_url, "https://github.com/freesteph/peach-melpa.org.git"
 set :branch, "feature/capistrano"
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/peach-dev/deploy/www/peach"
+set :deploy_to, "/home/peach/deploy/www/"
 
 # Default value for :format is :airbrussh.
 # set :format, :nairbrussh
@@ -27,7 +27,7 @@ set :deploy_to, "/home/peach-dev/deploy/www/peach"
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
-set :tmp_dir, "/home/peach-dev/deploy/tmp"
+set :tmp_dir, "/home/peach/deploy/tmp"
 # Default value for default_env is {}
 set :default_env, {}
 

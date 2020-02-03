@@ -3,7 +3,7 @@
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server "3.10.165.203", user: "peach-dev", roles: %w{app db web}
+server "3.11.191.119", user: "peach", roles: %w{app db web}
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
@@ -41,10 +41,10 @@ server "3.10.165.203", user: "peach-dev", roles: %w{app db web}
 #
 # Global options
 # --------------
- set :ssh_options, {
-   keys: %w(/home/freesteph/Downloads/peach-melpa-dev.pem),
-   forward_agent: true,
-   auth_methods: %w(publickey password)
+set :ssh_options, {
+  keys: %w(/home/freesteph/.ssh/id_rsa_peach_ec2),
+  forward_agent: true,
+  auth_methods: %w(publickey)
  }
 #
 # The server-based syntax can be used to override options:
