@@ -3,13 +3,13 @@ language: ruby
 cache: bundler
 
 script:
-- bundle exec rails db:migrate RAILS_ENV=test
-- bundle exec rspec
+  - bundle exec rails db:migrate RAILS_ENV=test
+  - bundle exec rspec
 
 after_success:
-  - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa"
-  - "bundle exec cap production deploy"
+  - openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa
+  - bundle exec cap production deploy
 
 env:
   global:
-    secure: PNmBafr1TfEiLZQIKgmGYuGyRBFKAM1DZUnuk7mOnY4eEWt2UIQmOaoTIXcNPuJcl00AedqNGdX+zckn/G+w8coXWMQgFZgbGNXNWuQqpgKtabKEdyc22Ca8vjSUjx40eH1ZS4RBDERAMjDZ//NdmfpoMh3dTPIV9XrxOeqJ3jTn0uOslsgZPtZq9oUVvKkyWhA0yTotwKQIASfdaSftwGQgYWLtSXbt6C29ESRSHnAAYVzny4e78mXcqY3lJT8Xj6Vm9q2HIqaUUdcb5DBDEU8itdEZbOnRN2COzVK5Rv6uXmd/AvIP52137GBNzRSInn02S63qGT4erpbuMtK7afQ19dCNWg5ndddDfkMrmkGGVOAy/fLImQzf3AMsZRY48WMAl4H5ktWqXmlNe2CFM1AEY722DV6g25JtE436Ynaj1Y9qWcuMZpjSLR81wzIRj18NGVO7hadDI4EAi+ktt9zIev7fxsSpEdHGQFJtVOkegbBx2Ug4Tdd7a3voKINeSrcw399bqOtMFPXQZowQYmC1Cvkcxr+0C2RXnkFj2Va8XL/Z7wxNiypxn4yOg7cNXEjukcKGPERoWwJDbxsWBKFd6vGL4Slkdf7S1NIgsMHuwL+CeY35HqO9cZNjZ0domTM85pR2a0mtOm+gxTv73ZvESnMEXH3tutKIg7fdYao=
+    secure: OKSEI9WXqkyrTiW3yCq86Wga2JPKyLBwRHOKTSwTU2npHIANbS+pkk5Vwgz70BKD8ImC+CMWk6mxlESKZcLkiRLZdVdig8prQ7wHgAko/ok3FxuQ5zjFZRfWu/1LKkWYhVtJ2PqW7xcCwgzM36HL314BtLE274AO01aLERqwbms6Y9DJY4mDCAlFQpojfdnVhy04t1QDkaSHZTQKBukwRkhllRnAgmrZmltaJ1u8poSkWavY5WbePGKAmI208nXjipQNVYgc6dIEt1+Fa6EXuXbJEidjhBKJ4sX57xXk4FQNRSVhaMEjq4xB0WEUD1yu5BJbJksM5vc8e8Ai+P1lPenTje7OcljucZbzSATU1j4SWeacBV0zmtW/ZZkvV1xV74leGrlbrNW7jlLn+puoS6LrSxr73cauaNNbBYYLZ8hh/iQ0OVT46Knd4RqpzSggNRkc9VPm9oCyeSNJSI7Hlp51CO8qjXBu8Or/BYIQDDpJvgjdn/wjXezZPlaM+7x8kQ9sHgzq9PY46ZuORG5k76UeN+grnDbJB9u394SoDDRE/swzR5VSWT7YuhcG1YR7Cb3dTNEIpiRWQIhHX/j/EhbbXMDx4SaYwS/PXJAretjGWdcaSpKTIuLBcQ+LWAFhUbLpZVxqLwsvONQ6gMnzsris8LCaM+evdufWsaL7dXI=
