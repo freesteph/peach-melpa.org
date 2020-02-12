@@ -74,6 +74,7 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
+    bcrypt_pbkdf (1.0.1)
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
@@ -102,6 +103,7 @@ GEM
     concurrent-ruby (1.1.5)
     crass (1.0.6)
     diff-lcs (1.3)
+    ed25519 (1.2.4)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -312,12 +314,14 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk-s3
+  bcrypt_pbkdf
   bootsnap
   byebug
   capistrano-dotenv
   capistrano-rails
   capistrano-rbenv
   capistrano3-puma
+  ed25519
   faker
   guard-livereload (~> 2.5)
   guard-rspec

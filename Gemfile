@@ -31,6 +31,8 @@ gem 'aws-sdk-s3', require: false
 gem 'faker'
 
 group :production do
+  gem "bcrypt_pbkdf"
+  gem "ed25519"
   gem "pg"
 end
 
