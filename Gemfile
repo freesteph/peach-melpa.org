@@ -1,5 +1,6 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -24,38 +25,37 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'therubyracer'
-gem 'haml-rails'
-gem 'image_processing'
 gem 'aws-sdk-s3', require: false
 gem 'faker'
+gem 'haml-rails'
+gem 'image_processing'
+gem 'therubyracer'
 
 group :production do
-  gem "bcrypt_pbkdf"
-  gem "ed25519"
-  gem "pg"
+  gem 'bcrypt_pbkdf'
+  gem 'ed25519'
+  gem 'pg'
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "sqlite3"
   gem 'byebug', platform: :mri
-  gem 'rspec-rails'
   gem 'guard-rspec'
+  gem 'rspec-rails'
+  gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'sqlite3'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
   gem 'bootsnap'
-  gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'guard-livereload', '~> 2.5', require: false
-  gem 'rack-livereload'
+  gem 'capistrano-dotenv'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
-  gem 'capistrano-dotenv'
   gem 'capistrano3-puma'
+  gem 'guard-livereload', '~> 2.5', require: false
+  gem 'listen', '~> 3.0.5'
+  gem 'rack-livereload'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console'
 end

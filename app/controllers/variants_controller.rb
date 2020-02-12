@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VariantsController < ApplicationController
   before_action :set_variant, :set_mode_info, :set_other_variants_info
 
@@ -15,17 +17,17 @@ class VariantsController < ApplicationController
 
   def set_other_variants_info
     @index = @variants.find_index @variant
-    @previous = @variants[@index-1] unless @index == 0
-    @next = @variants[@index+1]
+    @previous = @variants[@index - 1] unless @index.zero?
+    @next = @variants[@index + 1]
   end
 
   def set_mode_info
-    lang = request.params[:lang] || "lisp"
+    lang = request.params[:lang] || 'lisp'
 
-    @mode = @modes.find_by(extension: lang ) || @modes.find_by(name: "Lisp")
+    @mode = @modes.find_by(extension: lang) || @modes.find_by(name: 'Lisp')
     @mode_index = @modes.find_index @mode
-    @previous_mode = @modes[@mode_index - 1] unless @mode_index == 0
-    @next_mode = @modes[mode_next = @mode_index + 1]
+    @previous_mode = @modes[@mode_index - 1] unless @mode_index.zero?
+    @next_mode = @modes[@mode_index + 1]
   end
 
   def set_variant

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class ThemesController < ApplicationController
-  before_action :set_theme, only: [:show, :edit, :update, :destroy]
+  before_action :set_theme, only: %i[show]
 
-  @@page_size = 12
-
-  @lisp = Mode.find_by(name: "Lisp")
+  @page_size = 12
+  @lisp = Mode.find_by(name: 'Lisp')
 
   # GET /themes
   # GET /themes.json
@@ -28,10 +29,10 @@ class ThemesController < ApplicationController
             end
 
     @themes = Theme
-                .perfect
-                .offset(offset)
-                .limit(@@page_size)
-                .order(version: :desc)
+              .perfect
+              .offset(offset)
+              .limit(@@page_size)
+              .order(version: :desc)
   end
 
   # GET /themes/1
@@ -41,13 +42,13 @@ class ThemesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_theme
-      @theme = Theme.find_by(name: params[:name])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def theme_params
-      params.require(:theme).permit(:name, :version)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_theme
+    @theme = Theme.find_by(name: params[:name])
+  end
+
+  def theme_params
+    params.require(:theme).permit(:name, :version)
+  end
 end

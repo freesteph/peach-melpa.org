@@ -1,15 +1,17 @@
-# config valid for current version and patch releases of Capistrano
-lock "~> 3.11.2"
+# frozen_string_literal: true
 
-set :application, "peach-melpa"
-set :repo_url, "https://github.com/freesteph/peach-melpa.org.git"
+# config valid for current version and patch releases of Capistrano
+lock '~> 3.11.2'
+
+set :application, 'peach-melpa'
+set :repo_url, 'https://github.com/freesteph/peach-melpa.org.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, "feature/capistrano"
+set :branch, 'feature/capistrano'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/peach/deploy/www/"
+set :deploy_to, '/home/peach/deploy/www/'
 
 # Default value for :format is :airbrussh.
 # set :format, :nairbrussh
@@ -27,7 +29,7 @@ set :deploy_to, "/home/peach/deploy/www/"
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
-set :tmp_dir, "/home/peach/deploy/tmp"
+set :tmp_dir, '/home/peach/deploy/tmp'
 # Default value for default_env is {}
 set :default_env, {}
 

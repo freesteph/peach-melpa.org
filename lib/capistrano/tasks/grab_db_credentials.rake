@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 RETRIEVE_CMD = "secretsmanager get-secret-value --secret-id='prod-db' | jq '.SecretString | fromjson'"

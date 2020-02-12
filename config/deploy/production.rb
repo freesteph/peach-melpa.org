@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server "3.11.191.119", user: "peach", roles: %w{app db web}
+server '3.11.191.119', user: 'peach', roles: %w[app db web]
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
-
-
 
 # role-based syntax
 # ==================
@@ -21,8 +21,6 @@ server "3.11.191.119", user: "peach", roles: %w{app db web}
 # role :web, %w{deploy@peach-melpa.org}
 # role :db,  %w{deploy@example.com}
 
-
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -30,8 +28,6 @@ server "3.11.191.119", user: "peach", roles: %w{app db web}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================
@@ -41,11 +37,10 @@ server "3.11.191.119", user: "peach", roles: %w{app db web}
 #
 # Global options
 # --------------
- set :ssh_options, {
-   keys: ["~/.ssh/peach-deploy-key"],
-   forward_agent: true,
-   auth_methods: %w(publickey)
- }
+set :ssh_options,
+    keys: ['~/.ssh/peach-deploy-key'],
+    forward_agent: true,
+    auth_methods: %w[publickey]
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class AddScreenshotThroughTable < ActiveRecord::Migration[6.0]
   def change
     create_table :modes do |t|
-      t.column :name, :string, { null: false }
-      t.column :extension, :string, { null: false }
-      t.index :extension, { unique: true }
+      t.column :name, :string, null: false
+      t.column :extension, :string, null: false
+      t.index :extension, unique: true
     end
 
     create_table :screenshots do |t|

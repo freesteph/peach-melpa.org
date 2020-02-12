@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  root to: "themes#index"
+  root to: 'themes#index'
 
   resources :themes, only: [:index], param: :name do
     resources :variants, param: :name

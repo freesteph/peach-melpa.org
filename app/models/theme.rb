@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require_relative '../../lib/errors'
 require_relative '../../lib/logging'
 
 class Theme < ApplicationRecord
   has_many :variants, dependent: :destroy
 
-  validates :name, { presence: true, uniqueness: true }
+  validates :name, presence: true, uniqueness: true
 
   scope :perfect, -> { joins(:variants).distinct }
 
@@ -14,92 +16,88 @@ class Theme < ApplicationRecord
     name
   end
 
-  def older_than? version
-    if not self.version
-      return true
+  def older_than?(version)
+    if !self.version
+      true
     else
-      return self.version < version
+      self.version < version
     end
   end
 
-  def update_screenshots! new_attrs
+  def update_screenshots!(new_attrs)
     pid = nil
 
     begin
-      Timeout::timeout(90) do
-        cmd = CMD % [self.name]
-        PeachMelpa::Log.info(self.name) { "going to launch #{cmd}" }
+      Timeout.timeout(90) do
+        cmd = format(CMD, name)
+        PeachMelpa::Log.info(name) { "going to launch #{cmd}" }
         pid = Kernel.spawn cmd
         Process.wait pid
 
-        if not $?.success?
-          raise PeachMelpa::Errors::EmacsError
-        end
+        raise PeachMelpa::Errors::EmacsError unless $CHILD_STATUS.success?
 
-        PeachMelpa::Log.info(self.name) { "success! picking up screenshots..." }
+        PeachMelpa::Log.info(name) { 'success! picking up screenshots...' }
 
-        self.capture_artifacts! new_attrs
+        capture_artifacts! new_attrs
       end
     rescue Timeout::Error
       # the process hung
-      PeachMelpa::Log.info(self.name) {
-        "the Emacs process is taking too much time, killing it now."
-      }
-      Process.kill "TERM", pid
+      PeachMelpa::Log.info(name) do
+        'the Emacs process is taking too much time, killing it now.'
+      end
+      Process.kill 'TERM', pid
     rescue PeachMelpa::Errors::NoThemeScreenshotsFolder => e
-      PeachMelpa::Log.info(self.name) {
+      PeachMelpa::Log.info(name) do
         "#{e.message}: it's likely the Emacs process is dodgy so terminating it."
-      }
+      end
       begin
-        Process.kill "TERM", pid
-      rescue
+        Process.kill 'TERM', pid
+      rescue StandardError
       end
     rescue PeachMelpa::Errors::EmacsError => e
-      PeachMelpa::Log.info(self.name) {
+      PeachMelpa::Log.info(name) do
         "the Emacs process exited with an unknown error: #{e.inspect}"
-      }
+      end
       # something bad happened in Emacs
     end
   end
 
-  def devise_variants screenshots
+  def devise_variants(screenshots)
     endings = Regexp.new("_(#{PeachMelpa::EXTENSIONS.values.join('|')}).png$")
 
     screenshots.map { |s| s.gsub(endings, '') }.uniq
   end
 
   def radical
-    self.name.partition("-theme").first
+    name.partition('-theme').first
   end
 
-  def capture_artifacts! new_attrs
+  def capture_artifacts!(new_attrs)
     Dir.chdir PeachMelpa::Parsing::SCREENSHOT_FOLDER do
-      if not Dir.exists? self.name
-        raise PeachMelpa::Errors::NoThemeScreenshotsFolder
-      end
+      raise PeachMelpa::Errors::NoThemeScreenshotsFolder unless Dir.exist? name
 
-      Dir.chdir(self.name) do
-        files = Dir.glob("*")
+      Dir.chdir(name) do
+        files = Dir.glob('*')
 
-        PeachMelpa::Log.info(self.name) { "deleting all variants" }
-        self.variants.destroy_all
+        PeachMelpa::Log.info(name) { 'deleting all variants' }
+        variants.destroy_all
 
-        variant_names = self.devise_variants(files)
-        PeachMelpa::Log.info(self.name) { "found variants: #{variant_names}"}
+        variant_names = devise_variants(files)
+        PeachMelpa::Log.info(name) { "found variants: #{variant_names}" }
 
         variant_names.each do |name|
-          PeachMelpa::Log.info(self.name) { "capturing: #{name}"}
-          variant = self.variants.find_or_create_by(name: name)
+          PeachMelpa::Log.info(self.name) { "capturing: #{name}" }
+          variant = variants.find_or_create_by(name: name)
           variant.parse!
         end
 
-        PeachMelpa::Log.info(self.name) { "updating attributes..." }
-        self.update!(new_attrs)
+        PeachMelpa::Log.info(self.name) { 'updating attributes...' }
+        update!(new_attrs)
 
-        PeachMelpa::Log.info(self.name) { "cleaning up screenshots..." }
+        PeachMelpa::Log.info(self.name) { 'cleaning up screenshots...' }
         File.delete(*files)
 
-        PeachMelpa::Log.info(self.name) { "done." }
+        PeachMelpa::Log.info(self.name) { 'done.' }
       end
 
       Dir.rmdir(self.name)
@@ -107,8 +105,8 @@ class Theme < ApplicationRecord
   end
 
   def thumbnail
-    @lisp = Mode.find_by(name: "Lisp")
-    self.variants.first.screenshots.find_by(mode: @lisp)
+    @lisp = Mode.find_by(name: 'Lisp')
+    variants.first.screenshots.find_by(mode: @lisp)
   end
 
   def preview
@@ -116,10 +114,10 @@ class Theme < ApplicationRecord
     dimensions = "#{1600 / factor}x#{1200 / factor}"
 
     # FIXME: figure out if this operation is cached or not
-    self.thumbnail.image.variant(combine_options: {
-                                   gravity: "SouthWest",
-                                   crop: "#{dimensions}+0+0",
-                                   resize: "300x300^",
-                                 })
+    thumbnail.image.variant(combine_options: {
+                              gravity: 'SouthWest',
+                              crop: "#{dimensions}+0+0",
+                              resize: '300x300^'
+                            })
   end
 end
