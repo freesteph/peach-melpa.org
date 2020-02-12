@@ -5,6 +5,7 @@ language: ruby
 cache: bundler
 
 script:
+  - bundle exec rubocop
   - bundle exec rails db:migrate RAILS_ENV=test
   - bundle exec rspec
 
