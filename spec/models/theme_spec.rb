@@ -142,7 +142,7 @@ RSpec.describe Theme, type: :model do
   end
 
   describe "devise_variants" do
-    it "infers the theme variants based on the list of screenshots", focus: true  do
+    it "infers the theme variants based on the list of screenshots" do
       test_data = %w(
         poet_c.png
         poet-dark-monochrome_c.png

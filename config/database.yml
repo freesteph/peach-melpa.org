@@ -23,3 +23,12 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+# production:
+  adapter: postgresql
+  encoding: unicode
+  database: postgres # seriously fix this
+  user: <%= ENV["PEACH_DB_USER"] %>
+  host: <%= ENV["PEACH_DB_HOST"] %>
+  password: <%= ENV["PEACH_DB_PASSWORD"] %>
+  port: <%= ENV["PEACH_DB_PORT"] %>

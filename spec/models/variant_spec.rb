@@ -27,7 +27,7 @@ RSpec.describe Variant, type: :model do
     other = Variant.new(theme: @theme, name: "test")
     expect(other).not_to be_valid
 
-    other.update(theme: Theme.create!)
+    other.update(theme: Theme.create!(name: "other theme"))
     expect(other).to be_valid
   end
 
