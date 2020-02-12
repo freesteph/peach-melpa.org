@@ -1,5 +1,13 @@
 language: ruby
 
 script:
-  - bundle exec rails db:migrate RAILS_ENV=test
-  - bundle exec rspec
+- bundle exec rails db:migrate RAILS_ENV=test
+- bundle exec rspec
+
+after_success:
+  - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa"
+  - "bundle exec cap production deploy"
+
+env:
+  global:
+    secure: PNmBafr1TfEiLZQIKgmGYuGyRBFKAM1DZUnuk7mOnY4eEWt2UIQmOaoTIXcNPuJcl00AedqNGdX+zckn/G+w8coXWMQgFZgbGNXNWuQqpgKtabKEdyc22Ca8vjSUjx40eH1ZS4RBDERAMjDZ//NdmfpoMh3dTPIV9XrxOeqJ3jTn0uOslsgZPtZq9oUVvKkyWhA0yTotwKQIASfdaSftwGQgYWLtSXbt6C29ESRSHnAAYVzny4e78mXcqY3lJT8Xj6Vm9q2HIqaUUdcb5DBDEU8itdEZbOnRN2COzVK5Rv6uXmd/AvIP52137GBNzRSInn02S63qGT4erpbuMtK7afQ19dCNWg5ndddDfkMrmkGGVOAy/fLImQzf3AMsZRY48WMAl4H5ktWqXmlNe2CFM1AEY722DV6g25JtE436Ynaj1Y9qWcuMZpjSLR81wzIRj18NGVO7hadDI4EAi+ktt9zIev7fxsSpEdHGQFJtVOkegbBx2Ug4Tdd7a3voKINeSrcw399bqOtMFPXQZowQYmC1Cvkcxr+0C2RXnkFj2Va8XL/Z7wxNiypxn4yOg7cNXEjukcKGPERoWwJDbxsWBKFd6vGL4Slkdf7S1NIgsMHuwL+CeY35HqO9cZNjZ0domTM85pR2a0mtOm+gxTv73ZvESnMEXH3tutKIg7fdYao=

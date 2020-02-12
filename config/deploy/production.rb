@@ -41,10 +41,10 @@ server "3.11.191.119", user: "peach", roles: %w{app db web}
 #
 # Global options
 # --------------
-set :ssh_options, {
-  keys: %w(/home/freesteph/.ssh/id_rsa_peach_ec2),
-  forward_agent: true,
-  auth_methods: %w(publickey)
+ set :ssh_options, {
+   keys: File.exist?("config/deploy_id_rsa") && ["config/deploy_id_rsa"],
+   forward_agent: true,
+   auth_methods: %w(publickey)
  }
 #
 # The server-based syntax can be used to override options:
