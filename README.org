@@ -1,3 +1,5 @@
+[[https://travis-ci.org/freesteph/peach-melpa.org][https://travis-ci.org/freesteph/peach-melpa.org.svg?branch=master]]
+
 #+TITLE: Peach Melpa
 
 Peach Melpa is an Emacs themes showcase automatically retrieved from
