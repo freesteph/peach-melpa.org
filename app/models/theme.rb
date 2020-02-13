@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 require_relative '../../lib/errors'
 require_relative '../../lib/logging'
 
@@ -34,7 +35,10 @@ class Theme < ApplicationRecord
         pid = Kernel.spawn cmd
         Process.wait pid
 
-        raise PeachMelpa::Errors::EmacsError unless $CHILD_STATUS.success?
+        # rubocop:disable Style/NegatedIf, Style/Not
+        raise PeachMelpa::Errors::EmacsError if not $CHILD_STATUS.success?
+
+        # rubocop:enable Style/NegatedIf, Style/Not
 
         PeachMelpa::Log.info(name) { 'success! picking up screenshots...' }
 
