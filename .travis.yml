@@ -9,6 +9,11 @@ script:
   - bundle exec rails db:migrate RAILS_ENV=test
   - bundle exec rspec
 
-after_success:
-  - openssl aes-256-cbc -K $encrypted_f8d167f54618_key -iv $encrypted_f8d167f54618_iv -in peach-deploy-key.enc -out ~/.ssh/peach-deploy-key -d
-  - bundle exec cap production deploy
+before_deploy:
+    - openssl aes-256-cbc -K $encrypted_f8d167f54618_key -iv $encrypted_f8d167f54618_iv -in peach-deploy-key.enc -out ~/.ssh/peach-deploy-key -d
+
+deploy:
+  provider: script
+  script: bundle exec cap production deploy
+  on:
+    branch: master
