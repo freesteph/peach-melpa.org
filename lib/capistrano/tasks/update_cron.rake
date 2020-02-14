@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 namespace :deploy do
   desc 'sets the update process to run hourly with whenever'
-  task :update_cron do
+  task update_cron: :environment do
     on roles(:app) do
       within current_path do
         execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
