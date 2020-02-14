@@ -35,6 +35,7 @@ group :production do
   gem 'bcrypt_pbkdf'
   gem 'ed25519'
   gem 'pg'
+  gem 'whenever'
 end
 
 group :development, :test do
@@ -58,5 +59,4 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console'
-  gem 'whenever'
 end
