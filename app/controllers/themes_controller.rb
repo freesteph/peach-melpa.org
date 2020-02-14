@@ -12,7 +12,7 @@ class ThemesController < ApplicationController
     set_page_title_for 'home'
     @page = (request.params[:page] || 1).to_i
 
-    offset = (@page - 1) * @@page_size
+    offset = (@page - 1) * @page_size
 
     @count = Theme.perfect.count
 
@@ -22,7 +22,7 @@ class ThemesController < ApplicationController
                   themes_path(page: @page - 1)
                 end
 
-    @next = if offset + @@page_size >= @count
+    @next = if offset + @page_size >= @count
               nil
             else
               themes_path(page: @page + 1)
@@ -31,7 +31,7 @@ class ThemesController < ApplicationController
     @themes = Theme
               .perfect
               .offset(offset)
-              .limit(@@page_size)
+              .limit(@page_size)
               .order(version: :desc)
   end
 
