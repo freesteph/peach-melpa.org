@@ -3,7 +3,7 @@
 class ThemesController < ApplicationController
   before_action :set_theme, only: %i[show]
 
-  @page_size = 12
+  PAGE_SIZE = 12
   @lisp = Mode.find_by(name: 'Lisp')
 
   # GET /themes
@@ -12,7 +12,7 @@ class ThemesController < ApplicationController
     set_page_title_for 'home'
     @page = (request.params[:page] || 1).to_i
 
-    offset = (@page - 1) * @page_size
+    offset = (@page - 1) * PAGE_SIZE
 
     @count = Theme.perfect.count
 
@@ -22,7 +22,7 @@ class ThemesController < ApplicationController
                   themes_path(page: @page - 1)
                 end
 
-    @next = if offset + @page_size >= @count
+    @next = if offset + PAGE_SIZE >= @count
               nil
             else
               themes_path(page: @page + 1)
@@ -31,7 +31,7 @@ class ThemesController < ApplicationController
     @themes = Theme
               .perfect
               .offset(offset)
-              .limit(@page_size)
+              .limit(PAGE_SIZE)
               .order(version: :desc)
   end
 
