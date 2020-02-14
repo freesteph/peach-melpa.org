@@ -1,0 +1,9 @@
+[Unit]
+Description = <%= fetch(:application) %> XVFB server
+
+[Service]
+WorkingDirectory = <%= current_path %>
+ExecStart = /usr/bin/env Xvfb :13 -nocursor -screen 0 "1600x1200x24+32"
+
+[Install]
+WantedBy = multi-user.target

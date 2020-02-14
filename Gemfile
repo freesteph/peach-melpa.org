@@ -49,9 +49,10 @@ end
 
 group :development do
   gem 'bootsnap'
-  gem 'capistrano-dotenv'
+  gem 'capistrano', '~> 3.11.2'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
+  gem 'capistrano-systemd-multiservice'
   gem 'capistrano3-puma'
   gem 'guard-livereload', '~> 2.5', require: false
   gem 'listen', '~> 3.0.5'

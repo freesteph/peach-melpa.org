@@ -35,8 +35,11 @@ require 'capistrano/rbenv'
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
-require 'capistrano/dotenv'
 require 'whenever/capistrano'
+
+# service to run Xvfb
+require 'capistrano/systemd/multiservice'
+install_plugin Capistrano::Systemd::MultiService.new_service('xvfb')
 
 set :rbenv_ruby, File.read('.ruby-version').strip
 
