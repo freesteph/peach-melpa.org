@@ -38,7 +38,10 @@ server '3.11.191.119', user: 'peach', roles: %w[app db web]
 # Global options
 # --------------
 set :ssh_options,
-    keys: ['~/.ssh/peach-deploy-key'],
+    keys: [
+      '~/.ssh/peach-deploy-key',
+      '~/.ssh/peach-melpa-dev.pem'
+    ],
     forward_agent: true,
     auth_methods: %w[publickey]
 #

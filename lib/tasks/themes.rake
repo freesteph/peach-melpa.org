@@ -19,4 +19,10 @@ namespace :themes do
   task :parse, %i[theme_name force] => :environment do |_task, args|
     PeachMelpa::Parsing.pick_updated_themes only: args[:theme_name], force: args[:force]
   end
+
+  desc 'refresh & update'
+  task update: :environment do
+    Rake::Task['themes:refresh'].invoke
+    Rake::Task['themes:parse'].invoke
+  end
 end

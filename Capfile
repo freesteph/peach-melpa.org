@@ -20,6 +20,7 @@ install_plugin Capistrano::SCM::Git
 require 'capistrano/puma'
 install_plugin Capistrano::Puma # Default puma tasks
 
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
@@ -31,14 +32,12 @@ install_plugin Capistrano::Puma # Default puma tasks
 #   https://github.com/capistrano/rails
 #   https://github.com/capistrano/passenger
 #
-# require "capistrano/rvm"
 require 'capistrano/rbenv'
-# require "capistrano/chruby"
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/dotenv'
-# require "capistrano/passenger"
+require 'whenever/capistrano'
 
 set :rbenv_ruby, File.read('.ruby-version').strip
 
