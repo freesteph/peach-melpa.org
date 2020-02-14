@@ -31,7 +31,8 @@ set :deploy_to, '/home/peach/deploy/www/'
 
 set :tmp_dir, '/home/peach/deploy/tmp'
 # Default value for default_env is {}
-set :default_env, {}
+set :default_env,
+    'DISPLAY': ':13'
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
