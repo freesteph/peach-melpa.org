@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # config valid for current version and patch releases of Capistrano
-lock '~> 3.11.2'
+lock '~> 3.12.0'
 
 set :application, 'peach-melpa'
 set :repo_url, 'https://github.com/freesteph/peach-melpa.org.git'
