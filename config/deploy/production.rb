@@ -60,3 +60,7 @@ set :ssh_options,
 
 set :tmp_dir, '/home/peach/deploy/tmp'
 set :deploy_to, '/home/peach/deploy/www/'
+
+
+after :finishing, 'deploy:update_cron'
+# before 'deploy:migrate', 'aws:grab_db_credentials'

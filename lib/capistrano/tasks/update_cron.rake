@@ -9,6 +9,4 @@ namespace :deploy do
       end
     end
   end
-
-  after :finishing, 'deploy:update_cron'
 end
