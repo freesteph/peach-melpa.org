@@ -21,6 +21,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
+env :PATH, ENV['PATH']
+
 set :output, File.join(Whenever.path, 'log', 'whenever.log')
 
 every :hour do
