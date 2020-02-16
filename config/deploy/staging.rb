@@ -8,7 +8,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-# role-based syntax
+# role-based syntax>
 # ==================
 
 # Defines a role with one or multiple servers. The primary server in each
@@ -54,3 +54,17 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+set :ssh_options,
+    keys: [
+      '~/.ssh/peach-deploy-key',
+      '~/.ssh/peach-melpa-dev.pem'
+    ],
+    forward_agent: true,
+    auth_methods: %w[publickey]
+
+
+server '3.11.191.119', user: 'peach', roles: %w[app db web]
+
+set :tmp_dir, '/home/peach/staging/tmp'
+set :deploy_to, '/home/peach/staging/www/'

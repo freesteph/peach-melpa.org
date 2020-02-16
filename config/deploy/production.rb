@@ -57,3 +57,6 @@ set :ssh_options,
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+set :tmp_dir, '/home/peach/deploy/tmp'
+set :deploy_to, '/home/peach/deploy/www/'
