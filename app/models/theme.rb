@@ -73,7 +73,12 @@ class Theme < ApplicationRecord
   end
 
   def radical
-    name.partition('-theme').first
+    extras = %w[color theme themes]
+
+    name
+      .split('-')
+      .reject { |p| extras.include?(p) }
+      .join('-')
   end
 
   def capture_artifacts!(new_attrs)

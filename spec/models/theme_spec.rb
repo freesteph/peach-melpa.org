@@ -5,7 +5,7 @@ require 'rails_helper'
 require_relative '../../lib/parsing'
 require_relative '../../lib/errors'
 
-RSpec.describe Theme, type: :model do
+RSpec.describe Theme, type: :model do # rubocop:disable Metrics/BlockLength
   before do
     @mock_args = {
       version: '2',
@@ -174,7 +174,8 @@ RSpec.describe Theme, type: :model do
       [
         %w[foo-theme foo],
         %w[some-rad-theme some-rad],
-        %w[combo-themes combo]
+        %w[combo-themes combo],
+        %w[color-theme-sanityinc-tomorrow sanityinc-tomorrow]
       ].each do |name, radical|
         expect(Theme.new(name: name).radical).to eq radical
       end
