@@ -1,6 +1,0 @@
-[Unit]
-Description=Peach updater
-
-[Service]
-Type=simple
-ExecStart=$HOME/peach-melpa/lib/units/peach-update.sh

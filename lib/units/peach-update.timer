@@ -1,9 +1,0 @@
-[Unit]
-Description=Runs Peach Melpa hourly update
-
-[Timer]
-OnCalendar=minutely
-Persistent=true
-
-[Install]
-WantedBy=timers.target
