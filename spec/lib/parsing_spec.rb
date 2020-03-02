@@ -244,6 +244,12 @@ RSpec.describe PeachMelpa::Parsing do
         expect(PeachMelpa::Parsing.looks_like_theme?(name)).to be true
       end
     end
+
+    it 'rejects blacklisted names' do
+      PeachMelpa::Parsing::REJECTS.each do |name|
+        expect(PeachMelpa::Parsing.looks_like_theme?(name)).to be false
+      end
+    end
   end
 
   describe 'select_themes' do
