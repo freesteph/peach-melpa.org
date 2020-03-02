@@ -41,6 +41,7 @@ end
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'guard-rspec'
+  gem 'guard-rubocop'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false

@@ -138,6 +138,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    guard-rubocop (1.3.0)
+      guard (~> 2.0)
+      rubocop (~> 0.20)
     haml (5.1.2)
       temple (>= 0.8.0)
       tilt
@@ -347,6 +350,7 @@ DEPENDENCIES
   faker
   guard-livereload (~> 2.5)
   guard-rspec
+  guard-rubocop
   haml-rails
   image_processing
   jbuilder (~> 2.5)

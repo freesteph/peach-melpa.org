@@ -106,3 +106,8 @@ guard 'livereload' do
   watch(%r{app/helpers/.+\.rb})
   watch(%r{config/locales/.+\.yml})
 end
+
+guard :rubocop do
+  watch(%r{.+\.rb$}) # rubocop:disable Style/RegexpLiteral
+  watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
+end
