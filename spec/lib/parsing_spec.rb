@@ -239,6 +239,12 @@ RSpec.describe PeachMelpa::Parsing do
         expect(PeachMelpa::Parsing.looks_like_theme?(pkg)).to_not be_truthy
       end
     end
+
+    it 'allows exceptions' do
+      PeachMelpa::Parsing::AKIN.each do |name|
+        expect(PeachMelpa::Parsing.looks_like_theme?(name)).to be true
+      end
+    end
   end
 
   describe 'select_themes' do

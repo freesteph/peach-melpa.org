@@ -8,8 +8,10 @@ module PeachMelpa
   module Parsing
     SCREENSHOT_FOLDER = "#{::Rails.root}/tmp/screenshots/"
 
+    AKIN = %w[color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized].freeze
+
     def self.looks_like_theme?(name)
-      name.end_with? '-theme', '-themes'
+      name.end_with?('-theme', '-themes') || AKIN.include?(name)
     end
 
     def self.select_themes(data)
