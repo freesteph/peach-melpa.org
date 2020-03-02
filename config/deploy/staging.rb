@@ -65,6 +65,5 @@ set :ssh_options,
 
 server '3.11.191.119', user: 'peach', roles: %w[app db web]
 
-set :rails_env, 'staging'
 set :tmp_dir, '/home/peach/staging/tmp'
 set :deploy_to, '/home/peach/staging/www/'
