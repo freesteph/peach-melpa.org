@@ -41,9 +41,9 @@ class Theme < ApplicationRecord
         # rubocop:enable Style/NegatedIf, Style/Not
 
         PeachMelpa::Log.info(name) { 'success! picking up screenshots...' }
-
-        capture_artifacts! new_attrs
       end
+
+      capture_artifacts! new_attrs
     rescue Timeout::Error
       # the process hung
       PeachMelpa::Log.info(name) do
