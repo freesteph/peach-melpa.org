@@ -47,6 +47,7 @@
       (find-file sample-path t)
       (delete-other-windows)
       (redisplay t)
+      (message "")
       (mkdir screenshot-path t)
       (shell-command cmd-name nil nil))))
 
