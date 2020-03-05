@@ -105,5 +105,3 @@
 
 (provide 'take-screenshot)
 ;;; take-screenshot.el ends here
-
-(package-install 'color-theme-solarized-20150110)
