@@ -75,7 +75,7 @@
   "Wraps the real fetch-and-load-theme for THEME-NAME and catch its errors."
   (condition-case err
       (fetch-and-load-theme-inner theme-name)
-    (peach-no-theme-to-load
+    (peach-error
      (message (error-message-string err)))))
 
 (defun fetch-and-load-theme-inner (theme-name)
