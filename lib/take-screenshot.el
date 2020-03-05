@@ -18,6 +18,24 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-refresh-contents)
 
+;; errors
+(define-error 'peach-error "Something happened with Peach: ")
+
+(define-error
+  'peach-no-theme-to-load
+  "could not be found in load-theme list"
+  'peach-error)
+
+(define-error
+  'peach-no-package-found
+  "could not find a package to install"
+  'peach-error)
+
+(define-error
+  'peach-package-uninstallable
+  "could not install the package file"
+  'peach-error)
+
 (defun peach--get-screenshot-cmd ()
   "Use the environment to figure out the screenshot command."
   (let ((peach-env (getenv "PEACH_ENV")))
@@ -34,8 +52,10 @@
 (defun peach--install (theme-name)
   "Install the theme designed by THEME-NAME."
   (let ((desc (cadr (assoc (intern theme-name) package-archive-contents))))
-    (and (null desc) (error "The theme is not available"))
-    (package-install desc)))
+    (and (null desc) (signal 'peach-no-package-found (list theme-name)))
+    (condition-case nil
+        (package-install desc)
+      (signal 'peach-package-uninstallable (list theme-name)))))
 
 (defun peach--capture-screenshot-for-mode (theme-name variant mode)
   "Find the correct MODE sample for THEME-NAME's VARIANT and screenshot it."
@@ -52,11 +72,21 @@
       (shell-command cmd-name nil nil))))
 
 (defun fetch-and-load-theme (theme-name)
+  "Wraps the real fetch-and-load-theme for THEME-NAME and catch its errors."
+  (condition-case err
+      (fetch-and-load-theme-inner theme-name)
+    (peach-no-theme-to-load
+     (message (error-message-string err)))))
+
+(defun fetch-and-load-theme-inner (theme-name)
   "Get and install THEME-NAME of package type KIND and VERSION before taking a screenshot of it."
   (peach--ensure-clean-install theme-name)
   (setq current-themes (custom-available-themes))
   (peach--install theme-name)
   (setq possible-themes (set-difference (custom-available-themes) current-themes))
+
+  (and (seq-empty-p possible-themes)
+       (signal 'peach-no-theme-to-load (list theme-name)))
 
   (toggle-frame-fullscreen)
 
@@ -75,3 +105,5 @@
 
 (provide 'take-screenshot)
 ;;; take-screenshot.el ends here
+
+(package-install 'color-theme-solarized-20150110)
