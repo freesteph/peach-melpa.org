@@ -52,11 +52,7 @@ class Theme < ApplicationRecord
       Process.kill 'TERM', pid
     rescue PeachMelpa::Errors::NoThemeScreenshotsFolder => e
       PeachMelpa::Log.info(name) do
-        "#{e.message}: it's likely the Emacs process is dodgy so terminating it."
-      end
-      begin
-        Process.kill 'TERM', pid
-      rescue StandardError
+        "#{e.message}: moving on..."
       end
     rescue PeachMelpa::Errors::EmacsError => e
       PeachMelpa::Log.info(name) do
