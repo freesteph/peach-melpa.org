@@ -17,9 +17,6 @@ require 'capistrano/deploy'
 require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
-require 'capistrano/puma'
-install_plugin Capistrano::Puma # Default puma tasks
-
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
@@ -36,6 +33,9 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'whenever/capistrano'
+
+require 'capistrano/puma'
+install_plugin Capistrano::Puma # Default puma tasks
 
 # service to run Xvfb
 require 'capistrano/systemd/multiservice'
