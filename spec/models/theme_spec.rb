@@ -39,14 +39,10 @@ RSpec.describe Theme, type: :model do
       expect(t.older_than?('any')).to be(true)
     end
 
-    it "is true if the theme's version is alphabetically superior" do
-      t = Theme.new(version: '2018aaa')
-      expect(t.older_than?('2019aaa')).to be(true)
-    end
+    it 'is true if the newer version is at a further time' do
+      t = Theme.new(version: '20180101.700')
 
-    it "false if the theme's version is alphabetically inferior" do
-      t = Theme.new(version: '2018bbb')
-      expect(t.older_than?('2018aaa')).to be(false)
+      expect(t.older_than?('20180101.1000')).to be(true)
     end
   end
 

@@ -21,7 +21,10 @@ class Theme < ApplicationRecord
     if !self.version
       true
     else
-      self.version < version
+      d1 = make_datetime(self.version)
+      d2 = make_datetime(version)
+
+      d1 < d2
     end
   end
 
@@ -124,5 +127,14 @@ class Theme < ApplicationRecord
                               crop: "#{dimensions}+0+0",
                               resize: '300x300^'
                             })
+  end
+
+  def make_datetime(version)
+    d, t = version.split('.')
+
+    date = Date.parse d
+    time = t.insert(-3, ':')
+
+    DateTime.parse("#{date} #{time}")
   end
 end
