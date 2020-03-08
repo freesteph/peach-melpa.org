@@ -131,6 +131,7 @@ class Theme < ApplicationRecord
 
   def make_datetime(version)
     d, t = version.split('.')
+    t.prepend '00' if t.length <= 2 # midnight minutes
 
     date = Date.parse d
     time = t.insert(-3, ':')

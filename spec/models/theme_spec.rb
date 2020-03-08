@@ -5,7 +5,7 @@ require 'rails_helper'
 require_relative '../../lib/parsing'
 require_relative '../../lib/errors'
 
-RSpec.describe Theme, type: :model do
+RSpec.describe Theme, type: :model do # rubocop:disable Metrics/BlockLength
   before do
     @mock_args = {
       version: '2',
@@ -43,6 +43,18 @@ RSpec.describe Theme, type: :model do
       t = Theme.new(version: '20180101.700')
 
       expect(t.older_than?('20180101.1000')).to be(true)
+    end
+
+    it 'understands midnight times' do
+      t = Theme.new(version: '20200101.30')
+
+      expect(t.older_than?('20200101.110')).to be true
+    end
+
+    it 'understands the first 10 midnight minutes' do
+      t = Theme.new(version: '20200101.3')
+
+      expect(t.older_than?('20200101.110')).to be true
     end
   end
 
