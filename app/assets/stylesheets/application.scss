@@ -17,6 +17,7 @@
 @import "themes";
 @import "theme";
 @import "header";
+@import "mixins";
 
 body, html {
   padding: 0.5rem 0;
@@ -45,6 +46,10 @@ select {
 
 
 .link {
+  &:focus {
+    @include focus-state;
+  }
+
   transition: text-shadow 0.33s ease-in, color 0.25s, border 0.25s;
   padding: 0.5rem 0;
   letter-spacing: 1px;
@@ -60,6 +65,10 @@ select {
 }
 
 .button {
+  &:focus:not(disabled) {
+    @include focus-state;
+  }
+
   background: #EEE;
   color: #666;
   padding: 0.7rem;
