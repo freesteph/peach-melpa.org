@@ -3,44 +3,28 @@
 require 'rails_helper'
 
 RSpec.describe Mode, type: :model do
-  before do
-    @mock_args = {
-      name: 'Lisp',
-      extension: 'el'
-    }
-  end
+  let(:mode) { build(:mode) }
 
   it 'has a valid factory' do
-    m = Mode.new(@mock_args)
-
-    expect(m).to be_valid
+    expect(mode).to be_valid
   end
 
   it 'requires an extension' do
-    m = Mode.new(name: 'Foo')
-
-    expect(m).to_not be_valid
+    expect(build(:mode, extension: nil)).to_not be_valid
   end
 
   it 'requires a name' do
-    m = Mode.new(extension: 'el')
-
-    expect(m).to_not be_valid
+    expect(build(:mode, name: nil)).to_not be_valid
   end
 
   it 'has a unique extension' do
-    Mode.new(@mock_args).save
-
-    m = Mode.new(@mock_args)
-
-    expect(m).to_not be_valid
+    mode.save!
+    expect(build(:mode, extension: mode.extension)).to_not be_valid
   end
 
   it 'allows two modes with the same name' do
-    Mode.new(@mock_args).save
+    mode.save!
 
-    m = Mode.new(name: 'Lisp', extension: 'lp')
-
-    expect(m).to be_valid
+    expect(build(:mode, name: mode.name)).to be_valid
   end
 end

@@ -62,3 +62,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console'
 end
+
+group :test do
+  gem 'factory_bot_rails'
+end

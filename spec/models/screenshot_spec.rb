@@ -3,27 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe Screenshot, type: :model do
-  before do
-    @theme = Theme.create!(name: 'theme')
-    @variant = @theme.variants.create!(name: 'variant')
-    @mode = Mode.create!(name: 'Lisp', extension: 'el')
-  end
+  describe 'validation' do
+    it 'has a valid factory' do
+      expect(build(:screenshot)).to be_valid
+    end
 
-  it 'is valid with the default attributes' do
-    s = Screenshot.create(variant: @variant, mode: @mode)
+    it 'is not valid without a variant' do
+      expect(build(:screenshot, variant: nil)).not_to be_valid
+    end
 
-    expect(s).to be_valid
-  end
-
-  it 'is not valid without a variant' do
-    s = Screenshot.create(variant: nil, mode: @mode)
-
-    expect(s).not_to be_valid
-  end
-
-  it 'is not valid without a mode' do
-    s = Screenshot.create(variant: @variant, mode: nil)
-
-    expect(s).not_to be_valid
+    it 'is not valid without a mode' do
+      expect(build(:screenshot, mode: nil)).not_to be_valid
+    end
   end
 end
