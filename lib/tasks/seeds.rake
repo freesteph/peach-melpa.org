@@ -2,17 +2,17 @@
 
 require_relative '../logging'
 require 'faker'
-require_relative '../../lib/dev_seeds.rb'
+require 'factory_bot_rails'
 
 namespace :seeds do
-  desc 'grabs MELPA archives.json and put it in tmp'
+  desc 'creates fake themes'
   task :create, [:how_many] => :environment do |_task, args|
+    include FactoryBot::Syntax::Methods
+
     n = args[:how_many].nil? ? 1 : args[:how_many].to_i
 
     PeachMelpa::Log.info('dev-seeder') { "going to generate #{n} themes" }
 
-    n.times do
-      PeachMelpa::Seeds.generate_fake_theme Faker::Internet.slug(glue: '-')
-    end
+    create_list(:theme, n)
   end
 end
