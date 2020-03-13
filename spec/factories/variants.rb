@@ -6,7 +6,9 @@ FactoryBot.define do
     theme
 
     after(:create) do |variant|
-      create_list(:screenshot, 3, variant: variant)
+      Mode.all.each do |mode|
+        create(:screenshot, variant: variant, mode: mode)
+      end
     end
   end
 end
