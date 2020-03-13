@@ -47,6 +47,7 @@ guard :rspec, cmd: 'bundle exec rspec -f doc', notification: false do
 
   watch(rails.controllers) do |m|
     [
+      rspec.spec.call('requests'),
       rspec.spec.call("routing/#{m[1]}_routing"),
       rspec.spec.call("controllers/#{m[1]}_controller"),
       rspec.spec.call("acceptance/#{m[1]}")
@@ -57,6 +58,9 @@ guard :rspec, cmd: 'bundle exec rspec -f doc', notification: false do
   watch(rails.spec_helper)     { rspec.spec_dir }
   watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
   watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
+
+  # requests
+  watch(rails.controllers) { "#{rspec.spec_dir}/requests" }
 
   # Capybara features specs
   watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ThemesController < ApplicationController
-  before_action :set_theme, only: %i[show]
+  before_action :set_theme,
+                :set_variant,
+                :set_mode,
+                :set_pagination,
+                only: %i[show]
 
   PAGE_SIZE = 12
   @lisp = Mode.find_by(name: 'Lisp')
@@ -38,14 +42,43 @@ class ThemesController < ApplicationController
   # GET /themes/1
   # GET /themes/1.json
   def show
-    # FIXME: redirect this to variants or do some transparent hoisting
+    set_page_title_for 'show',
+                       name: @theme.name,
+                       description: @theme.description
+
+    @multi = @theme.variants.length > 1
+    @screenshot = @variant.screenshots.find_by(mode: @mode)
+    @url = @theme.url.nil? ? "https://melpa.org/#/#{@theme.name}" : @theme.url
+    @title = @theme.name
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_theme
     @theme = Theme.find_by(name: params[:name])
+  end
+
+  def set_variant
+    @variants = @theme.variants
+    @variant =
+      @variants.find_by(name: request.params[:variant]) ||
+      @variants.first
+  end
+
+  def set_mode
+    lang = request.params[:lang] || 'lisp'
+    @mode = @modes.find_by(extension: lang) || @modes.find_by(name: 'Lisp')
+  end
+
+  def set_pagination
+    mode_index = @modes.find_index @mode
+
+    @previous_mode = @modes[mode_index - 1] unless mode_index.zero?
+    @next_mode = @modes[mode_index + 1]
+
+    index = @variants.find_index @variant
+    @previous = @variants[index - 1] unless index.zero?
+    @next = @variants[index + 1]
   end
 
   def theme_params

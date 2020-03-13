@@ -4,24 +4,24 @@
   %section.variants
     .modes.selector
       - if @previous_mode
-        = link_to "⟵", { controller: "variants", action: "show", name: @variant.name, lang: @previous_mode.extension }, {class: "button"}
+        = link_to "⟵", theme_path(@theme, lang: @previous_mode.extension, variant: @variant), class: 'button'
       - else
         = link_to "⟵", "#", { class: 'disabled button' }
       %h3.mode.button= @mode.name
       - if @next_mode
-        = link_to "⟶", { controller: "variants", action: "show", name: @variant.name, lang: @next_mode.extension }, {class: "button"}
+        = link_to "⟶", theme_path(@theme, lang: @next_mode.extension, variant: @variant), class: 'button'
       - else
         %a.button.disabled
           ⟶
     - if @multi
       .variants.selector
         - if @previous
-          = link_to "⟵", { controller: "variants", action: "show", name: @previous.name, lang: @mode.extension }, {class: "button"}
+          = link_to "⟵", theme_path(@theme, variant: @previous, lang: @mode.extension), class: 'button'
         - else
           = link_to "⟵", "#", { class: 'disabled button' }
         %h3.name.button= @variant.name
         - if @next
-          = link_to "⟶", { controller: "variants", action: "show", name: @next.name, lang: @mode.extension }, {class: "button"}
+          = link_to "⟶", theme_path(@theme, variant: @next, lang: @mode.extension), class: 'button'
         - else
           %a.button.disabled
             ⟶
