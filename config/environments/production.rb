@@ -2,6 +2,10 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.action_controller.default_url_options = {
+    protocol: 'https',
+    host: 'peach-melpa.org'
+  }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
