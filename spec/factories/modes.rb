@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :mode do
     name { Faker::ProgrammingLanguage.name }
-    extension { 'some random extension' }
+    extension { Faker::File.extension }
   end
 end
