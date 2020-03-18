@@ -9,9 +9,11 @@ module PeachMelpa
     SCREENSHOT_FOLDER = "#{::Rails.root}/tmp/screenshots/"
 
     AKIN = %w[color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized].freeze
+
     REJECTS = %w[svg-mode-line-themes select-themes rand-theme per-buffer-theme
                  display-theme cycle-themes color-theme-theme helm-themes
-                 remember-last-theme].freeze
+                 remember-last-theme green-is-the-new-black-theme
+                 color-theme-modern].freeze
 
     def self.looks_like_theme?(name)
       return false if REJECTS.include?(name)
