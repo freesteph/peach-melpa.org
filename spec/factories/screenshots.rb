@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :screenshot do
-    mode { Mode.first }
+    mode
     variant
 
     after(:create) do |s|
