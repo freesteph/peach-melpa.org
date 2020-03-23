@@ -2,12 +2,14 @@
 
 FactoryBot.define do
   factory :variant do
-    name { Faker::Internet.slug(glue: '-') }
     theme
+    name { Faker::Internet.slug(glue: '-') }
 
-    after(:create) do |variant|
-      Mode.all.each do |mode|
-        create(:screenshot, variant: variant, mode: mode)
+    trait :full do
+      after(:create) do |variant|
+        Mode.all.each do |mode|
+          create(:screenshot, :full, variant: variant, mode: mode)
+        end
       end
     end
   end

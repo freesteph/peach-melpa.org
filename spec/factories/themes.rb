@@ -4,8 +4,16 @@ FactoryBot.define do
   factory :theme do
     name { Faker::Internet.slug(glue: '-') }
 
-    after(:create) do |theme|
-      create_list(:variant, 3, theme: theme)
+    trait :with_variant do
+      after :create do |t|
+        create(:variant, theme: t)
+      end
+    end
+
+    trait :with_full_variant do
+      after :create do |t|
+        create(:variant, :full, theme: t)
+      end
     end
   end
 end

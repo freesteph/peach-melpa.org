@@ -6,7 +6,7 @@ require_relative '../../lib/parsing'
 require_relative '../../lib/errors'
 
 RSpec.describe Theme, type: :model do
-  let(:theme) { create(:theme, name: 'foo-theme') }
+  let(:theme) { create(:theme, :with_variant, name: 'foo-theme') }
   let(:variant) { theme.variants.first }
   let(:args) do
     {

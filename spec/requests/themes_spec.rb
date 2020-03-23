@@ -3,15 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Themes', type: :request do
+  before do
+    create(:mode, name: 'Lisp')
+  end
+
   describe 'GET /themes' do
-    it 'works! (now write some real specs)' do
+    it 'works' do
       get themes_path
       expect(response).to have_http_status(200)
     end
   end
 
   describe 'GET /theme/:id' do
-    let!(:theme) { create(:theme) }
+    let!(:theme) { create(:theme, :with_full_variant) }
 
     it 'has a valid show route' do
       get theme_path(theme)

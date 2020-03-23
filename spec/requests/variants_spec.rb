@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Variants', type: :request do
   describe 'GET /variants/:id' do
     let!(:variant) { create(:variant) }
+    let!(:mode) { create(:mode) }
 
     it 'redirects to the theme and forwards params' do
       get theme_variant_path(

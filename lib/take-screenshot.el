@@ -36,6 +36,10 @@
   "could not install the package file"
   'peach-error)
 
+(define-error
+  'peach-dependency-drama
+  "could not start from a clean slate")
+
 (defun peach--get-screenshot-cmd ()
   "Use the environment to figure out the screenshot command."
   (let ((peach-env (getenv "PEACH_ENV")))
@@ -47,7 +51,9 @@
   "Ensure THEME-NAME of VERSION and KIND is removed before starting."
   (let ((pkg (assoc (intern theme-name) package-alist)))
     (and (not (null pkg))
-	 (package-delete (cadr pkg)))))
+         (condition-case nil
+             (package-delete (cadr pkg)))
+         (signal 'peach-dependency-drama (list theme-name)))))
 
 (defun peach--install (theme-name)
   "Install the theme designed by THEME-NAME."

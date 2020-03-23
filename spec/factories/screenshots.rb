@@ -5,12 +5,14 @@ FactoryBot.define do
     mode
     variant
 
-    after(:create) do |s|
-      preview = Tempfile.new(['preview', '.png'])
+    trait :full do
+      after(:create) do |s|
+        preview = Tempfile.new(['preview', '.png'])
 
-      `convert -size 1600x1200 xc:#{Faker::Color.hex_color} #{preview.path}`
+        `convert -size 1600x1200 xc:#{Faker::Color.hex_color} #{preview.path}`
 
-      s.image.attach(io: File.open(preview.path), filename: 'screenshot')
+        s.image.attach(io: File.open(preview.path), filename: 'screenshot')
+      end
     end
   end
 end
