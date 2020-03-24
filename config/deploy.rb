@@ -8,7 +8,6 @@ set :repo_url, 'https://github.com/freesteph/peach-melpa.org.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-# set :branch, 'feature/capistrano'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/peach/deploy/www/'
@@ -46,4 +45,4 @@ set :default_env,
 set :bundle_jobs, 1
 
 before 'deploy:migrate', 'aws:grab_db_credentials'
-after 'deploy:migrate', 'db:seed'
+after 'deploy:migrate', 'seed'
