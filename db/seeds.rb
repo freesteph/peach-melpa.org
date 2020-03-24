@@ -12,7 +12,8 @@ MODES = {
   'Javascript' => 'js',
   'C' => 'c',
   'Ruby' => 'rb',
-  'Org-mode' => 'org'
+  'Org-mode' => 'org',
+  'Diff' => 'patch'
 }.freeze
 
 MODES.each { |n, e| Mode.find_or_create_by(name: n, extension: e) }
