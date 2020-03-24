@@ -46,3 +46,4 @@ set :default_env,
 set :bundle_jobs, 1
 
 before 'deploy:migrate', 'aws:grab_db_credentials'
+after 'deploy:migrate', 'db:seed'
