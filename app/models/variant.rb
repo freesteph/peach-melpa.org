@@ -5,7 +5,7 @@ require_relative '../../lib/parsing'
 class Variant < ApplicationRecord
   belongs_to :theme
   has_many :screenshots, dependent: :destroy
-  validates :name, presence: true, uniqueness: { scope: :theme }
+  validates :name, presence: true, uniqueness: { scope: :theme } # rubocop:disable Rails/UniqueValidationWithoutIndex
 
   def to_param
     name
