@@ -20,10 +20,8 @@ test:
   <<: *default
   database: db/test.sqlite3
 
-production:
+production: &production
   <<: *default
-  database: db/production.sqlite3
-
 # production:
   adapter: postgresql
   encoding: unicode
@@ -32,3 +30,6 @@ production:
   host: <%= ENV["PEACH_DB_HOST"] %>
   password: <%= ENV["PEACH_DB_PASSWORD"] %>
   port: <%= ENV["PEACH_DB_PORT"] %>
+
+staging:
+  <<: *production
