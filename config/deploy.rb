@@ -6,29 +6,16 @@ lock '~> 3.11.2'
 set :application, 'peach-melpa'
 set :repo_url, 'https://github.com/freesteph/peach-melpa.org.git'
 
-# Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+server '3.11.191.119', user: 'peach', roles: %w[app db web]
 
-# Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/peach/deploy/www/'
+set :ssh_options,
+    keys: [
+      '~/.ssh/peach-deploy-key',
+      '~/.ssh/peach-melpa-dev.pem'
+    ],
+    forward_agent: true,
+    auth_methods: %w[publickey]
 
-# Default value for :format is :airbrussh.
-# set :format, :nairbrussh
-
-# You can configure the Airbrussh format using :format_options.
-# These are the defaults.
-# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
-
-# Default value for :pty is false
-# set :pty, true
-
-# Default value for :linked_files is []
-# append :linked_files, "config/database.yml"
-
-# Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
-
-set :tmp_dir, '/home/peach/deploy/tmp'
 # Default value for default_env is {}
 set :default_env,
     'DISPLAY': ':13'
