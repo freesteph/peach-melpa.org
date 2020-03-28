@@ -3,7 +3,7 @@
 namespace :deploy do
   desc 'sets the update process to run hourly with whenever'
   task :update_cron do
-    on roles(:app) do
+    on roles(:db) do
       within current_path do
         execute :bundle, :exec, "whenever --update-crontab #{fetch(:application)}"
       end

@@ -7,7 +7,7 @@ RETRIEVE_CMD = "secretsmanager get-secret-value --secret-id='prod-db' | jq '.Sec
 namespace :aws do
   desc 'Grab the credentials for the DB'
   task :grab_db_credentials do
-    on roles(:app) do
+    on roles(:db) do
       execute :aws, RETRIEVE_CMD, verbosity: :DEBUG do |data|
         credentials = JSON.parse data
 

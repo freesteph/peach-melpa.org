@@ -6,8 +6,6 @@ lock '~> 3.11.2'
 set :application, 'peach-melpa'
 set :repo_url, 'https://github.com/freesteph/peach-melpa.org.git'
 
-server '3.11.191.119', user: 'peach', roles: %w[app db web]
-
 set :ssh_options,
     keys: [
       '~/.ssh/peach-deploy-key',
@@ -30,6 +28,8 @@ set :default_env,
 # set :ssh_options, verify_host_key: :secure
 
 set :bundle_jobs, 1
+
+set :keep_releases, 2
 
 before 'deploy:migrate', 'aws:grab_db_credentials'
 after 'deploy:migrate', 'seed'
