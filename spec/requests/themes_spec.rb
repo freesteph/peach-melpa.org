@@ -21,5 +21,13 @@ RSpec.describe 'Themes', type: :request do
       get theme_path(theme)
       expect(response).to have_http_status(200)
     end
+
+    it 'redirects to the home page if the theme is not found' do
+      t = build(:theme)
+
+      get theme_path(t)
+
+      expect(response).to redirect_to root_path
+    end
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-task :seed do # rubocop:disable Rails/RakeEnvironment
+task :seed do
   on primary :db do
     within current_path do
       with rails_env: fetch(:stage) do

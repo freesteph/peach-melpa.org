@@ -39,3 +39,5 @@ en:
       title: "%{name} | PeachMelpa | Emacs themes from MELPA"
       header: "%{name}"
       description: "%{name} on PeachMelpa: %{description}"
+  errors:
+    notfound: "The theme '%{name}' could not be found"

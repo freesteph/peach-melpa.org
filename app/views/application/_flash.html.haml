@@ -1,0 +1,4 @@
+- if flash.keys.any?
+  .flash
+    - flash.keys.each do |f|
+      %p{class: f}= flash[f]

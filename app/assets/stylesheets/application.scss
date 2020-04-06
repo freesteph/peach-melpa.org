@@ -18,8 +18,11 @@
 @import "theme";
 @import "header";
 
+* {
+  box-sizing: border-box;
+}
+
 body, html {
-  padding: 0.5rem 0;
   font-family: monospace;
   height: 100%;
   width: 100%;
@@ -83,4 +86,15 @@ select {
       border: 1px solid #EEE;
     }
   }
+}
+
+.flash {
+  background: $peach-darker-color;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.3rem;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
 }
