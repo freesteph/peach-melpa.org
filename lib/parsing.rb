@@ -36,7 +36,7 @@ module PeachMelpa
 
       theme = Theme.find_or_create_by(name: name)
 
-      if theme.older_than?(version) && !theme.blacklisted? || (opts[:force] == true)
+      if theme.older_than?(version) || (opts[:force] == true)
         PeachMelpa::Log.info(name) { 'theme eligible for update...' }
         theme.update_screenshots!(
           version: version,
@@ -46,7 +46,7 @@ module PeachMelpa
           kind: kind
         )
       else
-        PeachMelpa::Log.info(name) { 'skipped because either up-to-date or blacklisted.' }
+        PeachMelpa::Log.info(name) { 'skipped because up to date.' }
       end
     end
 

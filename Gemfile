@@ -40,6 +40,7 @@ end
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'factory_bot_rails'
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rspec-rails'
@@ -61,8 +62,4 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console'
-end
-
-group :test do
-  gem 'factory_bot_rails'
 end

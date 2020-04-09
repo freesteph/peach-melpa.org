@@ -133,7 +133,6 @@ RSpec.describe PeachMelpa::Parsing do
       @theme = double
       allow(@theme).to receive(:older_than?)
       allow(@theme).to receive(:update_screenshots!)
-      allow(@theme).to receive(:blacklisted?).and_return false
 
       allow(Theme).to receive(:find_or_create_by).and_return @theme
     end
@@ -197,18 +196,6 @@ RSpec.describe PeachMelpa::Parsing do
                 a_hash_including(authors: '')
               )
           end
-        end
-      end
-
-      context 'but the theme is blacklisted' do
-        before :each do
-          allow(@theme).to receive(:blacklisted?).and_return true
-        end
-
-        it 'does not call update_screenshots!' do
-          PeachMelpa::Parsing.parse_theme @name, @props
-
-          expect(@theme).to_not have_received(:update_screenshots!)
         end
       end
     end
