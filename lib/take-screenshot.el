@@ -40,6 +40,11 @@
   'peach-dependency-drama
   "could not start from a clean slate")
 
+(defvar
+  peach--modes
+  '(el js c rb org)
+  "languages to capture")
+
 (defun peach--get-screenshot-cmd ()
   "Use the environment to figure out the screenshot command."
   (let ((peach-env (getenv "PEACH_ENV")))
@@ -50,10 +55,10 @@
 (defun peach--ensure-clean-install (theme-name)
   "Ensure THEME-NAME of VERSION and KIND is removed before starting."
   (let ((pkg (assoc (intern theme-name) package-alist)))
-    (and (not (null pkg))
-         (condition-case nil
-             (package-delete (cadr pkg)))
-         (signal 'peach-dependency-drama (list theme-name)))))
+    (unless (null pkg)
+      (condition-case nil
+	  (package-delete (cadr pkg))
+	(signal 'peach-dependency-drama (list theme-name))))))
 
 (defun peach--install (theme-name)
   "Install the theme designed by THEME-NAME."
@@ -96,18 +101,13 @@
 
   (toggle-frame-fullscreen)
 
-  (dolist
-      (variant possible-themes)
-    (condition-case nil
-	(progn
-	  (load-theme variant t)
-	  (let ((modes '(el js c rb org)))
-	    (while modes
-	      (setq mode (car modes))
-	      (peach--capture-screenshot-for-mode theme-name variant mode)
-	      (setq modes (cdr modes))))
-	  (disable-theme variant))
-      (error nil))))
+  (seq-each
+   (lambda (variant)
+     (load-theme variant t)
+     (seq-each
+      (lambda (mode)
+	(peach--capture-screenshot-for-mode theme-name variant mode)) peach--modes)
+     (disable-theme variant)) possible-themes))
 
 (provide 'take-screenshot)
 ;;; take-screenshot.el ends here
