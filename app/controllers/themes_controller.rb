@@ -55,9 +55,18 @@ class ThemesController < ApplicationController
   private
 
   def set_theme
-    @theme = Theme.find_by(name: params[:name])
+    name = params[:name]
+    @theme = Theme.find_by(name: name)
 
-    redirect_to root_path, notice: t('errors.notfound', name: params[:name]) if @theme.nil?
+    if @theme.nil?
+      redirect_to root_path, notice: t('errors.not_found', name: name)
+    elsif @theme.variants.empty?
+      url = t('bug.url',
+              title: t('bug.title', name: name),
+              body: t('bug.body', path: request.path))
+
+      redirect_to root_path, notice: t('errors.no_variants', name: name, url: url)
+    end
   end
 
   def set_variant

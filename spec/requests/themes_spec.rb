@@ -22,12 +22,28 @@ RSpec.describe 'Themes', type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it 'redirects to the home page if the theme is not found' do
-      t = build(:theme)
+    context 'when the theme does not exist' do
+      let(:response) { get theme_path(build(:theme)) }
 
-      get theme_path(t)
+      it 'redirects to the home page if the theme is not found' do
+        expect(response).to redirect_to root_path
+      end
 
-      expect(response).to redirect_to root_path
+      it 'sets the notice flash' do
+        skip 'not sure how to test for flash presence'
+      end
+    end
+
+    context 'when the theme has no variants' do
+      let(:response) { get theme_path(create(:theme)) }
+
+      it 'redirects to the home page if the theme has no variants' do
+        expect(response).to redirect_to root_path
+      end
+
+      it 'sets the notice flash' do
+        skip 'not sure how to test for flash presence'
+      end
     end
   end
 end

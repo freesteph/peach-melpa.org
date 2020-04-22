@@ -97,4 +97,16 @@ select {
   padding: 1rem;
   text-align: center;
   width: 100%;
+
+  a {
+    display: inline-block;
+    line-height: 1.3rem;
+    padding: 0;
+
+    &:hover {
+      color: white;
+      font-weight: bold;
+      border-color: white;
+    }
+  }
 }

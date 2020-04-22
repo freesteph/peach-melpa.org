@@ -40,4 +40,9 @@ en:
       header: "%{name}"
       description: "%{name} on PeachMelpa: %{description}"
   errors:
-    notfound: "The theme '%{name}' could not be found"
+    not_found: "The theme '%{name}' could not be found"
+    no_variants: "The theme '%{name}' can't be displayed. Feel free to <a class='link' href='%{url}'>report an issue</a>."
+  bug:
+    url: 'https://github.com/freesteph/peach-melpa.org/issues/new?title=%{title}&body=%{body}'
+    title: 'No variants for "%{name}"'
+    body: 'The URL at `%{path}` is unavailable because of missing variants. Themes always have at least one variant so this should be investigated.'
