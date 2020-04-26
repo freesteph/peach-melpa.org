@@ -38,7 +38,7 @@ en:
     show:
       title: "%{name} | PeachMelpa | Emacs themes from MELPA"
       header: "%{name}"
-      description: "%{name} on PeachMelpa: %{description}"
+      description: "Preview of Emacs theme %{name} on PeachMelpa"
   errors:
     not_found: "The theme '%{name}' could not be found"
     no_variants: "The theme '%{name}' can't be displayed. Feel free to <a class='link' href='%{url}'>report an issue</a>."

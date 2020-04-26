@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_page_title_for(descriptor, args = {})
-    @title = t("pages.#{descriptor}.title", args)
-    @description = t("pages.#{descriptor}.description", args)
-    @header = t("pages.#{descriptor}.header", args)
+    %w[title description header].each do |s|
+      instance_variable_set "@#{s}", t("pages.#{descriptor}.#{s}", args)
+    end
   end
 end
