@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :theme do
     name { Faker::Internet.slug(glue: '-') }
+    download_count { Faker::Number.number }
 
     trait :with_variant do
       after :create do |t|

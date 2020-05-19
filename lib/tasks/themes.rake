@@ -13,6 +13,7 @@ namespace :themes do
   desc 'grabs MELPA archives.json and put it in tmp'
   task refresh: :environment do
     PeachMelpa::Retrieval.refresh_melpa_archive
+    PeachMelpa::Retrieval.refresh_melpa_stats
   end
 
   desc 'grabs tmp JSON file and store themes'

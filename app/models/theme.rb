@@ -8,6 +8,7 @@ class Theme < ApplicationRecord
   has_many :variants, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true # rubocop:disable Rails/UniqueValidationWithoutIndex
+  validates :download_count, numericality: { only_integer: true, greater_than: 0 }
 
   scope :perfect, -> { joins(:variants).distinct }
 

@@ -34,6 +34,14 @@ RSpec.describe Theme, type: :model do
         expect(build(:theme, name: 'great')).to_not be_valid
       end
     end
+
+    it 'needs a download count' do
+      expect(build(:theme, download_count: nil)).to_not be_valid
+    end
+
+    it "needsc' a positive download count" do
+      expect(build(:theme, download_count: -1)).to_not be_valid
+    end
   end
 
   describe 'update_screenshots!' do

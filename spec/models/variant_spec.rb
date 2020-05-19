@@ -5,8 +5,8 @@ require_relative '../../lib/parsing'
 
 RSpec.describe Variant, type: :model do
   before do
-    @theme = Theme.create!(name: 'poet')
-    @variant = Variant.create!(theme: @theme, name: 'test')
+    @theme = create(:theme)
+    @variant = create(:variant, theme: @theme, name: 'test')
     @mode = Mode.new
     @screenshot = Screenshot.new # create!(variant: @variant, mode: @mode)
   end
@@ -26,11 +26,7 @@ RSpec.describe Variant, type: :model do
   end
 
   it 'needs a name unique in the scope of the theme' do
-    other = Variant.new(theme: @theme, name: 'test')
-    expect(other).not_to be_valid
-
-    other.update(theme: Theme.create!(name: 'other theme'))
-    expect(other).to be_valid
+    expect(build(:variant, theme: @theme, name: 'test')).not_to be_valid
   end
 
   describe 'parse!' do
