@@ -13,5 +13,11 @@ module PeachMelpa
         'the screenshots folder (for this specific theme) does not exist'
       end
     end
+
+    class NoDownloadCount < StandardError
+      def message
+        'no download count found for this specific theme'
+      end
+    end
   end
 end

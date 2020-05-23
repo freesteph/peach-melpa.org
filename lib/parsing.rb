@@ -3,6 +3,7 @@
 require 'json'
 require_relative './retrieval'
 require_relative './logging'
+require_relative './download_count'
 
 module PeachMelpa
   module Parsing
@@ -24,7 +25,7 @@ module PeachMelpa
       data.select { |name, _val| looks_like_theme? name }
     end
 
-    def self.parse_theme(name, meta, opts = {})
+    def self.parse_theme(name, meta, download_count, opts = {})
       PeachMelpa::Log.info(name) { 'trying to find theme' }
 
       version = meta['ver'].join('.')
@@ -40,6 +41,7 @@ module PeachMelpa
         theme.update_screenshots!(
           version: version,
           description: description,
+          download_count: download_count,
           url: url,
           authors: authors,
           kind: kind
@@ -78,8 +80,10 @@ module PeachMelpa
       args = nil
       args = { force: true } unless opts[:force].nil?
 
+      download_count = PeachMelpa::DownloadCount.new
+
       themes.each do |name, props|
-        send :parse_theme, name, props, *[args].reject(&:nil?)
+        parse_theme(name, props, download_count.count_for(name), *[args].reject(&:nil?))
       end
     end
   end

@@ -4,8 +4,9 @@ require 'json'
 require 'rails_helper'
 require './lib/parsing'
 require './lib/retrieval'
+require './lib/download_count'
 
-RSpec.describe PeachMelpa::Parsing do
+RSpec.describe PeachMelpa::Parsing do # rubocop:disable Metrics/BlockLength
   include PeachMelpa::Parsing
 
   before :each do
@@ -42,6 +43,10 @@ RSpec.describe PeachMelpa::Parsing do
       allow(PeachMelpa::Parsing).to receive(:select_themes).and_return @mock_theme
       allow(PeachMelpa::Parsing).to receive(:start_daemon)
       allow(PeachMelpa::Parsing).to receive(:parse_theme)
+
+      allow_any_instance_of(PeachMelpa::DownloadCount)
+        .to receive(:count_for)
+        .and_return 42
     end
 
     it 'parses the archive file' do
@@ -53,6 +58,7 @@ RSpec.describe PeachMelpa::Parsing do
 
       expect(JSON)
         .to have_received(:parse)
+        .at_least(:once)
         .with(:res)
     end
 
@@ -80,16 +86,21 @@ RSpec.describe PeachMelpa::Parsing do
       it 'forwards it to parse_them' do
         PeachMelpa::Parsing.pick_updated_themes force: 'yes'
 
-        name, props = @mock_theme.to_a.first
-
         expect(PeachMelpa::Parsing)
-          .to have_received(:parse_theme).with(name, props, force: true)
+          .to have_received(:parse_theme).with(
+            @name,
+            @props,
+            42,
+            force: true
+          )
       end
     end
 
     context 'if no arguments are given' do
       it 'parses every returned theme' do
-        allow(PeachMelpa::Parsing).to receive(:select_themes).and_return Array.new(10)
+        allow(PeachMelpa::Parsing)
+          .to receive(:select_themes)
+          .and_return(Array.new(10).map { |i| [i, {}] })
 
         PeachMelpa::Parsing.pick_updated_themes
 
@@ -113,9 +124,7 @@ RSpec.describe PeachMelpa::Parsing do
 
       PeachMelpa::Parsing.pick_updated_themes
 
-      expect(PeachMelpa::Parsing)
-        .to have_received(:parse_theme)
-        .with(@name, @props)
+      expect(PeachMelpa::Parsing).to have_received(:parse_theme)
     end
 
     it "creates the screenshots folders if it doesn't exist" do
@@ -133,12 +142,11 @@ RSpec.describe PeachMelpa::Parsing do
       @theme = double
       allow(@theme).to receive(:older_than?)
       allow(@theme).to receive(:update_screenshots!)
-
       allow(Theme).to receive(:find_or_create_by).and_return @theme
     end
 
     it 'finds or creates a theme' do
-      PeachMelpa::Parsing.parse_theme @name, @props
+      PeachMelpa::Parsing.parse_theme @name, @props, 42
 
       expect(Theme)
         .to have_received(:find_or_create_by)
@@ -146,7 +154,7 @@ RSpec.describe PeachMelpa::Parsing do
     end
 
     it 'checks if the theme needs updating' do
-      PeachMelpa::Parsing.parse_theme @name, @props
+      PeachMelpa::Parsing.parse_theme @name, @props, 42
 
       expect(@theme).to have_received(:older_than?).with '0.1'
     end
@@ -157,16 +165,27 @@ RSpec.describe PeachMelpa::Parsing do
       end
 
       it 'calls update_screenshots on it with the formatted attributes' do
-        PeachMelpa::Parsing.parse_theme @name, @props
+        PeachMelpa::Parsing.parse_theme @name, @props, 42
 
         expect(@theme).to have_received(:update_screenshots!)
-          .with(
-            version: '0.1',
-            description: 'some theme',
-            url: 'http://github.com/freesteph/peach-melpa',
-            authors: 'Stéphane Maniaci <steph@rspec.org>',
-            kind: 'single'
-          )
+          .with(a_hash_including(
+                  version: '0.1',
+                  description: 'some theme',
+                  url: 'http://github.com/freesteph/peach-melpa',
+                  authors: 'Stéphane Maniaci <steph@rspec.org>',
+                  kind: 'single'
+                ))
+      end
+
+      describe 'download count parsing' do
+        it 'calls update_screenshots! with the download count' do
+          PeachMelpa::Parsing.parse_theme @name, @props, 42
+
+          expect(@theme).to have_received(:update_screenshots!)
+            .with(
+              a_hash_including(download_count: 42)
+            )
+        end
       end
 
       describe 'authors parsing' do
@@ -175,7 +194,7 @@ RSpec.describe PeachMelpa::Parsing do
             multi = @props.dup
             multi['props']['authors'] = %w[John Doe]
 
-            PeachMelpa::Parsing.parse_theme @name, multi
+            PeachMelpa::Parsing.parse_theme @name, multi, 42
 
             expect(@theme).to have_received(:update_screenshots!)
               .with(
@@ -189,7 +208,7 @@ RSpec.describe PeachMelpa::Parsing do
             none = @props.dup
             none['props'].delete 'authors'
 
-            PeachMelpa::Parsing.parse_theme @name, none
+            PeachMelpa::Parsing.parse_theme @name, none, 42
 
             expect(@theme).to have_received(:update_screenshots!)
               .with(
@@ -207,7 +226,7 @@ RSpec.describe PeachMelpa::Parsing do
 
       context 'but the force option is given' do
         it 'updates the theme nevertheless' do
-          PeachMelpa::Parsing.parse_theme @name, @props, force: true
+          PeachMelpa::Parsing.parse_theme @name, @props, 42, force: true
 
           expect(@theme).to have_received(:update_screenshots!)
         end
