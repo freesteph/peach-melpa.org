@@ -6,6 +6,7 @@ module PeachMelpa
     'Javascript' => 'js',
     'C' => 'c',
     'Ruby' => 'rb',
-    'Org-mode' => 'org'
+    'Org-mode' => 'org',
+    'Diff' => 'patch'
   }.freeze
 end

@@ -42,7 +42,7 @@
 
 (defvar
   peach--modes
-  '(el js c rb org)
+  '(el js c rb org patch)
   "languages to capture")
 
 (defun peach--get-screenshot-cmd ()
