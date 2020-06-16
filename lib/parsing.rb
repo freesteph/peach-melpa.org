@@ -12,7 +12,7 @@ module PeachMelpa
 
     REJECTS = %w[svg-mode-line-themes select-themes rand-theme per-buffer-theme
                  display-theme cycle-themes color-theme-theme helm-themes
-                 remember-last-theme color-theme-modern].freeze
+                 remember-last-theme color-theme-modern airline-themes].freeze
 
     def self.looks_like_theme?(name)
       return false if REJECTS.include?(name)
