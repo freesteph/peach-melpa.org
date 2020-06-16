@@ -29,6 +29,7 @@ gem 'aws-sdk-s3', require: false
 gem 'faker'
 gem 'haml-rails'
 gem 'image_processing'
+gem 'sentry-raven'
 gem 'therubyracer'
 
 group :production do
