@@ -92,22 +92,22 @@
 (defun fetch-and-load-theme-inner (theme-name)
   "Get and install THEME-NAME of package type KIND and VERSION before taking a screenshot of it."
   (peach--ensure-clean-install theme-name)
-  (setq current-themes (custom-available-themes))
-  (peach--install theme-name)
-  (setq possible-themes (set-difference (custom-available-themes) current-themes))
-
-  (and (seq-empty-p possible-themes)
-       (signal 'peach-no-theme-to-load (list theme-name)))
-
-  (toggle-frame-fullscreen)
-
-  (seq-each
-   (lambda (variant)
-     (load-theme variant t)
-     (seq-each
-      (lambda (mode)
-	(peach--capture-screenshot-for-mode theme-name variant mode)) peach--modes)
-     (disable-theme variant)) possible-themes))
+  (let ((current-themes (custom-available-themes)))
+    (peach--install theme-name)
+    (let ((possible-themes (set-difference (custom-available-themes) current-themes)))
+      (if (seq-empty-p possible-themes)
+          (signal 'peach-no-theme-to-load (list theme-name)))
+      (toggle-frame-fullscreen)
+      (seq-each
+       (lambda (variant)
+         (unless (not (condition-case nil
+                          (load-theme variant t)
+                        (error nil)))
+           (seq-each
+            (lambda (mode)
+              (peach--capture-screenshot-for-mode theme-name variant mode)) peach--modes)
+           (disable-theme variant)))
+       possible-themes))))
 
 (provide 'take-screenshot)
 ;;; take-screenshot.el ends here
