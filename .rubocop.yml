@@ -10,6 +10,7 @@ AllCops:
   Exclude:
     - 'db/**/*'
     - 'bin/*'
+    - 'lib/samples/*'
 
 Style/HashEachMethods:
   Enabled: true
