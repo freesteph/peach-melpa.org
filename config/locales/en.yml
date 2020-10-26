@@ -40,6 +40,7 @@ en:
       header: "%{name}"
       description: "Preview of Emacs theme %{name} on PeachMelpa"
   errors:
+    negative_offset: "You've been redirected to the home page because you tried to look at a negative page number"
     not_found: "The theme '%{name}' could not be found"
     no_variants: "The theme '%{name}' can't be displayed. Feel free to <a class='link' href='%{url}'>report an issue</a>."
   bug:

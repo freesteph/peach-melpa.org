@@ -16,6 +16,8 @@ class ThemesController < ApplicationController
     set_page_title_for 'home'
     @page = (request.params[:page] || 1).to_i
 
+    redirect_to root_path, notice: t('errors.negative_offset') if @page < 1
+
     offset = (@page - 1) * PAGE_SIZE
 
     @count = Theme.perfect.count

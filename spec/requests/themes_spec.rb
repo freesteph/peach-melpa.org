@@ -12,6 +12,14 @@ RSpec.describe 'Themes', type: :request do
       get themes_path
       expect(response).to have_http_status(200)
     end
+
+    context 'when a negative offset is passed' do
+      it 'redirects to the home page' do
+        get(themes_path, params: { page: -1 })
+
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 
   describe 'GET /theme/:id' do
