@@ -5,7 +5,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 # Use Puma as the app server
-gem 'puma'
+gem 'puma', '~> 4.0'
+
 # Use SCSS for stylesheets
 gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -21,9 +22,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 gem 'aws-sdk-s3', require: false
 gem 'faker'
@@ -53,7 +51,7 @@ end
 group :development do
   gem 'bootsnap'
   gem 'capistrano', '~> 3.11.2'
-  gem 'capistrano3-puma'
+  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-systemd-multiservice'
