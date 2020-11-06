@@ -31,5 +31,4 @@ set :bundle_jobs, 1
 
 set :keep_releases, 2
 
-before 'deploy:migrate', 'aws:grab_db_credentials'
 after 'deploy:migrate', 'seed'
