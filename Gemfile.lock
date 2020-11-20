@@ -369,6 +369,7 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano-systemd-multiservice
   capistrano3-puma!
+  concurrent-ruby
   ed25519
   factory_bot_rails
   faker

@@ -29,6 +29,7 @@ gem 'haml-rails'
 gem 'image_processing'
 gem 'sentry-raven'
 gem 'therubyracer'
+gem 'concurrent-ruby'
 
 group :production do
   gem 'bcrypt_pbkdf'
