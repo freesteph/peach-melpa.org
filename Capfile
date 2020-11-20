@@ -36,12 +36,13 @@ require 'whenever/capistrano'
 
 require 'capistrano/puma'
 install_plugin Capistrano::Puma # Default puma tasks
+install_plugin Capistrano::Puma::Daemon
 
 # service to run Xvfb
 require 'capistrano/systemd/multiservice'
 install_plugin Capistrano::Systemd::MultiService.new_service('xvfb')
 
-set :rbenv_ruby, File.read('.ruby-version').strip
+# set :rbenv_ruby, File.read('.ruby-version').strip
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
