@@ -51,7 +51,7 @@ end
 group :development do
   gem 'bootsnap'
   gem 'capistrano', '~> 3.11.2'
-  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
+  gem 'capistrano3-puma', github: 'seuros/capistrano-puma'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano-systemd-multiservice'
