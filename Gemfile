@@ -63,3 +63,5 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console'
 end
+
+gem "tailwindcss-rails", "~> 0.1.0"
