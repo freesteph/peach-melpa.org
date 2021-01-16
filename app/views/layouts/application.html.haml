@@ -19,8 +19,10 @@
 
     = favicon_link_tag asset_path("logo.png")
     %meta{name:"viewport", content:"width=device-width, initial-scale=1"}
-  %body.p-4.bg-gray-200
-    = render 'flash'
-    = render 'header'
-    .main
-      = yield
+  %body.bg-gray-200
+    .container.mx-auto.py-3
+      = render 'flash'
+      = render 'header'
+      .main
+        = yield
+    = render 'footer'
