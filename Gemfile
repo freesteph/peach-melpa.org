@@ -24,12 +24,12 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'aws-sdk-s3', require: false
+gem 'concurrent-ruby'
 gem 'faker'
 gem 'haml-rails'
 gem 'image_processing'
 gem 'sentry-raven'
 gem 'therubyracer'
-gem 'concurrent-ruby'
 
 group :production do
   gem 'bcrypt_pbkdf'
@@ -64,4 +64,4 @@ group :development do
   gem 'web-console'
 end
 
-gem "tailwindcss-rails", "~> 0.1.0"
+gem 'tailwindcss-rails', '~> 0.1.0'

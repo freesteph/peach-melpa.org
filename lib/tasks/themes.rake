@@ -7,9 +7,9 @@ require "#{Rails.root}/lib/critic"
 require "#{Rails.root}/lib/retrieval"
 require "#{Rails.root}/lib/parsing"
 
-namespace :themes do
-  SCREENSHOT_FOLDER = "#{Rails.root}/tmp/screenshots/"
+SCREENSHOT_FOLDER = "#{Rails.root}/tmp/screenshots/"
 
+namespace :themes do
   desc 'grabs MELPA archives.json and put it in tmp'
   task refresh: :environment do
     PeachMelpa::Retrieval.refresh_melpa_archive

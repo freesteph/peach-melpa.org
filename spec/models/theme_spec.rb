@@ -165,7 +165,7 @@ RSpec.describe Theme, type: :model do
   end
 
   describe '.capture_artifacts!' do
-    let(:folder_path) { PeachMelpa::Parsing::SCREENSHOT_FOLDER + 'foo-theme' }
+    let(:folder_path) { "#{PeachMelpa::Parsing::SCREENSHOT_FOLDER}foo-theme" }
 
     before do
       allow(variant).to receive(:parse!)

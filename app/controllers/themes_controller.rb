@@ -31,9 +31,7 @@ class ThemesController < ApplicationController
                   end
     end
 
-    if offset + PAGE_SIZE < @count
-      @next = themes_path(page: @page + 1)
-    end
+    @next = themes_path(page: @page + 1) unless offset + PAGE_SIZE >= @count
 
     @themes = Theme
               .perfect
