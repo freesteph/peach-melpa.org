@@ -4,16 +4,18 @@
       .oops
         there are no themes yet. How strange.
     - @themes.each do |theme|
-      .theme.rounded-t-md.overflow-hidden.shadow-md.sm:w-full.m-6{class: "lg:w-1/5 md:w-1/4"}
+      .theme.group.transform.hover:scale-105.hover:-rotate-1.transition-all.hover:shadow-xl.rounded-t-md.overflow-hidden.shadow-md.sm:w-full.m-6{class: "lg:w-1/5 md:w-1/4"}
         = link_to theme do
           %img{src: url_for(theme.preview), alt: "preview for #{theme.name}"}
           .meta.py-6.bg-white
             .px-6
               %span= theme.radical
-              .text-sm.text-gray-500
+              .text-xs.text-gray-500
                 updated
                 = time_ago_in_words(theme.updated_at)
                 ago
-.pagination
-  = link_to "⟵ Previous page", @previous, { class: "button page prev" + (@page < 2 ? " disabled": "")}
-  = link_to "Next page ⟶", @next, { class: "button page next" + (@next ? "" : " disabled") }
+.pagination.my-6.text-center
+  - if @previous
+    = render partial: "components/button", locals: { link: @previous, text: "⟵ Previous page" }
+  - if @next
+    = render partial: "components/button", locals: { link: @next, text: "Next page ⟶" }

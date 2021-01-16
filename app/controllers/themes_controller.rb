@@ -22,17 +22,18 @@ class ThemesController < ApplicationController
 
     @count = Theme.perfect.count
 
-    @previous = if @page == 2
-                  themes_path
-                else
-                  themes_path(page: @page - 1)
-                end
+    # this logic hurts
+    if @page > 1
+      @previous = if @page == 2
+                    themes_path
+                  else
+                    themes_path(page: @page - 1)
+                  end
+    end
 
-    @next = if offset + PAGE_SIZE >= @count
-              nil
-            else
-              themes_path(page: @page + 1)
-            end
+    if offset + PAGE_SIZE < @count
+      @next = themes_path(page: @page + 1)
+    end
 
     @themes = Theme
               .perfect
