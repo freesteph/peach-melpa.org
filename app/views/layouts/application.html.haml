@@ -21,9 +21,6 @@
     %meta{name:"viewport", content:"width=device-width, initial-scale=1"}
   %body.p-4.bg-gray-200
     = render 'flash'
-    .container.text-xl.flex.flex-row.space-x-3.mb-2
-      %h1.font-bold= link_to 'Peach Melpa', root_path
-      .logo.h-8.w-8= image_tag 'logo.png', { alt: "PeachMelpa logo" }
-    %h2.text-lg.my-3= @header
+    = render 'header'
     .main
       = yield
