@@ -1,31 +1,25 @@
-.theme{data: { controller: 'theme' }}
-  %h3.description
-    = link_to @theme.description, @url, { class: "link" }
-  %section.variants
-    .modes.selector
-      - if @previous_mode
-        = link_to "⟵", theme_path(@theme, lang: @previous_mode.extension, variant: @variant), class: 'button'
-      - else
-        = link_to "⟵", "#", { class: 'disabled button' }
-      %h3.mode.button= @mode.name
-      - if @next_mode
-        = link_to "⟶", theme_path(@theme, lang: @next_mode.extension, variant: @variant), class: 'button'
-      - else
-        %a.button.disabled
-          ⟶
-    - if @multi
-      .variants.selector
-        - if @previous
-          = link_to "⟵", theme_path(@theme, variant: @previous, lang: @mode.extension), class: 'button'
-        - else
-          = link_to "⟵", "#", { class: 'disabled button' }
-        %h3.name.button= @variant.name
-        - if @next
-          = link_to "⟶", theme_path(@theme, variant: @next, lang: @mode.extension), class: 'button'
-        - else
-          %a.button.disabled
-            ⟶
-    .gallery{data: { target: 'theme.gallery'}}
-      %img{src: url_for(@screenshot.image)}
+.theme.p-4{data: { controller: 'theme' }}
+  %h2.text-2xl= @theme.name
+  %h3.text-lg=@theme.description
+  = link_to @url, @url, class: "underline text-sm text-gray-600 hover:text-black"
 
-= link_to '⟵ Back', themes_path, { class: 'button back' }
+  %section
+    .modes.selector.container.mx-auto.py-4
+      - if @previous_mode
+        = render 'components/button', link: theme_path(@theme, lang: @previous_mode.extension, variant: @variant), text: "⟵"
+      %h3.inline-block.text-lg.p-4=@mode.name
+      - if @next_mode
+        = render 'components/button', link: theme_path(@theme, lang: @next_mode.extension, variant: @variant), text: "⟶"
+
+    - if @theme.multi?
+      .modes.selector.container.mx-auto.py-4
+        - if @previous
+          = render 'components/button', link: theme_path(@theme, variant: @previous, lang: @mode.extension), text: "⟵"
+        %h3.inline-block.text-lg.p-4= @variant.name
+        - if @next
+          = render 'components/button', link: theme_path(@theme, variant: @next, lang: @mode.extension), text: "⟶"
+
+    %img.rounded{src: url_for(@screenshot.image)}
+
+.container.mx-auto.text-center
+  = render 'components/button', link: themes_path, text: '⟵ Back'

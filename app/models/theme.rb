@@ -112,6 +112,10 @@ class Theme < ApplicationRecord
     end
   end
 
+  def multi?
+    variants.count > 1
+  end
+
   def thumbnail
     @lisp = Mode.find_by(name: 'Lisp')
     variants.first.screenshots.find_by(mode: @lisp)

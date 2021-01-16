@@ -7,13 +7,16 @@
       .theme.group.transform.hover:scale-105.hover:-rotate-1.transition-all.hover:shadow-xl.rounded-t-md.overflow-hidden.shadow-md.sm:w-full.m-6{class: "lg:w-1/5 md:w-1/4"}
         = link_to theme do
           %img{src: url_for(theme.preview), alt: "preview for #{theme.name}"}
-          .meta.py-6.bg-white
+          .meta.py-6.bg-white.h-full
             .px-6
               %span= theme.radical
               .text-xs.text-gray-500
                 updated
                 = time_ago_in_words(theme.updated_at)
                 ago
+              - if theme.multi?
+                %span.text-xs.text-gray-800
+                  multiple variants ⭐
 .pagination.my-6.text-center
   - if @previous
     = render partial: "components/button", locals: { link: @previous, text: "⟵ Previous page" }
