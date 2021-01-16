@@ -64,4 +64,4 @@ group :development do
   gem 'web-console'
 end
 
-gem 'tailwindcss-rails', '~> 0.1.0'
+gem 'tailwindcss-rails', git: 'https://github.com/freesteph/tailwindcss-rails.git', branch: 'haml'

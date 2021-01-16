@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/freesteph/tailwindcss-rails.git
+  revision: 1b7028a6e516ce42dcb434b5e6ba8ebcad29a135
+  branch: haml
+  specs:
+    tailwindcss-rails (0.1.0)
+      haml (>= 5.2.0)
+      rails (>= 6.0.0)
+
+GIT
   remote: https://github.com/seuros/capistrano-puma.git
   revision: f8093ad3e68e67390d0ffeb5f50830b1587973f9
   specs:
@@ -329,8 +338,6 @@ GEM
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    tailwindcss-rails (0.1.0)
-      rails (>= 6.0.0)
     temple (0.8.2)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
@@ -395,7 +402,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
-  tailwindcss-rails (~> 0.1.0)
+  tailwindcss-rails!
   therubyracer
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
