@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/freesteph/tailwindcss-rails.git
-  revision: 1b7028a6e516ce42dcb434b5e6ba8ebcad29a135
+  revision: 8d33c914aebd4fe8c5646949b713ec601bfa735d
   branch: haml
   specs:
     tailwindcss-rails (0.1.0)
