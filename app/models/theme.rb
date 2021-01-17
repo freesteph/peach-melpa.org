@@ -142,4 +142,8 @@ class Theme < ApplicationRecord
 
     DateTime.parse("#{date} #{time}")
   end
+
+  def version_to_datetime
+    make_datetime(version)
+  end
 end

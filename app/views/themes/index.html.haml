@@ -12,7 +12,7 @@
               %span= theme.radical
               .text-xs.text-gray-500
                 updated
-                = time_ago_in_words(theme.updated_at)
+                = time_ago_in_words(theme.version_to_datetime)
                 ago
               - if theme.multi?
                 %span.text-xs.text-gray-800
