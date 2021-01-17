@@ -18,13 +18,13 @@ class Theme < ApplicationRecord
   end
 
   def older_than?(version)
-    if !self.version
-      true
-    else
+    if self.version
       d1 = make_datetime(self.version)
       d2 = make_datetime(version)
 
       d1 < d2
+    else
+      true
     end
   end
 
