@@ -14,7 +14,7 @@ amazon:
   region: eu-west-1
   bucket: peach-melpa
   upload:
-    cache-control: 'max-age=86400, private'
+    cache_control: 'max-age=86400, private'
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
