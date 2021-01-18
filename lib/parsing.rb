@@ -10,9 +10,11 @@ module PeachMelpa
 
     AKIN = %w[color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized].freeze
 
-    REJECTS = %w[svg-mode-line-themes select-themes rand-theme per-buffer-theme
-                 display-theme cycle-themes color-theme-theme helm-themes
-                 remember-last-theme color-theme-modern airline-themes].freeze
+    REJECTS = %w[svg-mode-line-themes select-themes rand-theme
+                 per-buffer-theme display-theme cycle-themes
+                 color-theme-theme helm-themes
+                 smart-mode-line-atom-one-dark remember-last-theme
+                 color-theme-modern airline-themes].freeze
 
     def self.looks_like_theme?(name)
       return false if REJECTS.include?(name)
