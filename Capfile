@@ -36,7 +36,7 @@ require 'whenever/capistrano'
 
 require 'capistrano/puma'
 install_plugin Capistrano::Puma # Default puma tasks
-install_plugin Capistrano::Puma::Daemon
+install_plugin Capistrano::Puma::Systemd
 
 # service to run Xvfb
 require 'capistrano/systemd/multiservice'
