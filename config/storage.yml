@@ -13,6 +13,7 @@ amazon:
   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
   region: eu-west-1
   bucket: peach-melpa
+  public: true
   upload:
     cache_control: 'max-age=86400, private'
 
