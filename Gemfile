@@ -30,6 +30,7 @@ gem 'haml-rails'
 gem 'image_processing'
 gem 'sentry-raven'
 gem 'therubyracer'
+gem 'webpacker'
 
 group :production do
   gem 'bcrypt_pbkdf'
@@ -63,5 +64,3 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console'
 end
-
-gem 'tailwindcss-rails', git: 'https://github.com/freesteph/tailwindcss-rails.git', branch: 'haml'

@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/freesteph/tailwindcss-rails.git
-  revision: fdc3dc608455604fff85c51b4d19052365b4f4d6
-  branch: haml
-  specs:
-    tailwindcss-rails (0.2.1)
-      rails (>= 6.0.0)
-
-GIT
   remote: https://github.com/seuros/capistrano-puma.git
   revision: d4ac7b9950ddc53835f661c7761ad3e904c48c65
   specs:
@@ -240,6 +232,8 @@ GEM
     rack (2.2.3)
     rack-livereload (0.3.17)
       rack
+    rack-proxy (0.6.5)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.1.2)
@@ -326,6 +320,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    semantic_range (2.3.1)
     sentry-raven (3.1.1)
       faraday (>= 1.0)
     sexp_processor (4.15.2)
@@ -364,6 +359,11 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webpacker (5.2.1)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -408,11 +408,11 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
-  tailwindcss-rails!
   therubyracer
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
   web-console
+  webpacker
   whenever
 
 BUNDLED WITH
