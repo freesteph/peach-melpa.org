@@ -31,4 +31,6 @@ set :bundle_jobs, 1
 
 set :keep_releases, 2
 
+before 'deploy:assets:precompile', 'deploy:yarn_install'
+
 after 'deploy:migrate', 'seed'
