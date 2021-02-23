@@ -1,13 +1,11 @@
-/* @import "tailwindcss/base"; */
-/* @import "tailwindcss/components"; */
-/* @import "tailwindcss/utilities"; */
-
-/* @import "../stylesheets/base.css"; */
-
-body {
-  background: red !important;
-}
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer components {
+  .pagination {
+    a {
+      @apply transition-all hover:bg-white transform hover:scale-105 hover:-rotate-1 hover:text-black text-gray-600 p-4 shadow-md mr-5 bg-gray-50 rounded-md;
+    }
+  }
+}
