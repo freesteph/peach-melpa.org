@@ -126,7 +126,7 @@ class Theme < ApplicationRecord
     dimensions = "#{1600 / factor}x#{1200 / factor}"
 
     # FIXME: figure out if this operation is cached or not
-    thumbnail.image
+    thumbnail.image.variant(gravity: 'SouthWest', crop: "#{dimensions}+0+0", resize: '300x300^')
   end
 
   def make_datetime(version)
