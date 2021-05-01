@@ -10,8 +10,8 @@
                     :width 'normal
                     :height 180)
 
-(setq org-startup-folded nil)
-(setq frame-resize-pixelwise t)
+(setf org-startup-folded nil
+      frame-resize-pixelwise t)
 
 (require 'package)
 (package-initialize)
@@ -90,11 +90,11 @@
      (message (error-message-string err)))))
 
 (defun fetch-and-load-theme-inner (theme-name)
-  "Get and install THEME-NAME of package type KIND and VERSION before taking a screenshot of it."
+  "Get and install THEME-NAME."
   (peach--ensure-clean-install theme-name)
   (let ((current-themes (custom-available-themes)))
     (peach--install theme-name)
-    (let ((possible-themes (set-difference (custom-available-themes) current-themes)))
+    (let ((possible-themes (seq-difference (custom-available-themes) current-themes)))
       (if (seq-empty-p possible-themes)
           (signal 'peach-no-theme-to-load (list theme-name)))
       (toggle-frame-fullscreen)
