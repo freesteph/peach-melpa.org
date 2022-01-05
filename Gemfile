@@ -28,7 +28,7 @@ gem 'concurrent-ruby'
 gem 'faker'
 gem 'haml-rails'
 gem 'image_processing'
-gem 'sentry-raven'
+gem 'sentry-rails'
 gem 'therubyracer'
 gem 'webpacker'
 
